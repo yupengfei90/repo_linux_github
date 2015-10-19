@@ -1,0 +1,55 @@
+
+var start = 1;
+
+var _html = '<div class="blogpopMain"><div class="l">'
+          + '<a href="http://edu.51cto.com/pack/view/id-46.html" target="_blank"><img src="http://s3.51cto.com/wyfs02/M01/46/52/wKiom1PxvpXAgjVzAAA197rzlMQ323.jpg" width="105" height="105" /></a>'
+          + '<p><a href="http://edu.51cto.com/pack/view/id-46.html" target="_blank">捷哥带你轻松学Cisco</a></p></div>'
+          + '<div class="r"><h4 style="text-align:left;"><a href="http://laoguang.blog.51cto.com/6013350/1540793" target="_blank">运维堡垒机跳板机系统 部署篇</a></h4>'
+          + '<ul>'
+          + '<li><a href="http://edu.51cto.com/pack/view/id-77.html" target="_blank">备战2014软考-网络规划设计师视频</a></li>'
+          + '<li><a href="http://zhaisj.blog.51cto.com/219066/1538584" target="_blank"style="color:red;">创业找投资，你要警惕的三种人</a></li>'
+          + '<li><a href="http://yuhongchun.blog.51cto.com/1604432/1540387" target="_blank">基于Jenkins快速搭建持续集成环境</a></li>'
+          + '<li><a href="http://edu.51cto.com/pack/view/id-56.html" target="_blank"style="color:red;">Linux运维数据库/集群/高可用视频集</a></li>'
+          + '</ul>'
+          + '</div></div>'
+          + '';
+
+jQuery('#showMessagerDim').show();
+
+jQuery(function(){
+//window.onload=function(){
+   if(get_cookie('blog_top')==''&&start==1){
+//	 show_pop();
+	    jQuery.messager.showblogtop('', _html);
+        var date=new Date();
+	    var day = 1408896000000;//
+	    date.setTime(day);
+	    var test = date.getTime();
+	    document.cookie="blog_top=yes;domain=.blog.51cto.com;expires="+date.toGMTString()+";path=/;";
+    }
+	jQuery("#showMessagerDim").click(function(){
+		jQuery.messager.showblogtop('', _html);
+		//removeIframe();
+	});
+//}
+});
+
+
+function get_cookie(Name) {
+    var search = Name + "=";
+    var returnvalue = "";
+    if (document.cookie.length > 0) {
+        offset = document.cookie.indexOf(search);
+        if (offset != -1) {
+            offset += search.length;
+
+            end1 = document.cookie.indexOf(";", offset);
+
+            if (end1 == -1)
+            end1 = document.cookie.length;
+            returnvalue=unescape(document.cookie.substring(offset, end1));
+        }
+    }
+    return returnvalue;
+}
+

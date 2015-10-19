@@ -1,0 +1,102 @@
+﻿#datalist{ width:980px; margin:0px auto;}
+.al{ color:#F08139; font-size:12px; text-align:center;}
+.pn{ float:left; width:100%; }
+.pn table{ width:100%;}
+
+#leftNews{ width:180px; height:560px; float:left;}
+#newList{float:left;  width:760px; margin-left:20px;height:560px;   }
+
+h2           { line-height:200%; padding-top:6px; vertical-align:middle; padding-left:10px; color:#5D5D5D; font-size:12px; font-weight:100;}
+h3           { float:left; display: inline; vertical-align:middle; padding-left:15px; line-height:200%; padding-top:5px; color:#EB5A00; font-size:12px; font-weight:bold;letter-spacing:1px;}
+h4           { float:left; display: inline; vertical-align:middle; padding-left:30px; line-height:200%;padding-top:7px; color:#EB5A00; font-size:12px; font-weight:bold;letter-spacing:1px;}
+
+.m4_left  { float:left; display:inline;margin:10px 0; width:180px; }
+.m4_right  { float:right; display:inline; width:585px; margin:10px 0;}
+.m4_middle  { float:left; display: inline; width:180px; margin-bottom:10px; margin-top:5px; background: url(../../../images/m4_2.gif);}
+.m4_middle2  { float:left; display: inline; width:180px; margin-bottom:10px; background: url(../../../images/m4_2.gif); margin-top:5px; }
+
+.m4_top     { float:left; width:180px; height:31px; line-height:31px; background:url(../../../images/m4_1.jpg) no-repeat;}
+.m4_bottom  { float:left; width:180px; height:5px; font-size:0px; background:url(../../../images/m4_3.gif) no-repeat left bottom;}
+.m4_font    { float:left; width:170px; padding-left:10px; margin-top:8px; padding-bottom:4px;} 
+.m4_font li { background:url(li_icon.gif) no-repeat left 10px; float:left; display:inline; width:170px; line-height:210%; overflow:hidden; height:22px; letter-spacing:1px; text-align:left; text-indent:10px;}
+.m4r_middle  { float:left; display: inline; width:585px; background: url(../../../images/m4_5.gif);}
+.m4r_top     { float:left; width:585px; height:31px; background:url(../../../images/m4_4.jpg) no-repeat;}
+.m4r_bottom  { float:left; width:585px; height:410px; line-height:200%; background:url(../../../images/m4_6.gif) no-repeat left bottom;}
+.m4r_bottom2  { float:left; width:585px; height:410px; line-height:200%; background:url(../../../images/m4_6.gif) no-repeat left bottom;}
+
+.jiange{ width:99%; height:1px; margin-top:5px;float:left;}
+#panNewNav{padding-top:6px; height:20px; text-align:left;}
+.panPage{ line-height:30px;}
+
+.newsList
+{
+	float:left;
+	width:750px;
+	line-height:180%;
+	margin-bottom:15px;
+}
+
+.newsContent
+{
+	float:left;
+	display:inline;
+	width:750px;
+	margin:22px 0px 15px 30px;
+	text-align:left;	
+}
+
+.newsContent h1   
+{ 
+	float:left;
+	display: inline;
+	text-align:center;
+	width:100%;
+	font-size: 24px;
+	line-height:30px;
+	color:#484848; 
+	font-weight: bold;
+	margin-top:10px;
+	margin-bottom:10px;
+	clear:both;
+}
+
+h6   
+{ 
+	float:left;
+	display: inline;
+	text-align:center;
+	width:100%;
+	font-size: 12px;
+	color:#484848; 
+	font-weight:100;
+	margin-bottom:30px;
+}
+
+#jianli_pic  { width:980px; height:310px; background: url(/images/jl_bg.gif); font-size:0px; margin:0px auto;}
+.jl_bg{ float:left; width:400px; line-height:180%; font-size:14px; color:#000; letter-spacing:1px; padding-left:320px; padding-top:100px;  }
+
+.help{ border:1px solid #DDDDDD; text-align:left; margin:0 auto; padding-bottom:30px;  width:978px; overflow:hidden;}
+.help h1{ background-color:#E2E2E2; font-size:14px; line-height:35px; height:35px; padding-left:15px;}
+
+.help-qy h2{ background:url("../qy1.jpg") no-repeat; clear:both; width:980px; height:100px; overflow:hidden;}
+.help-qz h2{ background:url("../m1.jpg") no-repeat; clear:both; width:980px; height:100px; overflow:hidden;}
+
+.help-qy p,.help-qz p{ padding:0 80px; color:#333333; line-height:20px;}
+.help-qy p.font,.help-qz p.font{ margin-top:20px;}
+.help-qy p.pic,.help-qz p.pic{ padding:0;  margin:20px auto 0;  text-align:center;}
+
+.help-qy h3{ background:url("../qy2.jpg") no-repeat; clear:both;  width:980px; height:100px; overflow:hidden;}
+.help-qy h4{ background:url("../qy3.jpg") no-repeat; clear:both;  width:980px; height:100px; overflow:hidden;}
+.help-qy h5{ background:url("../qy4.jpg") no-repeat; clear:both; width:980px; height:100px; overflow:hidden;}
+.help-qy h6{ background:url("../qy5.jpg") no-repeat; clear:both; width:980px; height:100px; overflow:hidden;}
+
+.help-qy p.pl{ background:url("../qy6.jpg") no-repeat; clear:both; width:980px; height:100px; overflow:hidden;}
+
+
+
+.help-qz h3{ background:url("../m2.jpg") no-repeat; clear:both; height:100px; overflow:hidden;}
+.help-qz h4{ background:url("../m3.jpg") no-repeat; clear:both; height:100px; overflow:hidden;}
+.help-qz h5{ background:url("../m4.jpg") no-repeat; clear:both; height:100px; overflow:hidden;}
+
+/*新加样式lf*/
+.prenext{ float:left; text-align:left;}

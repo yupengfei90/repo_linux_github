@@ -1,0 +1,494 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><script charset="utf-8" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/a.js"></script><script charset="utf-8" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/id.js"></script>
+        <meta name="wumiiVerification" content="f6451ea1-2397-4a63-9b29-2702f735d69d">
+        <script src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/uaredirect.js" type="text/javascript"></script><script type="text/javascript">uaredirect("http://siteapp.baidu.com/webapp/www.rhce.cc","http://www.rhce.cc");</script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>sed:删除命令d | 老段工作室 </title>
+		<meta name="keywords" content="">
+	
+	<link href="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/style.css" rel="stylesheet" type="text/css">
+	<link rel="shortcut icon" href="http://www.rhce.cc/wp-content/themes/xiaobei/images/favicon.ico">
+	<link rel="alternate" type="application/rss+xml" title="老段工作室 RSS Feed" href="http://www.rhce.cc/?feed=rss2">
+	<link rel="alternate" type="application/atom+xml" title="老段工作室 Atom Feed" href="http://www.rhce.cc/?feed=atom">
+	<link rel="pingback" href="http://www.rhce.cc/xmlrpc.php">
+	<script type="text/javascript" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/jquery_002.js"></script>
+	<script type="text/javascript" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/jquery_muchun.js"></script>
+	<!--[if IE 6]>
+	<link href="http://www.rhce.cc/wp-content/themes/xiaobei/ie6.css" rel="stylesheet" type="text/css" />
+	<script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" id="wp-pagenavi-css" href="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/pagenavi-css.css" type="text/css" media="all">
+<script type="text/javascript">
+/* <![CDATA[ */
+window.CKEDITOR_BASEPATH = "http://www.rhce.cc/wp-content/plugins/ckeditor-for-wordpress/ckeditor/";
+var ckeditorSettings = { "textarea_id": "comment", "pluginPath": "http:\/\/www.rhce.cc\/wp-content\/plugins\/ckeditor-for-wordpress\/", "autostart": true, "excerpt_state": false, "qtransEnabled": false, "outputFormat": { "indent": true, "breakBeforeOpen": true, "breakAfterOpen": true, "breakBeforeClose": true, "breakAfterClose": true }, "configuration": { "filebrowserBrowseUrl": "http:\/\/www.rhce.cc\/wp-content\/plugins\/ckeditor-for-wordpress\/filemanager\/browser\/default\/browser.html?Connector=..\/..\/connectors\/php\/connector.php", "filebrowserImageBrowseUrl": "http:\/\/www.rhce.cc\/wp-content\/plugins\/ckeditor-for-wordpress\/filemanager\/browser\/default\/browser.html?Connector=..\/..\/connectors\/php\/connector.php&type=Images", "filebrowserFlashBrowseUrl": "http:\/\/www.rhce.cc\/wp-content\/plugins\/ckeditor-for-wordpress\/filemanager\/browser\/default\/browser.html?Connector=..\/..\/connectors\/php\/connector.php&type=Flash", "filebrowserUploadUrl": "http:\/\/www.rhce.cc\/wp-content\/plugins\/ckeditor-for-wordpress\/filemanager\/connectors\/php\/upload.php", "filebrowserImageUploadUrl": "http:\/\/www.rhce.cc\/wp-content\/plugins\/ckeditor-for-wordpress\/filemanager\/connectors\/php\/upload.php?type=Images", "filebrowserFlashUploadUrl": "http:\/\/www.rhce.cc\/wp-content\/plugins\/ckeditor-for-wordpress\/filemanager\/connectors\/php\/upload.php?type=Flash", "uiColor": "#D3D3D3", "height": "160px", "skin": "kama", "scayt_autoStartup": false, "entities": true, "entities_greek": true, "entities_latin": true, "toolbar": "WordpressBasic", "templates_files": [ "http:\/\/www.rhce.cc\/wp-content\/plugins\/ckeditor-for-wordpress\/ckeditor.templates.js" ], "stylesCombo_stylesSet": "wordpress:http:\/\/www.rhce.cc\/wp-content\/plugins\/ckeditor-for-wordpress\/ckeditor.styles.js", "allowedContent": true, "customConfig": "http:\/\/www.rhce.cc\/wp-content\/plugins\/ckeditor-for-wordpress\/ckeditor.config.js" }, "externalPlugins": [  ], "additionalButtons": [  ] }
+/* ]]> */
+</script>		<style type="text/css">
+				#content table.cke_editor { margin:0; }
+				#content table.cke_editor tr td { padding:0;border:0; }
+		</style>
+		<script type="text/javascript">
+var duoshuoQuery = {"short_name":"lduan","sso":{"login":"http:\/\/www.rhce.cc\/wp-login.php?action=duoshuo_login","logout":"http:\/\/www.rhce.cc\/wp-login.php?action=logout&_wpnonce=02d3e0f45e"},"theme":"default","stylePatch":"wordpress\/xiaobei"};
+duoshuoQuery.sso.login += '&redirect_to=' + encodeURIComponent(window.location.href);
+duoshuoQuery.sso.logout += '&redirect_to=' + encodeURIComponent(window.location.href);
+</script>
+<script type="text/javascript" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/embed.js" charset="UTF-8" async="async"></script>
+<script type="text/javascript" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/ckeditor_002.js"></script><link href="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/embed.css" rel="stylesheet" type="text/css"><style>.cke{visibility:hidden;}</style>
+<script type="text/javascript" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/jquery.js"></script>
+<script type="text/javascript" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/jquery-migrate.js"></script>
+<script type="text/javascript" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/ckeditor.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.rhce.cc/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.rhce.cc/wp-includes/wlwmanifest.xml"> 
+</head>
+<body><script charset="utf-8" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/jiathis.js"></script><link type="text/css" rel="stylesheet" href="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/jiathis_share.css"><iframe style="position: fixed; display: none; opacity: 0;" frameborder="0"></iframe><div style="position: absolute; z-index: 1000000000; display: none; top: 50%; left: 50%; overflow: auto;" class="jiathis_style"></div><div style="position: absolute; z-index: 1000000000; display: none; overflow: auto;" class="jiathis_style"></div><iframe src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/jiathis_utility.html" style="display: none;" frameborder="0"></iframe>
+
+
+ <!-- top strip #end -->
+		
+		
+		
+		<div id="header">
+        	<div id="header_in">
+            	
+                                
+                  <div class="logo"><a href="http://www.rhce.cc/" title="老段工作室"><img src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/logo.png" alt="看互联"></a>
+        		  </div>
+				  <!-- <div class="poptip" >
+    <span class="poptip-arrow poptip-arrow-left" ><em>◆</em><i>◆</i></span>
+	<p>每天向目标靠近一步！<br />执行力比策略更重要！</p>
+	</div> -->
+		
+		<div class="yiyu">
+				<p><br>专注于远程培训</p>
+				</div>		
+				
+        				            
+            </div>
+        </div> <!-- header #end -->
+        
+
+
+		<div id="nav">
+        	<div id="nav_in">
+				 	
+				<div class="menu-%e8%8f%9c%e5%8d%95-container"><ul id="menu-%e8%8f%9c%e5%8d%95" class="menu"><li id="menu-item-470" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-470"><a href="http://www.rhce.cc/">首页</a></li>
+<li id="menu-item-1022" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1022"><a href="http://www.rhce.cc/?page_id=1021">开课信息</a></li>
+<li id="menu-item-549" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-549"><a href="http://www.rhce.cc/?cat=22">技术分类</a>
+<ul class="sub-menu">
+	<li id="menu-item-1158" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1158"><a href="http://www.rhce.cc/?cat=22">RHCE</a></li>
+	<li id="menu-item-1159" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1159"><a href="http://www.rhce.cc/?cat=34">RHCA</a></li>
+	<li id="menu-item-1157" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1157"><a href="http://www.rhce.cc/?cat=58">虚拟化</a></li>
+	<li id="menu-item-1160" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1160"><a href="http://www.rhce.cc/?cat=53">OCP</a></li>
+	<li id="menu-item-1161" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1161"><a href="http://www.rhce.cc/?cat=43">MySQL</a></li>
+</ul>
+</li>
+<li id="menu-item-961" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-961"><a href="http://www.rhce.cc/?cat=44">视频汇总</a></li>
+<li id="menu-item-1058" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1058"><a title="target=”_blank”" href="http://lduan.taobao.com/">淘宝店</a></li>
+<li id="menu-item-1078" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1078"><a href="http://www.rhce.cc/?page_id=1077">镜像下载</a></li>
+<li id="menu-item-460" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-460"><a href="http://www.rhce.cc/?page_id=4">远程培训</a></li>
+</ul></div>		
+                                <div class="search"><form method="get" id="searchform" action="http://www.rhce.cc">
+    <input value="搜索其实很简单 ^_^" name="s" id="s" class="textfield" onfocus="if (this.value == '搜索其实很简单 ^_^') {this.value = '';}" onblur="if (this.value == '') {this.value = '搜索其实很简单 ^_^';}" x-webkit-speech="" type="text">
+    <input class="b_search" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/b_search.png" alt="Submit button" type="image">
+  </form> </div>
+                
+            </div> 
+        </div> <!-- nav #end -->
+
+		
+	<div id="wrapper" class="clearfix">
+                								                <div class="clear"></div> 
+	<div id="breadcrumbs" class="con_box clearfix">
+		<div class="bcrumbs"><strong><a href="http://www.rhce.cc/" title="返回首页">home</a></strong>
+		<a href="http://www.rhce.cc/?cat=42" rel="category">Shell</a>		<a>sed:删除命令d</a>
+		</div>
+		
+							
+		
+	</div>
+ 	<div id="art_container clearfix">
+ 		<div id="art_main1" class="art_white_bg fl"> 
+			            <div class="art_title clearfix">
+			
+		        
+
+				<h1 align="center">sed:删除命令d</h1>
+				<div class="jiange"></div>
+				<div class="b2"></div>
+				<p class="info" align="center">
+				<small>时间 : 13-09-13 </small>
+				<small>栏目 : <a href="http://www.rhce.cc/?cat=42" rel="category">Shell</a> </small>
+				<small>作者 : 老段 </small>
+				<small>评论 : 1条评论</small>
+				<small>点击 :  8,879 次</small>
+								</p><!-- /info -->  
+			</div>
+			<div class="article_content">
+				
+																<div class="clear"></div>
+				<div style="clear:both; margin-top:5px; margin-bottom:5px;"></div><div style="float:left"><!-- JiaThis Button BEGIN -->
+<div class="jiathis_style_32x32">
+	<a title="分享到QQ空间" class="jiathis_button_qzone"><span class="jiathis_txt jtico jtico_qzone"></span></a>
+	<a title="分享到微信" class="jiathis_button_weixin"><span class="jiathis_txt jtico jtico_weixin"></span></a>
+	<a title="分享到百度空间" class="jiathis_button_hi"><span class="jiathis_txt jtico jtico_hi"></span></a>
+	<a href="http://www.jiathis.com/share?uid=1539696" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+</div>
+<script type="text/javascript">
+var jiathis_config = {data_track_clickback:'true'};
+</script>
+<script type="text/javascript" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/jia.js" charset="utf-8"></script><script type="text/javascript" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/plugin.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+<!-- UJian Button BEGIN -->
+	<div class="ujian-hook"><div style="margin: 0; border: none; padding: 0; clear: both; overflow: hidden; *zoom: 1; *position: relative;"><div style="padding: 0; margin: 0; border: none; clear: both; display: block;"><div style="clear:both;overflow:visible;width:200px; height:28px; margin:20px auto 0px;" id="ujian_BtnDiv"><div onmouseout="this.style.backgroundPosition='0 0';" onmouseover="this.style.backgroundPosition='-89px 0';" style="position: static; float: left; display: inline; width: 89px; height: 28px; margin:0; padding: 0pt; background:url(http://img.ujian.cc/lkrc/1.png) no-repeat scroll 0pt 0pt transparent; text-indent: 0pt;" id="ujian_LikeBtnDiv"><a onmouseout="this.style.fontWeight='normal';" onmouseover="this.style.fontWeight='bold';" style="float: left; width: 38px; height: 20px; line-height: 21px; margin: 4px 0pt 0pt 4px; padding: 0pt; border: medium none; background-color: rgb(255, 255, 255); color: rgb(56, 92, 128); letter-spacing: 0pt; text-decoration: none; text-align: center; text-indent: 0pt; font-size: 12px; font-weight: normal;cursor:default;" id="ujian_NumLikes">2</a><span hidefocus="true" id="ujian_LikeBtn" style="float:left;width:40px;height:29px;margin:0;padding:0;outline:none;cursor:pointer;" onclick="UJIAN.like();"></span></div><div style="position:static;clear:none;float:left;display:inline;height:28px;margin:0;padding:0 5px;text-indent:0;" id="ujian_RecommendBtnDiv"><span onmouseout="this.style.backgroundPosition='-267px 0';" onmouseover="this.style.backgroundPosition='-328px 0';" style="float:left;display:inline;width:60px;height:28px;margin:0 0 0 5px;padding:0; background:url(http://img.ujian.cc/lkrc/1.png) no-repeat -267px 0;cursor:pointer;outline:none;" hidefocus="true" id="ujian_RecommendBtn" onclick="UJIAN.recommend();"></span><img style="clear:none;width:19px;height:15px;margin:7px 0 0 8px;padding:0;border:0;background:none;cursor:default;display:none;" id="ujian_Loading" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/loading.gif"></div></div><div style="font-family:'Helvetica Neue',helvetica,arial,sans-serif;font-size:16px;margin: 0; border: none; padding: 10px 0 5px 5px; _padding-top:10px; text-indent: 0; text-align: left; font-weight: bold;color:#333333;">猜你喜欢：</div><div style="clear: both; border: none; margin: 0 0 0 -1px; padding: 0; overflow: hidden; _zoom: 1;"><a onmouseup="t=this; setTimeout(function() {t.href='http://www.rhce.cc/?p=1037';}, 50); return true;" onmousedown="this.href='http://e.ujian.cc/?code=1990JpOsq0lXzToZjsovpVaoCXWbnxy0izuDAOkpIUzi31aj%2FwMxCHEPCpNoHguMUmuZnUHRgMyYD3p%2BT6KYH1K1ab2Yyzd8Opbwt3AuBabGFxoqSTtXbGRtJBn%2Bs8MtgZzreewn2PJ1HQBxDt0%2FCxkQKevS9xC%2FFQBMr03U%2Bq%2F7M64k'; return true;" href="http://www.rhce.cc/?p=1037" style="display: block; height: auto; float: left; text-decoration: none; border-bottom: medium none; cursor: pointer; position: relative; margin: 5px 0px; padding: 5px; width: 108px; text-align: left; outline: medium none; background-image: none; border-left: 1px solid rgb(221, 221, 221) ! important; color: rgb(51, 51, 51); overflow: hidden;" onmouseover="this.style.backgroundColor='#E6F3DE';this.getElementsByTagName('div')[1].style.color='#333333';" onmouseout="this.style.backgroundColor='';this.getElementsByTagName('div')[1].style.color='#333333';" title="第1章：sed语法和基本命令(1)" hidefocus="true"><div style="margin: 0;border-radius:5px; padding: 0; width: auto; height: 106px; border: 1px solid #dddddd;"></div><img class="JIATHIS_IMG_NO BSHARE_IMAGE_NO" style="position: absolute;border-radius:5px;border: medium none; background: none repeat scroll 0% 0% transparent; visibility: visible; padding: 0pt; margin: 0pt; width: 102px; height: 102px; clip: rect(0px, 102px, 102px, 0px); left: 8px; top: 8px;" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/5.jpg"><div style="color:#333333;height:60px; width: 100%; margin: 3px 2px 0 2px; padding: 0; text-indent: 0; border: none;overflow: hidden;font-family:'Helvetica Neue',helvetica,arial,sans-serif;font-size:12px;line-height:15px;">第1章：sed语法和基本命令(1)</div></a><a onmouseup="t=this; setTimeout(function() {t.href='http://www.rhce.cc/2013/05/31/3-%e6%89%93%e5%8d%b0%e6%a8%a1%e5%bc%8f%e7%a9%ba%e9%97%b4%ef%bc%88p%e5%91%bd%e4%bb%a4%ef%bc%89/';}, 50); return true;" onmousedown="this.href='http://e.ujian.cc/?code=8058cTIAv%2Bb8kG%2BCH46mC7%2Bo2j8ZGdTrL5N1SUqmwTPA%2F3WHbZUCa6jchv2BUqMAJcaLqNsabF0vOkRI%2FYR%2B4JbM6lxWgI1rHgfVZbJexB0ni%2BCxPpEvcbGVArP04%2BvJ%2ByHc3hchZujCPOtqKE4QUlw%2B96B6kcP70tYQki7jLUGUc%2FrrGF0J3tSxBV3%2BT%2BJYsZRlC6VgCUPoJBh99NlNo7nmshvzfX7xOEouUGSufsfkLU%2F7pHahuV0FzdNnorKwopJTSSNaj%2F62M6jWOR9rgZDBCqXXIEpqcmyZQu2gG0n59ep7VSddeRRZG0G%2BzFt1KjflaliLau1jlSSwgqMn5wIFofJJQwvusZ31nBYpqoC0lgnLe5zC94So8xTFbiQ5n2m2suR1'; return true;" href="http://www.rhce.cc/2013/05/31/3-%e6%89%93%e5%8d%b0%e6%a8%a1%e5%bc%8f%e7%a9%ba%e9%97%b4%ef%bc%88p%e5%91%bd%e4%bb%a4%ef%bc%89/" style="display: block; height: auto; float: left; text-decoration: none; border-bottom: none; cursor: pointer; position: relative; margin: 5px 0; padding: 5px 5px; width: 108px; text-align: left; outline: none; background-image: none; border-left: 1px solid #dddddd !important;color:#333333;overflow:hidden;" onmouseover="this.style.backgroundColor='#E6F3DE';this.getElementsByTagName('div')[1].style.color='#333333';" onmouseout="this.style.backgroundColor='';this.getElementsByTagName('div')[1].style.color='#333333';" title="RHCE sed awk shell sed打印模式空间（p命令）" hidefocus="true"><div style="margin: 0;border-radius:5px; padding: 0; width: auto; height: 106px; border: 1px solid #dddddd;"></div><img class="JIATHIS_IMG_NO BSHARE_IMAGE_NO" style="position: absolute;border-radius:5px;border: medium none; background: none repeat scroll 0% 0% transparent; visibility: visible; padding: 0pt; margin: 0pt; width: 102px; height: 102px; clip: rect(0px, 102px, 102px, 0px); left: 8px; top: 8px;" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/26.jpg"><div style="color:#333333;height:60px; width: 100%; margin: 3px 2px 0 2px; padding: 0; text-indent: 0; border: none;overflow: hidden;font-family:'Helvetica Neue',helvetica,arial,sans-serif;font-size:12px;line-height:15px;">RHCE sed awk shell sed打印模式空间（p命令）</div></a><a onmouseup="t=this; setTimeout(function() {t.href='http://www.rhce.cc/2013/05/27/%E7%AC%AC1%E7%AB%A0%EF%BC%9Ased%E8%AF%AD%E6%B3%95%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A41/';}, 50); return true;" onmousedown="this.href='http://e.ujian.cc/?code=7aeb992svwmmvI0AB8JTlkccf4YiR%2BbmJhTEsp2xMLAyNCFYcnN9ioMBv8PcuIvXZa%2BwWAzc63ykcv4RWtPrzrQHSVOVZh9IcBWoejY%2B6rcNIdWAolZTZWgs%2F3M2D0NyO1ion5t1ATJwnb0AMgVAYtehD895%2FFzAZajBFh2T%2FIuMY%2BGQUEOGydBZ1Ic%2B0Qc7qjEk%2FY7KOnZy5YCRZslTfVS4dL5KnQ9%2BUibxr5br%2F%2F6QOtB%2BR7htEC4G6hkRJp6cQG1BRPSukcRCoCe%2BQzLKDSv1lf2SCLl6A5u3%2B4HNj3Hr7bvy1vp6fQEw2bfq2Wr90UFvfB7lgoxtuAy%2BzgKx9brCpKl%2BxZLwSBauiqMY5NnYCr%2BDlJ9nv6%2B6UX5iZ%2FiBccazULa5T38'; return true;" href="http://www.rhce.cc/2013/05/27/%E7%AC%AC1%E7%AB%A0%EF%BC%9Ased%E8%AF%AD%E6%B3%95%E5%92%8C%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A41/" style="display: block; height: auto; float: left; text-decoration: none; border-bottom: none; cursor: pointer; position: relative; margin: 5px 0; padding: 5px 5px; width: 108px; text-align: left; outline: none; background-image: none; border-left: 1px solid #dddddd !important;color:#333333;overflow:hidden;" onmouseover="this.style.backgroundColor='#E6F3DE';this.getElementsByTagName('div')[1].style.color='#333333';" onmouseout="this.style.backgroundColor='';this.getElementsByTagName('div')[1].style.color='#333333';" title="rhce sed awk 第1章：sed语法和基本命令(1)" hidefocus="true"><div style="margin: 0;border-radius:5px; padding: 0; width: auto; height: 106px; border: 1px solid #dddddd;"></div><img class="JIATHIS_IMG_NO BSHARE_IMAGE_NO" style="position: absolute;border-radius:5px;border: medium none; background: none repeat scroll 0% 0% transparent; visibility: visible; padding: 0pt; margin: 0pt; width: 102px; height: 102px; clip: rect(0px, 102px, 102px, 0px); left: 8px; top: 8px;" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/46.jpg"><div style="color:#333333;height:60px; width: 100%; margin: 3px 2px 0 2px; padding: 0; text-indent: 0; border: none;overflow: hidden;font-family:'Helvetica Neue',helvetica,arial,sans-serif;font-size:12px;line-height:15px;">rhce sed awk 第1章：sed语法和基本命令(1)</div></a><a onmouseup="t=this; setTimeout(function() {t.href='http://www.rhce.cc/2013/05/31/2-sed%E6%89%A7%E8%A1%8C%E7%9A%84%E6%B5%81%E7%A8%8B/';}, 50); return true;" onmousedown="this.href='http://e.ujian.cc/?code=c36bW702JQsZFJnErNGKbnylo%2FfCUOUaABZi%2F3pRDohWUHc2FVZ6Zd3LKxjoW1PFD6RGUkHZiq1UNUuZOkrib2y3tXk9vynUy%2FJZls1VhNf%2Fhbu0nHW306iUZ7wsTPPWVTyGmd4DKDJwswM4wxwqCUk%2BSnnidwifJHNGuEFsEWnznnkD8AzrRL3JDCFq0201PCwQakMuHUi1F5wpejIujTrKsxHh%2FHLIgh%2BMBLaCldnRHyia%2BN%2Bl2E4MN9Do75BNkE63AlucSsFO%2F3daZBTa1NHWHDrxkLzxx6plEBQ'; return true;" href="http://www.rhce.cc/2013/05/31/2-sed%E6%89%A7%E8%A1%8C%E7%9A%84%E6%B5%81%E7%A8%8B/" style="display: block; height: auto; float: left; text-decoration: none; border-bottom: none; cursor: pointer; position: relative; margin: 5px 0; padding: 5px 5px; width: 108px; text-align: left; outline: none; background-image: none; border-left: 1px solid #dddddd !important;color:#333333;overflow:hidden;" onmouseover="this.style.backgroundColor='#E6F3DE';this.getElementsByTagName('div')[1].style.color='#333333';" onmouseout="this.style.backgroundColor='';this.getElementsByTagName('div')[1].style.color='#333333';" title="sed命令 rhce" hidefocus="true"><div style="margin: 0;border-radius:5px; padding: 0; width: auto; height: 106px; border: 1px solid #dddddd;"></div><img class="JIATHIS_IMG_NO BSHARE_IMAGE_NO" style="position: absolute;border-radius:5px;border: medium none; background: none repeat scroll 0% 0% transparent; visibility: visible; padding: 0pt; margin: 0pt; width: 102px; height: 102px; clip: rect(0px, 102px, 102px, 0px); left: 8px; top: 8px;" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/mini_01bb61e72a7f285fb2db_120_120.jpg"><div style="color:#333333;height:60px; width: 100%; margin: 3px 2px 0 2px; padding: 0; text-indent: 0; border: none;overflow: hidden;font-family:'Helvetica Neue',helvetica,arial,sans-serif;font-size:12px;line-height:15px;">sed命令 rhce</div></a><a onmouseup="t=this; setTimeout(function() {t.href='http://www.rhce.cc/2013/05/26/sed%E5%92%8Cawk-101%E4%B8%AA%E6%8A%80%E5%B7%A7-%E8%BF%9E%E8%BD%BD/';}, 50); return true;" onmousedown="this.href='http://e.ujian.cc/?code=e008shcUGfi4G%2F3GQAaYvAOGdcUhuHYNqWW%2BoZzop4u1RIEJChu17yBYh6pU%2FKp%2BK1iYFpi8zNeH0puC9eg8%2FUE2J6JMgp5%2FBz0WXhfi%2FMj8RfzSMSxnl3Ok6HwtCz7mHElmmPxo1wdj6f1bWruiNEegbEmOsaCrGsIx%2F9TOVauUbjqDmPqWCkUYCZl5FOj3FbmhM6DyHnf9wKNrIbpHUp69QwTcEjv101O%2BkGU6e8ftmk9PZSl5DvBQd05qjmGGYSMbFpBVQoRNJ58hOmxXZX0U%2Fss4i1D3S6XUV2LzgNf6ZfoCQmleMpC6%2FT2l67Or7T0'; return true;" href="http://www.rhce.cc/2013/05/26/sed%E5%92%8Cawk-101%E4%B8%AA%E6%8A%80%E5%B7%A7-%E8%BF%9E%E8%BD%BD/" style="display: block; height: auto; float: left; text-decoration: none; border-bottom: medium none; cursor: pointer; position: relative; margin: 5px 0px; padding: 5px; width: 108px; text-align: left; outline: medium none; background-image: none; border-left: 1px solid rgb(221, 221, 221) ! important; color: rgb(51, 51, 51); overflow: hidden;" onmouseover="this.style.backgroundColor='#E6F3DE';this.getElementsByTagName('div')[1].style.color='#333333';" onmouseout="this.style.backgroundColor='';this.getElementsByTagName('div')[1].style.color='#333333';" title="sed awk rhce sed和awk 101个技巧 连载 rhce" hidefocus="true"><div style="margin: 0;border-radius:5px; padding: 0; width: auto; height: 106px; border: 1px solid #dddddd;"></div><img class="JIATHIS_IMG_NO BSHARE_IMAGE_NO" style="position: absolute;border-radius:5px;border: medium none; background: none repeat scroll 0% 0% transparent; visibility: visible; padding: 0pt; margin: 0pt; width: 102px; height: 102px; clip: rect(0px, 102px, 102px, 0px); left: 8px; top: 8px;" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/mini_ad63857a4a9f8c6ff15b_120_120.jpg"><div style="color:#333333;height:60px; width: 100%; margin: 3px 2px 0 2px; padding: 0; text-indent: 0; border: none;overflow: hidden;font-family:'Helvetica Neue',helvetica,arial,sans-serif;font-size:12px;line-height:15px;">sed awk rhce sed和awk 101个技巧 连载 rhce</div></a></div><div style="margin: 0pt; border: medium none; padding: 5px 8px; clear: both; text-align: right;"><a href="http://www.ujian.cc/index2" style="font-family:'Helvetica Neue',helvetica,arial,sans-serif;font-size:12px;text-decoration:none;color:#999; border-bottom: medium none; word-wrap: normal; display: inline;" title="这是什么工具？" target="_blank">友荐[?]</a></div></div></div></div>
+	<script type="text/javascript" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/ujian.js"></script>
+<!-- UJian Button END --></div><div style="clear:both; margin-top:5px; margin-bottom:5px;"></div><p style="margin:0in;font-size:14.0pt">
+	<span style="font-family:Calibri" lang="zh-CN">使用 sed </span><span style="font-family:SimSun" lang="zh-CN">的</span><span style="font-family:Calibri" lang="zh-CN">d 指令，你</span><span style="font-family:&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
+SimSun" lang="zh-CN">可以删除一些行</span><span style="font-family:Calibri" lang="zh-CN">。请注意</span><span style="font-family:SimSun" lang="zh-CN">这些行只是在输出的时候被删除</span><span style="font-family:Calibri" lang="zh-CN">。</span><span style="font-family:SimSun" lang="zh-CN">和其他命令一样，</span><span style="font-family:Calibri" lang="en-US">d</span><span style="font-family:SimSun" lang="zh-CN">命令不会修改源文件的内容。</span>
+</p>
+<p style="margin:0in;font-family:SimSun;font-size:14.0pt">
+	&nbsp;
+</p>
+<p style="margin:0in;font-size:14.0pt">
+	<span style="font-family:SimSun" lang="zh-CN">默认情况下</span><span style="font-family:Calibri" lang="zh-CN">，</span><span style="font-family:SimSun" lang="zh-CN">在使用</span><span style="font-family:Calibri" lang="en-US">sed</span><span style="font-family:SimSun" lang="zh-CN">前，</span><span style="font-family:Calibri" lang="zh-CN">如果你没有</span><span style="font-family:SimSun" lang="zh-CN">指定</span><span style="font-family:Calibri" lang="zh-CN">任何</span><span style="font-family:SimSun" lang="zh-CN">地址</span><span style="font-family:Calibri" lang="zh-CN">范围 </span><span style="font-family:SimSun" lang="zh-CN">，</span><span style="font-family:Calibri" lang="zh-CN">它</span><span style="font-family:SimSun" lang="zh-CN">将匹配</span><span style="font-family:Calibri" lang="zh-CN">所有的</span><span style="font-family:SimSun" lang="zh-CN">行</span><span style="font-family:Calibri" lang="zh-CN">。因此，下列的例子将不打印任内容，</span><span style="font-family:SimSun" lang="zh-CN">因为</span><span style="font-family:Calibri" lang="zh-CN">它</span><span style="font-family:SimSun" lang="zh-CN">匹配了</span><span style="font-family:Calibri" lang="zh-CN"> employee.txt 中所有的</span><span style="font-family:SimSun" lang="zh-CN">行并删除了</span><span style="font-family:Calibri" lang="zh-CN">他们。</span>
+</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+	&nbsp;
+</p>
+<blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		sed 'd' employee.txt
+	</p>
+</blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+	&nbsp;
+</p>
+<p style="margin:0in;font-size:14.0pt">
+	<span style="font-family:SimSun">在删除时，指定</span><span style="font-family:Calibri">一个位址范围</span><span style="font-family:SimSun">会很有用</span><span style="font-family:Calibri">。</span><span style="font-family:SimSun">下面是</span><span style="font-family:Calibri">一些例子：</span>
+</p>
+<p style="margin:0in;font-family:SimSun;font-size:14.0pt">
+	只删除第二行：
+</p>
+<blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		$ sed '2 d' employee.txt
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		101,John Doe,CEO
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		103,Raj Reddy,Sysadmin
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		104,Anand Ram,Developer
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		105,Jane Miller,Sales Manager
+	</p>
+</blockquote>
+<p style="margin:0in;font-family:SimSun;font-size:14.0pt">
+	&nbsp;
+</p>
+<p style="margin:0in;font-size:14.0pt">
+	<span style="font-family:SimSun" lang="zh-CN">删除</span><span style="font-family:Calibri" lang="en-US">1</span>到<span style="font-family:Calibri" lang="en-US">4</span><span style="font-family:SimSun" lang="zh-CN">行：</span>
+</p>
+<blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		$ sed '1,4 d' employee.txt
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		105,Jane Miller,Sales Manager
+	</p>
+</blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+	&nbsp;
+</p>
+<p style="margin:0in;font-family:SimSun;font-size:14.0pt">
+	删除从第二行到最后一行：
+</p>
+<blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		$ sed '2,$ d' employee.txt
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		101,John Doe,CEO
+	</p>
+</blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+	&nbsp;
+</p>
+<p style="margin:0in;font-family:SimSun;font-size:14.0pt">
+	只删除奇数行：
+</p>
+<blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		$ sed '1~2 d' employee.txt
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		102,Jason Smith,IT Manager
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		104,Anand Ram,Developer
+	</p>
+</blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+	&nbsp;
+</p>
+<p style="margin:0in;font-size:14.0pt">
+	<span style="font-family:SimSun" lang="zh-CN">删除所有包含</span><span style="font-family:Calibri" lang="en-US">'Manager'</span><span style="font-family:SimSun" lang="zh-CN">的行：</span>
+</p>
+<blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		$ sed '/Manager/ d' employee.txt
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		101,John Doe,CEO
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		103,Raj Reddy,Sysadmin
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		104,Anand Ram,Developer
+	</p>
+</blockquote>
+<p style="margin:0in;font-family:SimSun;font-size:14.0pt">
+	&nbsp;
+</p>
+<p style="margin:0in;font-size:14.0pt">
+	<span style="font-family:SimSun" lang="zh-CN">删除第一次包含</span><span style="font-family:Calibri" lang="en-US">'Jason'</span><span style="font-family:SimSun" lang="zh-CN">的行到第四行：</span>
+</p>
+<blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		$ sed '/Jason/,4 d' employee.txt
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		101,John Doe,CEO
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		105,Jane Miller,Sales Manager
+	</p>
+</blockquote>
+<p style="margin:0in;font-size:14.0pt">
+	<span style="font-family:SimSun" lang="zh-CN">如果在前四行没有匹配</span><span style="font-family:Calibri" lang="en-US">'Jason'</span><span style="font-family:SimSun" lang="zh-CN">的行，这个命令只删除第四行以后匹配</span><span style="font-family:Calibri" lang="en-US">'Jason'</span><span style="font-family:&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
+SimSun" lang="zh-CN">的行。</span>
+</p>
+<p style="margin:0in;font-family:SimSun;font-size:14.0pt">
+	&nbsp;
+</p>
+<p style="margin:0in;font-size:14.0pt">
+	<span style="font-family:SimSun" lang="zh-CN">删除从第一次匹配</span><span style="font-family:Calibri" lang="en-US">'Raj'</span><span style="font-family:SimSun" lang="zh-CN">的行到最后一行：</span>
+</p>
+<blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		$ sed '/Raj/,$ d' employee.txt
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		101,John Doe,CEO
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		102,Jason Smith,IT Manager
+	</p>
+</blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+	&nbsp;
+</p>
+<p style="margin:0in;font-size:14.0pt">
+	<span style="font-family:SimSun" lang="zh-CN">删除从第一次匹配</span><span style="font-family:Calibri" lang="en-US">'Raj'</span><span style="font-family:SimSun" lang="zh-CN">的行</span><span style="font-family:Calibri" lang="en-US"> </span><span style="font-family:SimSun" lang="zh-CN">到匹配</span><span style="font-family:Calibri" lang="en-US">'Jane'</span><span style="font-family:&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
+SimSun" lang="zh-CN">之间的行：</span>
+</p>
+<blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		$ sed '/Raj/,/Jane/ d' employee.txt
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		101,John Doe,CEO
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		102,Jason Smith,IT Manager
+	</p>
+</blockquote>
+<p style="margin:0in;font-family:SimSun;font-size:14.0pt">
+	&nbsp;
+</p>
+<p style="margin:0in;font-size:14.0pt">
+	<span style="font-family:SimSun" lang="zh-CN">删除匹配</span><span style="font-family:Calibri" lang="en-US">'Jason'</span><span style="font-family:SimSun" lang="zh-CN">的行及它下面两行：</span>
+</p>
+<blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		$ sed '/Jason/,+2 d' employee.txt
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		101,John Doe,CEO
+	</p>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		105,Jane Miller,Sales Manager
+	</p>
+</blockquote>
+<p style="margin:0in;font-family:SimSun;font-size:14.0pt">
+	&nbsp;
+</p>
+<p style="margin:0in;font-family:SimSun;font-size:14.0pt">
+	一些有用的删除例子<br>
+	下面的例子在日常的应用中很有用。
+</p>
+<p style="margin:0in;font-family:SimSun;font-size:14.0pt">
+	从一个文件删除所有空行：
+</p>
+<blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		sed '/^$/ d' employee.txt
+	</p>
+</blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+	&nbsp;
+</p>
+<p style="margin:0in;font-size:14.0pt">
+	<span style="font-family:SimSun" lang="zh-CN">删除所有注释行（假设注释以</span><span style="font-family:Calibri" lang="en-US">#</span><span style="font-family:SimSun" lang="zh-CN">开头）：</span>
+</p>
+<blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+		sed '/^#/ d' employee.txt
+	</p>
+</blockquote>
+<p style="margin:0in;font-family:Calibri;font-size:14.0pt">
+	&nbsp;
+</p>
+<p style="margin:0in;font-size:14.0pt">
+	<span style="font-family:SimSun" lang="zh-CN">注意：当你使用多个</span><span style="font-family:Calibri" lang="en-US">sed</span><span style="font-family:SimSun" lang="zh-CN">命令的时候，</span><span style="font-family:&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
+Calibri" lang="en-US">d</span><span style="font-family:SimSun" lang="zh-CN">命令会删除所有匹配的行，其他的命令将不会作用在这些删除的行上。</span>
+</p>
+<p style="margin:0in;font-family:SimSun;font-size:14.0pt">
+	&nbsp;</p>
+ 
+																<div class="clear"></div>
+            							
+								
+				
+					<p> 除非注明，文章均为(<a href="http://www.rhce.cc/"> 老段 </a>)原创，转载请保留链接: <a href="http://www.rhce.cc/?p=1110" title="sed:删除命令d">http://www.rhce.cc/?p=1110</a></p>
+							</div><!--正文--> 
+			<div class="con_pretext clearfix">
+					<ul>
+						<li class="first">上一篇：<a href="http://www.rhce.cc/?p=1108" rel="prev">icinga(nagios)配置视频</a> </li>
+						<li class="last">下一篇：<a href="http://www.rhce.cc/?p=1112" rel="next">把模式空间写入到文件（w命令）</a></li>
+					</ul>
+			</div><!--上一页 下一页-->              
+			<a name="comments"></a>
+
+<div id="ds-thread" class="ds-thread" data-thread-key="1110" data-author-key="1" data-title="sed:删除命令d" data-url="http://www.rhce.cc/?p=1110"><div id="ds-reset"><div style="display: none;" class="ds-meta"><a href="javascript:void(0)" class="ds-like-thread-button ds-rounded"><span class="ds-icon ds-icon-heart"></span> <span class="ds-thread-like-text">喜欢</span><span class="ds-thread-cancel-like">取消喜欢</span></a><span class="ds-like-panel"></span></div><a name="respond"></a><div class="ds-login-buttons"><p>社交帐号登录:</p><div class="ds-social-links"><ul class="ds-service-list"><li><a href="http://lduan.duoshuo.com/login/weibo/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.rhce.cc%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.rhce.cc%252F%253Fp%253D1110" rel="nofollow" class="ds-service-link ds-weibo">微博</a></li><li><a href="http://lduan.duoshuo.com/login/qq/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.rhce.cc%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.rhce.cc%252F%253Fp%253D1110" rel="nofollow" class="ds-service-link ds-qq">QQ</a></li><li><a href="http://lduan.duoshuo.com/login/renren/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.rhce.cc%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.rhce.cc%252F%253Fp%253D1110" rel="nofollow" class="ds-service-link ds-renren">人人</a></li><li><a href="http://lduan.duoshuo.com/login/douban/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.rhce.cc%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.rhce.cc%252F%253Fp%253D1110" rel="nofollow" class="ds-service-link ds-douban">豆瓣</a></li><li><a class="ds-more-services" href="javascript:void(0)">更多»</a></li></ul><ul class="ds-service-list ds-additional-services"><li><a href="http://lduan.duoshuo.com/login/kaixin/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.rhce.cc%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.rhce.cc%252F%253Fp%253D1110" rel="nofollow" class="ds-service-link ds-kaixin">开心</a></li><li><a href="http://lduan.duoshuo.com/login/netease/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.rhce.cc%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.rhce.cc%252F%253Fp%253D1110" rel="nofollow" class="ds-service-link ds-netease">网易</a></li><li><a href="http://lduan.duoshuo.com/login/sohu/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.rhce.cc%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.rhce.cc%252F%253Fp%253D1110" rel="nofollow" class="ds-service-link ds-sohu">搜狐</a></li><li><a href="http://lduan.duoshuo.com/login/baidu/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.rhce.cc%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.rhce.cc%252F%253Fp%253D1110" rel="nofollow" class="ds-service-link ds-baidu">百度</a></li><li><a href="http://lduan.duoshuo.com/login/google/?sso=1&amp;redirect_uri=http%3A%2F%2Fwww.rhce.cc%2Fwp-login.php%3Faction%3Dduoshuo_login%26redirect_to%3Dhttp%253A%252F%252Fwww.rhce.cc%252F%253Fp%253D1110" rel="nofollow" class="ds-service-link ds-google">谷歌</a></li></ul></div></div><div class="ds-replybox"><a class="ds-avatar" href="javascript:void(0);" onclick="return false"><img src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/noavatar_default.png" alt=""></a><form method="post"><input name="thread_id" value="1204094974786797659" type="hidden">
+<input name="parent_id" value="" type="hidden">
+<input name="nonce" value="555c9e2f1b00e" type="hidden"><div class="ds-textarea-wrapper ds-rounded-top"><textarea name="message" title="Ctrl+Enter快捷提交" placeholder="说点什么吧…"></textarea><pre class="ds-hidden-text"></pre></div><div class="ds-post-toolbar"><div class="ds-post-options ds-gradient-bg"><span class="ds-sync"></span></div><button class="ds-post-button" type="submit">发布</button><div class="ds-toolbar-buttons"><a class="ds-toolbar-button ds-add-emote" title="插入表情"></a></div></div></form></div><div class="ds-comments-info"><div class="ds-sort"><a class="ds-order-desc">最新</a><a class="ds-order-asc ds-current">最早</a><a class="ds-order-hot">最热</a></div><ul class="ds-comments-tabs"><li class="ds-tab"><a class="ds-comments-tab-duoshuo ds-current" href="javascript:void(0);"><span class="ds-highlight">1</span>条评论</a></li>  </ul></div><ul class="ds-comments"><li class="ds-post" data-post-id="1204094974786797659"><div class="ds-post-self" data-post-id="1204094974786797659" data-thread-id="1204094974786797659" data-root-id="0" data-source="duoshuo"><div class="ds-avatar" data-user-id="9367027"><a rel="nofollow author" target="_blank" href="http://t.qq.com/wangguoqing5057" onclick="this.href='http://lduan.duoshuo.com/user-url/?user_id=9367027';" title="汪国庆"><img src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/noavatar_default.png" alt="汪国庆"></a></div><div class="ds-comment-body"><div class="ds-comment-header"><a class="ds-user-name ds-highlight" data-qqt-account="" href="http://t.qq.com/wangguoqing5057" onclick="this.href='http://lduan.duoshuo.com/user-url/?user_id=9367027';" rel="nofollow" target="_blank" data-user-id="9367027">汪国庆</a></div><p>通俗易懂，</p><div class="ds-comment-footer ds-comment-actions"><span class="ds-time" datetime="2014-10-20T20:54:42+08:00" title="2014年10月20日 下午8:54:42">2014年10月20日</span><a class="ds-post-reply" href="javascript:void(0);"><span class="ds-icon ds-icon-reply"></span>回复</a><a class="ds-post-likes" href="javascript:void(0);"><span class="ds-icon ds-icon-like"></span>顶</a><a class="ds-post-repost" href="javascript:void(0);"><span class="ds-icon ds-icon-share"></span>转发</a><a class="ds-post-report" href="javascript:void(0);"><span class="ds-icon ds-icon-report"></span>举报</a></div></div></div></li></ul><div style="display: none;" class="ds-paginator"><div class="ds-border"></div><a data-page="1" href="javascript:void(0);" class="ds-current">1</a></div><p class="ds-powered-by"><a href="http://duoshuo.com/" target="_blank" rel="nofollow">老段工作室正在使用多说</a></p></div></div>
+
+<script type="text/javascript">
+	if (typeof DUOSHUO !== 'undefined')
+		DUOSHUO.EmbedThread('.ds-thread');
+</script>
+	<div id="ds-ssr">
+
+		
+            <ol id="commentlist">
+                		<li class="comment even thread-even depth-1" id="li-comment-584">
+			<article id="comment-584" class="comment">
+				<footer class="comment-meta">
+					<cite class="comment-author vcard">
+						<span class="fn"><a href="http://www.rhce.cc/?url=http://t.qq.com/wangguoqing5057" rel="external nofollow" class="url">汪国庆</a></span> on <a rel="nofollow" href="http://www.rhce.cc/?p=1110#comment-584"><time pubdate="" datetime="2014-10-20T20:54:42+00:00">2014 年 10 月 20 日 at 下午 8:54</time></a> <span class="says">said:</span>					</cite><!-- .comment-author .vcard -->
+				</footer>
+	
+				<div class="comment-content"><p>通俗易懂，</p>
+</div>
+				
+			</article><!-- #comment-## -->
+		</li><!-- #comment-## -->
+            </ol>
+
+		            
+    </div>																<div class="clear"></div>
+		</div><!--内容-->
+
+				</div>
+		<div class="clear"></div>
+
+<div id="sider" class="fr">
+
+		﻿<div class="widget feed-mail">
+
+
+	<div class="box">
+		<ul id="contact-li">
+			<li class="qq"><a rel="nofollow" target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1272585655" title="有急事请Q我">QQ联系</a></li>
+			<li class="email"><a rel="nofollow" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=Ml5WR1NcAgIDckNDHFFdXw" style="text-decoration:none;" title="意见反馈">意见反馈</a></li>
+			<li class="qqmblog"><a rel="nofollow" target="_blank" href="http://t.qq.com/rhce_cc" title="收听我的腾讯微博">腾讯微博</a></li>
+			<li class="sinamblog"><a rel="nofollow" target="_blank" href="http://weibo.com/2423574124/profile" title="收听我的新浪微博">新浪微博</a></li>
+			<li class="rss"><a rel="nofollow" target="_blank" href="http://www.rhce.cc/feed" title="通过RSS订阅我的博客">RSS订阅</a></li>
+		</ul>
+	</div>
+		<form action="http://list.qq.com/cgi-bin/qf_compose_send" target="_blank" method="post">
+			<input name="t" value="qf_booked_feedback" type="hidden">
+			<input name="id" value="ad103ec0a07f53df572b992b82807d9b4f3d7ddf2ed547f3" type="hidden">
+			<input id="to" onfocus="if (this.value == '输入QQ邮箱 订阅博客') {this.value = '';}" onblur="if (this.value == '') {this.value = '输入QQ邮箱 订阅博客';}" value="输入QQ邮箱 订阅博客" name="to" class="feed-mail-input" type="text"><input class="feed-mail-btn" value="订阅" type="submit">
+
+		</form>
+								<div class="clear"></div>
+</div>		
+
+		<div class="widget widget_text"><h3>订阅送视频</h3>			<div class="textwidget"><p>点击下面的订阅，免费赠送《老段带你学鸟哥Linux》（基础篇+服务器）<br>
+<!--以下是QQ邮件列表订阅嵌入代码--><a target="_blank" href="http://list.qq.com/cgi-bin/qf_invite?id=2847b7c37f259cedef2836fa101152dc8c2a3a09363b32ac"><img alt="填写您的邮件地址，订阅我们的精彩内容：" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/picMode_light_l.png" border="0"></a></p>
+</div>
+		</div>	<div style="display: block; top: 0px; padding-top: 15px;" class="hcms_rollbox"><div class="widget feed-mail">
+
+
+	<div class="box">
+		<ul id="contact-li">
+			<li class="qq"><a rel="nofollow" target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=1272585655" title="有急事请Q我">QQ联系</a></li>
+			<li class="email"><a rel="nofollow" target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=Ml5WR1NcAgIDckNDHFFdXw" style="text-decoration:none;" title="意见反馈">意见反馈</a></li>
+			<li class="qqmblog"><a rel="nofollow" target="_blank" href="http://t.qq.com/rhce_cc" title="收听我的腾讯微博">腾讯微博</a></li>
+			<li class="sinamblog"><a rel="nofollow" target="_blank" href="http://weibo.com/2423574124/profile" title="收听我的新浪微博">新浪微博</a></li>
+			<li class="rss"><a rel="nofollow" target="_blank" href="http://www.rhce.cc/feed" title="通过RSS订阅我的博客">RSS订阅</a></li>
+		</ul>
+	</div>
+		<form action="http://list.qq.com/cgi-bin/qf_compose_send" target="_blank" method="post">
+			<input name="t" value="qf_booked_feedback" type="hidden">
+			<input name="id" value="ad103ec0a07f53df572b992b82807d9b4f3d7ddf2ed547f3" type="hidden">
+			<input id="to" onfocus="if (this.value == '输入QQ邮箱 订阅博客') {this.value = '';}" onblur="if (this.value == '') {this.value = '输入QQ邮箱 订阅博客';}" value="输入QQ邮箱 订阅博客" name="to" class="feed-mail-input" type="text"><input class="feed-mail-btn" value="订阅" type="submit">
+
+		</form>
+								<div class="clear"></div>
+</div></div><div id="rollstart"></div>
+								<div class="clear"></div>	
+</div>
+</div> 
+<!-- //wrapper -->                								                <div class="clear"></div> 
+﻿<!-- //底部模板 -->
+<div class="footer">
+		<div class="bottom_nav  clearfix"><div class="menu"><ul><li class="page_item page-item-1021"><a href="http://www.rhce.cc/?page_id=1021">开课信息</a></li><li class="page_item page-item-1028"><a href="http://www.rhce.cc/?page_id=1028">我想兼职</a></li><li class="page_item page-item-1077"><a href="http://www.rhce.cc/?page_id=1077">镜像下载</a></li><li style="border: medium none;" class="page_item page-item-4"><a href="http://www.rhce.cc/?page_id=4">远程培训</a></li></ul></div>
+</div>		<div class="footer_nav clearfix">
+		<p>本站基于<a href="http://www.kanhulian.com/" title="看互联" target="_blank">看互联网</a>构建。除非注明，所有文章为本人原创，转载请保留版权！</p>
+        <p>Copyright © 2011-2014 <a href="http://www.kanhulian.com/">KANHULIAN.COM</a> All Rights Reserved.Themes By:<a href="http://www.kanhulian.com/">看互联网</a><script language="javascript" type="text/javascript" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/14855525.js"></script><a href="http://www.51.la/?14855525" target="_blank"><img alt="51.la 专业、免费、强健的访问统计" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/icon_9.gif" style="border:none"></a>
+
+<noscript><a href="http://www.51.la/?14855525" target="_blank"><img alt="我要啦免费统计" src="http://img.users.51.la/14855525.asp" style="border:none" /></a></noscript></p>
+         
+		</div>
+	</div>
+<!-- Generated in 2.498 seconds. Made 71 queries to database and 21 cached queries. Memory used - 34.13MB -->
+<!-- Cached by DB Cache Reloaded Fix -->
+<!--wrapmain-->
+ 		<div id="shangxia">
+				
+		<script type="text/javascript" src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/comments-ajax.js"></script>
+				
+		<div id="myrss" title="Hello，欢迎使用邮箱订阅博客。你，一定会喜欢我！" onclick="window.open('http://list.qq.com/cgi-bin/qf_invite?id=48a165d4ab71817ee0a1e51741f16f4bb7a9dbb91f5da028','_blank');"></div></div>
+
+
+
+<script src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/state.js" language="javascript" type="text/javascript"></script><link rel="stylesheet" type="text/css" href="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/icon-zh-cn.css">
+<link rel="stylesheet" type="text/css" href="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/miniDecoration.css">
+<script src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/main.js" language="javascript" type="text/javascript" charset="utf-8"></script>
+
+
+
+<div class="kf_qycn_com_cckf_welcomebox" style="display: none; z-index: 500100; width: auto; height: auto; position: fixed; top: 243.5px; left: 486.5px;"><div style="position:relative;float:none;-moz-user-select:none;height:137px;width:378px;overflow: hidden;display: block;background:url(http://kefu.qycn.com/app/themes/zh-cn/red/bg.gif) no-repeat;margin:0;padding:0" onselectstart="javascript:return false;" id="QYKFYQKC">
+    <div id="QYKFYQKT" style="position:absolute;top:0px;left:0px;float:none;display:block; height:25px;line-height:25px;width:300px; padding:0 ;padding-left:10px;margin:0; overflow:hidden; text-align:left; font-weight:bold; font-family:arial,'Microsoft YaHei'; color:#ffffff; font-size:12px;background:none;">老段工作室客服</div>
+    <div style="text-shadow:none;position:absolute;top:43px;left:31px;float:none;display:block; height:51px;width:320px;padding:0; margin:0; color:#ffffff; line-height:20px; text-align:left; font-size:13px;background:none;text-indent:18px;">您好！欢迎您访问老段工作室，请问有什么可以帮到您吗？</div>
+    <div class="qy_kf_welcomeBox_refuse" style="background:url(http://kefu.qycn.com/app/themes/zh-cn/red/refuse.gif) no-repeat;position:absolute;top:99px;left:110px;width:65px; height:24px;margin:0;padding:0;cursor:pointer;">
+    </div>
+    <div class="qy_kf_welcomeBox_agree" style="background:url(http://kefu.qycn.com/app/themes/zh-cn/red/accept.gif) no-repeat;position:absolute;top:99px;left:196px;width:65px; height:24px;margin:0;padding:0;cursor:pointer;">
+    </div>
+</div><div style="display: none; position: absolute; bottom: 0px; right: 0px; background: none repeat scroll 0% 0% rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 10px;" class="kf_qycn_com_cckf_version">2.5.0.6347</div></div><div style="position: absolute; left: 0px; bottom: 0px; width: 10px; height: 10px;"><object type="application/x-shockwave-flash" data="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20|%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/kfmain.swf" id="KF_QYCN_COM_VCMAIN_273567" height="100%" width="100%"><param name="movie" value="http://kefu.qycn.com/vclient/main/swf/kfmain.swf?ver=2.5.0.6347&amp;id=33188"><param name="allowscriptaccess" value="always"><param name="quality" value="high"><param name="bgcolor" value="#FFFFFF"><param name="scale" value="noscale"><param name="wmode" value="transparent"><param name="FlashVars" value="1&amp;AdvancedIconSetting=&amp;ToFixed=0&amp;Version=2.5.0.6347&amp;Develop=&amp;SKIN=red&amp;chatwinLayout=1&amp;miniwinThemeColor=#169ada&amp;ListSkin=red&amp;IPAddress=58.100.12.244&amp;KFURL=http://kefu.qycn.com/vclient/&amp;ShowOtherIM=1&amp;qyWebSiteClerkServerURL=http://kfrpc3.qycn.com/cgi-bin/qywebsiteclerkserver&amp;qyOnlineClerkCGI=http://kfrpc1.qycn.com/cgi-bin/qyonlineclerkcgi&amp;ChatURL=http://kefu.qycn.com/vclient/chat/&amp;ChatWindowMinWidth=640&amp;ChatWindowMinHeight=480&amp;ChatWindowMinWidthV2=950&amp;ChatWindowMinHeightV2=570&amp;MiniChatURL=http://kefu.qycn.com/vclient/minichat/&amp;ImageURL=http://kefu.qycn.com/app/themes/zh-cn&amp;YQKWaitTime=4&amp;YQKManualLimitTimes=10&amp;YQKAutoLimitTimes=2&amp;YQKManual=0&amp;YQKAuto=0&amp;YQKAutoInvite=1&amp;YQKInterval=30&amp;YQKNoClerkShow=0&amp;YQKIsFloat=1&amp;YQKOffsetX=0&amp;YQKOffsetY=0&amp;YQKPosition=mc&amp;MiniPosition=rb&amp;MiniWidth=300&amp;MiniHeight=260&amp;MiniOffsetX=0&amp;MiniOffsetY=0&amp;MiniWelcome=%3Cstrong%3E%3Cspan+style%3D%22color%3A%23FF0000%3B%22%3E%E9%A6%96%E6%9C%9F%E8%99%9A%E6%8B%9F%E5%8C%962%E6%9C%888%E6%97%A5%E5%BC%80%E8%AF%BE%EF%BC%8C%E5%8F%AA%E8%A6%812980%3C%2Fspan%3E%3Ca+href%3D%22http%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fspm%3Da1z10.1.w4004-6290411729.4.aKL1xa%26id%3D38215246093%22+target%3D%22_blank%22%3E%3Cspan+id%3D%22__kindeditor_bookmark_start_14__%22%3E%3C%2Fspan%3E%26nbsp%3B%E8%AF%A6%E6%83%85%26gt%3B%26gt%3B%3C%2Fa%3E%3C%2Fstrong%3E%3Cbr+%2F%3E&amp;MiniAuto=1&amp;MiniWaitTime=5&amp;MiniAutoLimitTimes=10&amp;MiniInterval=30&amp;MiniNoClerkShow=1&amp;MiniColorValue=null&amp;MiniWinState=1&amp;Title=sed%3A%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4&amp;Location=http%3A%2F%2Fwww.rhce.cc%2F%3Fp%3D1110&amp;Referrer=http%3A%2F%2Fwww.baidu.com%2Flink%3Furl%3DpSmALN-REwIOOrElGy_5oIipfbX2pxse99pQEXTntOqkdUmgtBO0G4nQ5VLZ1C91%26ie%3Dutf-8%26f%3D8%26tn%3Dbaidu%26wd%3Dsed%2520%2527%252F%255E%2524%252Fd%2527%26inputT%3D5423169%26bs%3Dinvert&amp;OffsetX=3&amp;OffsetY=0&amp;PageWidth=0&amp;ThemeType=2&amp;real_ThemeType=1&amp;ThemeURL=http://kf.qycn.com/app/themes/zh-cn/default/default_5.png&amp;SWFType=1&amp;real_SWFType=1&amp;IconType=1&amp;SWFTitle=%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4%E5%AE%A2%E6%9C%8D&amp;SecTitle=%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4%E5%AE%A2%E6%9C%8D&amp;SWFFile=clientlist.swf&amp;MiniSWF=customerservice.swf&amp;WebId=33188&amp;ColorValue=default_5&amp;SWFPOS=lc&amp;AREA1=%E6%B5%99%E6%B1%9F%E7%9C%81%E6%9D%AD%E5%B7%9E%E5%B8%82&amp;AREA2=%E6%B5%99%E6%B1%9F&amp;ClientUrl=&amp;ChatWindowTheme=red&amp;CustomTitle=老段工作室客服&amp;CCKFHome=http://www.qycn.com/kf&amp;debug=&amp;logurl=http://kefu.qycn.com/index.php?c=writeLog&amp;type=vclient&amp;isautoonline=0&amp;customizedIconHeight=0&amp;customizedIconWeight=0&amp;robotListOpen=0&amp;showListInIcon=0&amp;robotName=智能客服小C&amp;robotOpenState=1&amp;RobotListOpen=0&amp;areaKey=12&amp;leavingMessageSetting=1&amp;dialogList=[object Object],[object Object]&amp;qiyeQQImage=http://kefu.qycn.com/vclient/chat/assets/images/qq.gif"></object></div><div class="kf_qycn_com_cckf_icon" style="display: block; z-index: 600000; height: 158px; position: fixed; top: 233px; left: 3px;"><div style="height: 89px;" class="kf_qycn_com_cckf_icon kf_qycn_com_cckf_icon_online"><span style="cursor: default;" class="kf_qycn_com_cckf_caption">老段工作室客服</span></div><div style="width: 120px;" class="kf_qycn_com_cckf_direct_talking_dialog"><div class="kf_qycn_com_cckf_direct_talking_dialog_border_color kf_qycn_com_cckf_direct_talking_dialog_inner"><div style="background: none repeat scroll 0% 0% rgb(249, 249, 251); padding-top: 5px;" class="kf_qycn_com_cckf_direct_talking_dialog_inner_content"><div style="margin-top: 0px;" class="kf_qycn_com_cckf_direct_talking_dialog_item_qq kf_qycn_com_cckf_direct_talking_item"><div style="width: 24px;" class="kf_qycn_com_cckf_direct_talking_item_icon_box"><div class="kf_qycn_com_cckf_direct_talking_dialog_item_qq_img_wrap"><img src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/qq.gif" style="display: block;" class="kf_qycn_com_cckf_direct_talking_dialog_item_qq_img" type="1"></div><div class="kf_qycn_com_cckf_direct_talking_dialog_item_qq_img_mask"></div></div><div class="kf_qycn_com_cckf_direct_talking_dialog_item_qq_"><div class="kf_qycn_com_cckf_direct_talking_dialog_item_qq_body">QQ咨询</div></div></div><div class="kf_qycn_com_cckf_direct_talking_dialog_item_ww kf_qycn_com_cckf_direct_talking_item"><div style="width: 24px;" class="kf_qycn_com_cckf_direct_talking_item_icon_box"><img src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/online.gif" class="kf_qycn_com_cckf_direct_talking_dialog_item_ww_img" type="2"></div><div class="kf_qycn_com_cckf_direct_talking_dialog_item_ww_"><div class="kf_qycn_com_cckf_direct_talking_dialog_item_ww_body">旺旺咨询</div></div></div></div></div><div class="kf_qycn_com_cckf_direct_talking_dialog_border_color kf_qycn_com_cckf_direct_talking_dialog_middle"></div><div class="kf_qycn_com_cckf_direct_talking_dialog_border_color kf_qycn_com_cckf_direct_talking_dialog_bottom"></div></div><div style="display: none; position: absolute; bottom: 0px; right: 0px; background: none repeat scroll 0% 0% rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 10px;" class="kf_qycn_com_cckf_version">2.5.0.6347</div></div><div class="kf_qycn_com_cckf_dock kf_qycn_com_cckf_dock_left" style="display: block; z-index: 500000; position: fixed; top: 312px; left: 153px;"><span class="kf_qycn_com_cckf_caption"></span><div style="display: none; position: absolute; bottom: 0px; right: 0px; background: none repeat scroll 0% 0% rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 10px;" class="kf_qycn_com_cckf_version">2.5.0.6347</div></div><div class="kf_qycn_com_cckf_inpage_chat_window" style="display: block; z-index: 500200; position: fixed; bottom: 0px; right: 0px;"><div style="width: 300px;" class="kf_qycn_com_cckf_header"><span class="kf_qycn_com_cckf_icon kf_qycn_com_cckf_icon_cckf"></span><span class="kf_qycn_com_cckf_icon kf_qycn_com_cckf_icon_icon_open"></span><span class="kf_qycn_com_cckf_icon kf_qycn_com_cckf_icon_icon_minimize"></span><span style="font-family: Arial,Tahoma,Georgia,&quot;宋体&quot;;" alt="老段工作室客服" title="老段工作室客服" class="kf_qycn_com_cckf_caption">老段工作室客服</span></div><div style="width: 300px; height: 221px;" class="kf_qycn_com_cckf_content"><iframe src="sed:%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4_files/a.html" style="width: 300px; height: 221px;" border="0" class="kf_qycn_com_cckf_frame" frameborder="0"></iframe></div><div style="display: none; position: absolute; bottom: 0px; right: 0px; background: none repeat scroll 0% 0% rgb(255, 255, 255); color: rgb(0, 0, 0); font-size: 10px;" class="kf_qycn_com_cckf_version">2.5.0.6347</div></div><div style="display: none; z-index: 500200; position: fixed; bottom: 0px; right: 0px;" class="kf_qycn_com_cckf_inpage_chat_window_min"><span style="font-family: Arial,Tahoma,Georgia,&quot;宋体&quot;;" alt="老段工作室客服" title="老段工作室客服" class="kf_qycn_com_cckf_caption">老段工作室客服</span><span class="kf_qycn_com_cckf_hint"></span><span class="kf_qycn_com_cckf_icon kf_qycn_com_cckf_icon_cckf"></span></div></body></html>

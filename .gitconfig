@@ -1,0 +1,7 @@
+[user]
+	name = Yu Pengfei
+	email = yupengfei90@163.com
+[alias]
+	unstage = reset HEAD --
+[core]
+	quotepath = false

@@ -1,0 +1,731 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html class="dj_gecko dj_contentbox" xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Linux 内核调试器内幕</title>
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/">
+<link rel="SHORTCUT ICON" href="http://www.ibm.com/favicon.ico">
+<meta name="DC.Rights" content="© Copyright&nbsp;IBM Corporation&nbsp;2003">
+<meta name="Keywords" content="Hariprasad Nellitheertha, linux kernel debugger, debugging, kdb, break, set points, stack, trace, tracing, traceback, ibm developerworks, linux 内核调试器, 调试, 中断, 设置点, 堆栈, 跟踪, 跟踪, 回溯, tttlca">
+<meta name="DC.Date" scheme="iso8601" content="2003-09-01">
+<meta name="Source" content="v17 delivery:developerWorks">
+<meta name="Security" content="Public">
+<meta name="Abstract" content="调试内核问题时，能够跟踪内核执行情况并查看其内存和数据结构是非常有用的。Linux 中的内置内核调试器 KDB 提供了这种功能。在本文中您将了解如何使用 KDB 所提供的功能，以及如何在 Linux 机器上安装和设置 KDB。您还将熟悉 KDB 中可以使用的命令以及设置和显示选项。">
+<meta name="Description" content="调试内核问题时，能够跟踪内核执行情况并查看其内存和数据结构是非常有用的。Linux 中的内置内核调试器 KDB 提供了这种功能。在本文中您将了解如何使用 KDB 所提供的功能，以及如何在 Linux 机器上安装和设置 KDB。您还将熟悉 KDB 中可以使用的命令以及设置和显示选项。">
+<meta name="IBM.Effective" scheme="W3CDTF" content="2003-09-01">
+<meta name="Owner" content="developerWorks/China/IBM">
+<meta name="DC.Language" scheme="rfc1766" content="zh-CN">
+<meta name="IBM.SpecialPurpose" content="SP001">
+<meta name="IBM.Country" content="CN">
+<meta name="Robots" content="index,follow">
+<meta name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316">
+<meta name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="SWGC0">
+<meta name="dW.ContentArea" content="2">
+<meta name="dW.Topic" content="27,87">
+
+<meta scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCLNXCN">
+
+<link rel="canonical" href="http://www.ibm.com/developerworks/cn/linux/l-kdbug/index.html">
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="kdb_files/www.css" rel="stylesheet" title="www" type="text/css">
+<link href="kdb_files/cnzh.css" rel="stylesheet" title="www" type="text/css">
+<!-- Masthead/footer -->
+<link href="kdb_files/dw-mfN2015-01.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="kdb_files/dw-article-6.css" rel="stylesheet" title="www" type="text/css">
+<link href="kdb_files/dw-common-features.css" rel="stylesheet" title="www" type="text/css">
+<link href="kdb_files/dw-local-site-v17-N2014-05.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<script type="text/javascript" src="kdb_files/www.js">//</script><script type="text/javascript" src="kdb_files/eluminate.js"></script><script src="kdb_files/head.js"></script><script src="kdb_files/50200000.js" type="text/javascript" language="javascript"></script><script src="kdb_files/cookie-id.js" type="text/javascript" language="javascript"></script><script src="kdb_files/rules_50200000.js" type="text/javascript" language="javascript"></script><script src="kdb_files/dispatcher-v3.js" type="text/javascript" language="javascript"></script>
+<script type="text/javascript" src="kdb_files/dw-www-v2.js">//</script><script src="kdb_files/Dialog.js" charset="utf-8" type="text/javascript"></script> 
+<script type="text/javascript">
+//  ibmweb.config.set({ sbs: { enabled: false }});
+</script>
+<!-- Exp -->
+<script type="text/javascript">dojo.addOnLoad(function(){var dw_source="dwchina";var dw_register="注册免费的 Bluemix 试用版";var dw_connect="连接 Bluemix 开发者";var dw_vp="在 IBM Bluemix 云平台上开发并部署您的下一个应用。";var dw_cta="现在就开始免费试用";var dw_tile_alt="在 IBM Bluemix 云平台上开发并部署您的下一个应用。现在就开始免费试用";var dw_campaign="bluemix";var dw_content=window.location.pathname.split("/")[window.location.pathname.split("/").length-2];if(dw_content=="library"){dw_content=window.location.pathname.split("/")[window.location.pathname.split("/").length-1];dw_content=window.location.pathname.split("/")[window.location.pathname.split("/").length-3]+"-"+dw_content.substring(0,dw_content.indexOf(".html"))}var bluDevComURL="https://developer.ibm.com/bluemix/";var bluLink="https://www.bluemix.net/";var watsonLink="https://www.bluemix.net/#/solutions/solution=watson";var iotLink="http://www.bluemix.net/#/solutions/solution=internet_of_things";var lnkID;var lnkIDd;var lnkIDt;var bLinkEnd;var bLinkTemp;var idTrkr=[];var idCnt;var artTop=dojo.query("div.ibm-col-1-1")[0];var artChildren=dojo.query(artTop).children();var edgy=false;if(dojo.hasClass(artChildren[0],"ibm-inset"))edgy=true;if((artChildren[0].nodeName=="H2")&&(dojo.hasClass(artChildren[1],"ibm-inset")))edgy=true;if(dojo.hasClass(artChildren[0],"codesection"))edgy=true;if((artChildren[0].nodeName=="H5")&&(dojo.hasClass(artChildren[1],"codesection")))edgy=true;if((artChildren[0].nodeName=="H5")&&(artChildren[1].width>=701))edgy=true;if(artChildren[1].width>=701)edgy=true;if(dojo.hasClass(artChildren[0],"ibm-data-table"))edgy=true;if((artChildren[0].nodeName=="H5")&&(dojo.hasClass(artChildren[1],"ibm-data-table")))edgy=true;if(!(edgy)){var sBarAB='<div class="dw-article-sidebar dw-bluemix" id="dwc-exp-a">'+'<img src="//dw1.s81c.com/developerworks/i/bluemix-graphic.png" height="64" width="64" alt=""/>'+'<p>'+dw_vp+'</p>'+'<p class="ibm-button-link-alternate dw-button-green">'+'<a id="tutc-sbar-bmix-home-btn-ABa" href="'+bluLink+'" class="dw-button-large">'+dw_cta+'</a></p></div>';dojo.place(sBarAB,artTop,"first");}dojo.forEach(dojo.query("#ibm-content-main a"),function(item,index){var dw_medium="article";var bLink=dojo.attr(item,"href");if((dojo.attr(item,"id")!=null)&&(dojo.attr(item,"id").indexOf("-sbar-")>-1)){if(bLink.indexOf("solution=internet_of_things")>-1){dw_medium="sidebar-iot"}else if(bLink.indexOf("solution=watson")>-1){dw_medium="sidebar-watson"}else{dw_medium="sidebar"}}if(bLink&&(bLink.indexOf("//bluemix.net")>-1))bLink=bLink.replace("//bluemix.net","//www.bluemix.net");if(bLink&&(bLink.indexOf("//ace.ng.bluemix.net")>-1))bLink=bLink.replace("//ace.ng.bluemix.net","//www.bluemix.net");if(bLink&&(bLink.indexOf("//console.ng.bluemix.net")>-1))bLink=bLink.replace("//console.ng.bluemix.net","//www.bluemix.net");if(bLink&&((bLink.indexOf("//www.bluemix.net")>-1)||(bLink.indexOf("//www.ng.bluemix.net")>-1)||(bLink.indexOf("//hub.jazz.net")>-1))){bLinkEnd="";bLink=bLink.split("?");if((bLink[1])&&(bLink[1].indexOf("/")!=-1))bLinkEnd=bLink[1].substring(bLink[1].indexOf("/"));bLink=bLink[0];if(bLink.indexOf("//hub.jazz.net")>-1){if((bLink.indexOf("//hub.jazz.net/git")>-1)||(bLink.indexOf("//hub.jazz.net/project")>-1)){bLink="https://login.jazz.net/psso/proxy/jazzregister?utm_source="+dw_source+"&utm_medium="+dw_medium+"&utm_content="+dw_content+"&utm_campaign="+dw_campaign+"&redirect_uri="+bLink}else{bLink=bLink+"?utm_source="+dw_source+"&utm_campaign="+dw_campaign+"&utm_content="+dw_content+"&utm_medium="+dw_medium}}else{if(bLink.indexOf("/#/")==-1){if(bLink.substring(bLink.length-7)=="/docs/#"){bLink=bLink.replace("/docs/#","/docs/"+"?cm_mmc="+dw_source+"-_-"+dw_campaign+"-_-"+dw_content+"-_-"+dw_medium+"#")}else{bLink=bLink+"?cm_mmc="+dw_source+"-_-"+dw_campaign+"-_-"+dw_content+"-_-"+dw_medium}}else{bLink=bLink.substring(0,bLink.indexOf("#"))+"?cm_mmc="+dw_source+"-_-"+dw_campaign+"-_-"+dw_content+"-_-"+dw_medium+bLink.substring(bLink.indexOf("#")-1)}}if(bLinkEnd)bLink=bLink+bLinkEnd;dojo.attr(item,"href",bLink);}});});</script><!-- LEADSPACE_STYLES -->
+
+<script charset="utf-8" id="dojoIoScript1" src="kdb_files/cnzh-utf8.js" type="text/javascript"></script><script charset="utf-8" id="dojoIoScript2" src="kdb_files/a.json" type="text/javascript"></script><script charset="utf-8" id="dojoIoScript3" src="kdb_files/profiling.js" type="text/javascript"></script><script type="text/javascript" src="kdb_files/yahoo-min.js"></script><script type="text/javascript" src="kdb_files/cp-v3.js"></script><script src="kdb_files/move.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/TimedMoveable.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/_CssStateMixin.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/_FormMixin.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/_DialogMixin.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/DialogUnderlay.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/ContentPane.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/common_002.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/TooltipDialog.js" charset="utf-8" type="text/javascript"></script><script charset="utf-8" id="dojoIoScript4" src="kdb_files/blackwhite_lists.asc" type="text/javascript"></script><script src="kdb_files/Moveable.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/Mover.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/_ContentPaneResizeMixin.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/html.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/loading.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/common.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/autoscroll.js" charset="utf-8" type="text/javascript"></script><script src="kdb_files/_LayoutWidget.js" charset="utf-8" type="text/javascript"></script><script type="text/javascript" src="kdb_files/json-min.js"></script></head>
+
+<body aria-busy="false" class="v17" id="ibm-com">
+
+	<div id="ibm-top" class="ibm-landing-page ibm-no-scroll"><img src="kdb_files/ibm_logo_print.png" id="ibm-print-masthead" alt="IBM Print" height="15" width="43">
+
+<!-- MASTHEAD_BEGIN -->		
+<div role="banner" id="ibm-masthead">
+
+    <!-- TOP ROW -->    
+	<div id="dw-masthead-top-row">
+		<ul id="ibm-mast-options-dw" role="toolbar" aria-label="Masthead navigation">
+			<li id="dw-mast-top-4" role="presentation">
+				<a href="http://www.ibm.com/developerworks/cn/" tabindex="0"><img src="kdb_files/dwn-dw-badge.png" alt="dW" aria-label="dW" height="22" width="43"></a>
+			</li>
+			<li id="dw-mast-top-0" role="presentation">
+				<div id="dw-mast-signin">
+					<a id="dw-mf-signin-link" class="" href="http://www.ibm.com/developerworks/dwwi/jsp/ssologin.jsp?d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-kdbug%2Findex.html&amp;lang=zh_CN&amp;a=dwmav" title="" tabindex="2">登录</a>
+					<span class="dw-mf-signin-spacer">|</span>
+					<a id="dw-mf-reg-link" class="" href="http://www.ibm.com/developerworks/dwwi/jsp/ssoregister.jsp?d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-kdbug%2Findex.html&amp;lang=zh_CN&amp;a=dwmav" title="" tabindex="3">注册</a>
+				</div>
+				<div id="dw-mast-auth-link" class="dw-mf-hide">
+					<a class="authenticated ibm-active" href="#" role="button" tabindex="2"></a>
+					<ul id="dw-mast-auth-menu" class="dw-mf-hide">
+						<li class="dw-mast-auth-menu-title" aria-hidden="true">developerWorks 社区</li>
+						<li>
+							<span class="dw-mast-auth-menu-arrow" aria-hidden="true">›</span><a href="http://www.ibm.com/developerworks/community/profiles/html/myProfileView.do?lang=zh" tabindex="3">我的概要信息</a>
+						</li>
+						<li>
+							<span class="dw-mast-auth-menu-arrow" aria-hidden="true">›</span><a href="http://www.ibm.com/developerworks/community/groups/service/html/mycommunities?lang=zh" tabindex="4">我的社区</a>
+						</li>
+						<li>
+							<span class="dw-mast-auth-menu-arrow" aria-hidden="true">›</span><a href="http://www.ibm.com/developerworks/community/news/?lang=zh" tabindex="5">设置</a>
+						</li>
+						<li class="dw-mast-auth-menu-divider"><hr></li>
+						<li>
+							<span class="dw-mast-auth-menu-arrow" aria-hidden="true">›</span><a id="dw-mast-signout-link" href="http://www.ibm.com/developerworks/dwwi/jsp/ssologout.jsp?d=http://www.ibm.com/developerworks/cn/&amp;a=dwmav" tabindex="6">退出</a>
+						</li>
+					</ul>				
+				</div>
+			</li>
+			<li id="dw-mast-top-1">
+				<div></div>
+			</li>
+			<li id="dw-mast-top-3" role="presentation">
+				<a href="http://www.ibm.com/cn/zh/" tabindex="1">IBM</a>
+			</li>
+		</ul>
+	</div>
+
+    <!-- BOTTOM ROW -->
+	<div id="ibm-universal-nav-dw" aria-label="Site map">
+		<ul id="ibm-unav-links-dw">
+			<li id="ibm-unav-home-dwlogo">
+				<a href="http://www.ibm.com/developerworks/cn/"><img src="kdb_files/dwn-dw-wordmark.png" alt="developerWorks®" height="28" width="225"></a>
+			</li>
+		</ul>
+		<ul id="ibm-menu-links-dw" class="ibm-menu-links-dw-cn" role="toolbar" aria-label="Site map">
+			<li id="dw-mast-nav-0" role="presentation"><a href="http://www.ibm.com/developerworks/cn/topics/" tabindex="0">技术主题</a></li>
+			<li id="dw-mast-nav-1" role="presentation"><a href="http://www.ibm.com/developerworks/cn/downloads/" tabindex="0">软件下载</a></li>
+			<li id="dw-mast-nav-2" role="presentation"><a href="http://www.ibm.com/developerworks/community/?lang=zh" tabindex="0">社区</a></li>
+			<li id="dw-mast-nav-3" role="presentation"><a href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=6d7f9e5d-5f89-4767-a006-a81b8d186370&amp;lang=zh" tabindex="0">技术讲座</a></li>
+		</ul>
+		<form id="ibm-search-form" action="//www.ibm.com/search/csass/search/" method="get" name="form1" aria-label="搜索 developerWorks" role="search">
+			<p>
+				<label for="q"><span class="ibm-access">搜索 developerWorks</span></label>
+				<input id="q" name="q" value="搜索 developerWorks" maxlength="100" type="text">
+				<input name="sn" value="dw" type="hidden">
+				<input name="lang" value="zh" type="hidden">
+				<input name="cc" value="CN" type="hidden">
+				<input name="en" value="utf" type="hidden">
+				<input name="hpp" value="20" type="hidden">
+				<input name="dws" value="cndw" type="hidden">
+				<input name="lo" value="zh" type="hidden">
+				<input id="ibm-search" class="ibm-btn-search" value="提交" type="submit">
+			</p>
+		</form>
+	</div>    
+	
+<div aria-label="社交工具" role="navigation" style="display: block;" id="ibm-social-tools"><ul aria-label="Social tool list" role="toolbar"><li><a tabindex="0" role="button" dojoattrid="0" rel="print" href="#" title="打印本页面" class="ibm-share-print">打印本页面</a></li><li><a tabindex="-1" role="button" dojoattrid="1" rel="email" href="#" title="用电子邮件发送本页面" class="ibm-share-email">用电子邮件发送本页面</a></li><li></li><li></li><li><a class="ibm-share-weibo" tabindex="-1" role="button" dojoattrid="2" rel="新浪微博" title="新浪微博" href="http://service.weibo.com/share/share.php?title=Linux%20%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E5%99%A8%E5%86%85%E5%B9%95&amp;url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-kdbug%2Findex.html&amp;language=zh_cn" onclick="ibmweb.sbs.clickHandler(event,{url:'http://service.weibo.com/share/share.php?title=%{TITLE}&amp;url=%{URL}&amp;language=zh_cn'});">新浪微博</a></li><li><a class="ibm-share-renren" tabindex="-1" role="button" dojoattrid="3" rel="人人网" title="人人网" href="http://share.renren.com/share/buttonshare?title=Linux%20%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E5%99%A8%E5%86%85%E5%B9%95&amp;link=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-kdbug%2Findex.html" onclick="ibmweb.sbs.clickHandler(event,{url:'http://share.renren.com/share/buttonshare?title=%{TITLE}&amp;link=%{URL}'});">人人网</a></li><li><a class="dwcn-tencent-link" tabindex="-1" role="button" dojoattrid="4" rel="腾讯微博" title="腾讯微博" href="http://v.t.qq.com/share/share.php?title=Linux%20%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E5%99%A8%E5%86%85%E5%B9%95&amp;url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-kdbug%2Findex.html" onclick="ibmweb.sbs.clickHandler(event,{url:'http://v.t.qq.com/share/share.php?title=%{TITLE}&amp;url=%{URL}'});">腾讯微博</a></li><li><a class="dwcn-sohu-link" tabindex="-1" role="button" dojoattrid="5" rel="搜狐微博" title="搜狐微博" href="http://t.sohu.com/third/post.jsp?title=Linux%20%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E5%99%A8%E5%86%85%E5%B9%95%20&amp;link=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-kdbug%2Findex.html" onclick="ibmweb.sbs.clickHandler(event,{url:'http://t.sohu.com/third/post.jsp?title=%{TITLE}%20&amp;link=%{URL}'});">搜狐微博</a></li><li><a class="dwcn-netease-link" tabindex="-1" role="button" dojoattrid="6" rel="网易微博" title="网易微博" href="http://t.163.com/article/user/checkLogin.do?info=Linux%20%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E5%99%A8%E5%86%85%E5%B9%95%20http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-kdbug%2Findex.html" onclick="ibmweb.sbs.clickHandler(event,{url:'http://t.163.com/article/user/checkLogin.do?info=%{TITLE}%20%{URL}'});">网易微博</a></li><li><a class="ibm-share-digg" title="Digg" href="http://digg.com/submit?phase=2&amp;url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-kdbug%2Findex.html&amp;title=Linux%20%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E5%99%A8%E5%86%85%E5%B9%95" rel="digg" dojoattrid="7" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://digg.com/submit?phase=2&amp;url=%{URL}&amp;title=%{TITLE}'});">Digg</a></li><li><a class="ibm-share-facebook" title="Facebook" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-kdbug%2Findex.html&amp;t=Linux%20%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E5%99%A8%E5%86%85%E5%B9%95" rel="facebook" dojoattrid="8" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://www.facebook.com/sharer.php?u=%{URL}&amp;t=%{TITLE}'});">Facebook</a></li><li><a class="ibm-share-twitter" title="Twitter" href="http://twitter.com/?status=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-kdbug%2Findex.html%20-%20Linux%20%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E5%99%A8%E5%86%85%E5%B9%95" rel="twitter" dojoattrid="9" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://twitter.com/?status=%{URL}%20-%20%{TITLE}'});">Twitter</a></li><li><a class="ibm-share-delicious" title="Delicious" href="http://delicious.com/post?url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-kdbug%2Findex.html&amp;title=Linux%20%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E5%99%A8%E5%86%85%E5%B9%95" rel="delicious" dojoattrid="10" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://delicious.com/post?url=%{URL}&amp;title=%{TITLE}'});">Delicious</a></li><li><a class="ibm-share-linkedin" title="Linked In" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-kdbug%2Findex.html&amp;title=Linux%20%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E5%99%A8%E5%86%85%E5%B9%95" rel="linkedin" dojoattrid="11" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://www.linkedin.com/shareArticle?mini=true&amp;url=%{URL}&amp;title=%{TITLE}'});">Linked In</a></li></ul></div></div>
+<div id="fdiv" class="ibm-access"></div><!-- MASTHEAD_END -->
+	    
+<!-- LAYOUT -->
+<!-- LEADSPACE_BEGIN --> 
+<div role="main" id="ibm-access-cntr"><div id="ibm-leadspace-head">
+	<!-- LEADSPACE_BODY_BEGIN --> 
+	<div id="ibm-leadspace-body">
+		<!-- Navigation_Trail_BEGIN -->
+      <ul aria-label="Bread Crumbs" role="navigation" id="ibm-navigation-trail"><li><a href="http://www.ibm.com/developerworks/cn/">developerWorks 中国</a></li><li><a href="http://www.ibm.com/developerworks/cn/topics/">技术主题</a></li><li><a href="http://www.ibm.com/developerworks/cn/linux/">Linux</a></li><li><a href="http://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp">文档库</a></li></ul>
+		<!-- END_Navigation_Trail -->
+			<!-- Title_Subtitle -->
+			<h1>Linux 内核调试器内幕</h1><p><em><span>KDB 入门指南</span></em></p>
+	</div>
+	<!-- LEADSPACE_BODY_END --> 
+	<!-- SUMMARY_BEGIN -->
+	<div id="dw-summary-area" class="dw-summary-columns">
+		<div class="ibm-col-6-4">
+		<p>调试内核问题时，能够跟踪内核执行情况并查看其内存和数据结构是非常有用的。Linux 中的内置内核调试器 KDB 
+提供了这种功能。在本文中您将了解如何使用 KDB 所提供的功能，以及如何在 Linux 机器上安装和设置 KDB。您还将熟悉 KDB 
+中可以使用的命令以及设置和显示选项。</p>
+		<p class="ibm-no-print ibm-ind-link">
+
+			
+			<span id="nCmts"><span>0</span><img class="dw-cmts-arrow" alt="" src="kdb_files/dw-cmts-arrow.png" height="7" width="7"> <a href="#icomments" class="dw-cmt-link">评论：</a></span>
+		</p>
+		</div>
+		<div class="ibm-col-6-2 dw-toc-margin">
+			<p class="dw-summary-author"><a href="#authorN10019" class="ibm-popup-link" onclick="ibmweb.overlay.show('authorN10019',this);return false;">Hariprasad Nellitheertha</a> (<a href="mailto:nharipra@in.ibm.com?subject=Linux%20%E5%86%85%E6%A0%B8%E8%B0%83%E8%AF%95%E5%99%A8%E5%86%85%E5%B9%95">nharipra@in.ibm.com</a>), 软件工程师, IBM</p>
+<div id="authorN10019" class="ibm-common-overlay"><div class="ibm-head"><p><a href="#close" class="ibm-common-overlay-close">关闭 [x]</a></p></div><div class="ibm-body"><div class="ibm-main"><div class="ibm-title"><!--this is where the h2 usually goes--></div><div class="ibm-container ibm-alternate"><div class="ibm-container-body">
+<p><!--.-->
+Hariprasad Nellitheertha 在印度班加罗尔（Bangalore）的 IBM Linux 技术中心工作。他目前正在 
+Linux Change Team 从事修正内核和其它 Linux 错误的工作。Hari 研究过 OS/2 内核和文件系统。他的兴趣包括 
+Linux 内核内部机理、文件系统和自主计算。可以通过
+        <a href="mailto:nharipra@in.ibm.com?cc=dwlinux@us.ibm.com&amp;Subject=Inside%20the%20Linux%20kernel%20debugger">nharipra@in.ibm.com</a>与 Hari 联系。
+      </p><br><br></div></div></div></div><div class="ibm-footer"><!----></div></div>
+			<p class="dw-summary-date">2003 年 9 月 01 日</p>
+			
+
+
+			<div aria-hidden="true" class="ibm-container" id="dw-toc"><div class="ibm-container-body"><ul class="ibm-twisty"><li><a href="#toggle" class="ibm-twisty-trigger ibm-twisty-trigger-closed"><img src="kdb_files/c.gif" alt="+"></a><span class="ibm-twisty-head">内容</span><div style="display: none;" class="ibm-twisty-body"><ul style="font-size:0.8em" class="ibm-link-list">
+<li><a class="ibm-anchor-down-em-link" href="#1">入门</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#IDAIVPSE">初始化并设置环境变量</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#IDAQVPSE">激活 KDB</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#IDAXWPSE">KDB 命令</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#IDAYKQSE">技巧和诀窍</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#IDAL0QSE">结束语</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#resources">参考资料 </a></li>
+<li><a class="ibm-anchor-down-em-link" href="#icomments">评论</a></li></ul></div></li></ul></div></div>
+		</div>
+	</div>
+	<!-- SUMMARY_END -->
+</div><div id="ibm-pcon">
+
+<!-- BEGIN_IBM-CONTENT -->
+<div id="ibm-content">
+
+<!-- BEGIN_IBM-CONTENT-BODY -->
+<div id="ibm-content-body">
+
+<!-- BEGIN_IBM-CONTENT-MAIN -->
+<div id="ibm-content-main">
+
+<!-- 1_1_COLUMN_BEGIN -->
+<div class="ibm-columns">
+<div class="ibm-col-1-1"><div class="dw-article-sidebar dw-bluemix" id="dwc-exp-a"><img src="kdb_files/bluemix-graphic.png" alt="" height="64" width="64"><p>在 IBM Bluemix 云平台上开发并部署您的下一个应用。</p><p class="ibm-button-link-alternate dw-button-green"><a id="tutc-sbar-bmix-home-btn-ABa" href="https://www.bluemix.net/?cm_mmc=dwchina-_-bluemix-_-l-kdbug-_-sidebar" class="dw-button-large">现在就开始免费试用</a></p></div>
+
+<p>Linux 内核调试器（KDB）允许您调试 Linux 内核。这个恰如其名的工具实质上是内核代码的补丁，它允许高手访问内核内存和数据结构。KDB 的主要优点之一就是它不需要用另一台机器进行调试：您可以调试正在运行的内核。</p><p>设置一台用于 KDB 的机器需要花费一些工作，因为需要给内核打补丁并进行重新编译。KDB 的用户应当熟悉 Linux 内核的编译（在一定程度上还要熟悉内核内部机理），但是如果您需要编译内核方面的帮助，请参阅本文结尾处的
+        <a href="#resources">参考资料</a>一节。
+      </p><p>在本文中，我们将从有关下载 KDB 补丁、打补丁、（重新）编译内核以及启动 KDB 方面的信息着手。然后我们将了解 KDB 命令并研究一些较常用的命令。最后，我们将研究一下有关设置和显示选项方面的一些详细信息。</p><h2 id="1">入门</h2><p>
+KDB 项目是由 Silicon Graphics 维护的（请参阅
+        <a href="#resources">参考资料</a>以获取链接），您需要从它的
+        <a href="ftp://oss.sgi.com/www/projects/kdb/download">FTP 站点</a>下
+载与内核版本有关的补丁。（在编写本文时）可用的最新 KDB 版本是 
+4.2。您将需要下载并应用两个补丁。一个是“公共的”补丁，包含了对通用内核代码的更改，另一个是特定于体系结构的补丁。补丁可作为 bz2 
+文件获取。例如，在运行 2.4.20 内核的 x86 机器上，您会需要 kdb-v4.2-2.4.20-common-1.bz2 和 
+kdb-v4.2-2.4.20-i386-1.bz2。
+      </p><p>这里所提供的所有示例都是针对 i386 体系结构和 2.4.20 内核的。您将需要根据您的机器和内核版本进行适当的更改。您还需要拥有 root 许可权以执行这些操作。</p><p>将文件复制到 /usr/src/linux 目录中并从用 bzip2 压缩的文件解压缩补丁文件：</p><div class="codesection"><pre class="displaycode">#bzip2 -d kdb-v4.2-2.4.20-common-1.bz2
+        <br><br>
+#bzip2 -d kdb-v4.2-2.4.20-i386-1.bz2</pre></div><p>您将获得 kdb-v4.2-2.4.20-common-1 和 kdb-v4.2-2.4-i386-1 文件。</p><p>现在，应用这些补丁：</p><div class="codesection"><pre class="displaycode">#patch -p1 &lt;kdb-v4.2-2.4.20-common-1
+        <br><br>
+#patch -p1 &lt;kdb-v4.2-2.4.20-i386-1</pre></div><p>这些补丁应该干净利落地加以应用。查找任何以 .rej 结尾的文件。这个扩展名表明这些是失败的补丁。如果内核树没问题，那么补丁的应用就不会有任何问题。</p><p>接下来，需要构建内核以支持 KDB。第一步是设置 
+        <code>CONFIG_KDB</code> 选项。使用您喜欢的配置机制（xconfig 和 menuconfig 等）来完成这一步。转到结尾处的“Kernel hacking”部分并选择“Built-in Kernel Debugger support”选项。
+      </p><p>您还可以根据自己的偏好选择其它两个选项。选择“Compile the kernel with frame pointers”选项（如果有的话）则设置 
+        <code>CONFIG_FRAME_POINTER</code> 标志。这将产生更好的堆栈回溯，因为帧指针寄存器被用作帧指针而不是通用寄存器。您还可以选择“KDB off by default”选项。这将设置 
+        <code>CONFIG_KDB_OFF</code> 标志，并且在缺省情况下将关闭 KDB。我们将在后面一节中对此进行详细介绍。
+      </p><p>保存配置，然后退出。重新编译内核。建议在构建内核之前执行“make clean”。用常用方式安装内核并引导它。</p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="IDAIVPSE">初始化并设置环境变量</h2><p>
+您可以定义将在 KDB 初始化期间执行的 KDB 命令。需要在纯文本文件 kdb_cmds 中定义这些命令，该文件位于 Linux 
+源代码树（当然是在打了补丁之后）的 KDB 
+目录中。该文件还可以用来定义设置显示和打印选项的环境变量。文件开头的注释提供了编辑文件方面的帮助。使用这个文件的缺点是，在您更改了文件之后需要重
+新构建并重新安装内核。</p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="IDAQVPSE">激活 KDB</h2><p>
+如果编译期间没有选中 
+        <code>CONFIG_KDB_OFF</code> ，那么在缺省情况下 KDB 是活动的。否则，您需要显式地激活它 － 通过在引导期间将 
+        <code>kdb=on</code> 标志传递给内核或者通过在挂装了 /proc 之后执行该工作：
+      </p><div class="codesection"><pre class="displaycode">#echo "1" &gt;/proc/sys/kernel/kdb</pre></div><p>倒过来执行上述步骤则会取消激活 KDB。也就是说，如果缺省情况下 KDB 是打开的，那么将 
+        <code>kdb=off</code> 标志传递给内核或者执行下面这个操作将会取消激活 KDB：
+      </p><div class="codesection"><pre class="displaycode">#echo "0" &gt;/proc/sys/kernel/kdb</pre></div><p>在引导期间还可以将另一个标志传递给内核。 
+        <code>kdb=early</code> 标志将导致在引导过程的初始阶段就把控制权传递给 KDB。如果您需要在引导过程初始阶段进行调试，那么这将有所帮助。
+      </p><p>调用 KDB 的方式有很多。如果 KDB 处于打开状态，那么只要内核中有紧急情况就自动调用它。按下键盘上的 PAUSE 键将手工调用 KDB。调用 KDB 的另一种方式是通过串行控制台。当然，要做到这一点，需要设置串行控制台（请参阅
+        <a href="#resources">参考资料</a>以获取这方面的帮助）并且需要一个从串行控制台进行读取的程序。按键序列 Ctrl-A 将从串行控制台调用 KDB。
+      </p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="IDAXWPSE">KDB 命令</h2><p>
+KDB 是一个功能非常强大的工具，它允许进行几个操作，比如内存和寄存器修改、应用断点和堆栈跟踪。根据这些，可以将 KDB 命令分成几个类别。下面是有关每一类中最常用命令的详细信息。</p><h3 id="N100A1">内存显示和修改</h3><p>
+这一类别中最常用的命令是 
+        <code>md</code> 、 
+        <code>mdr</code> 、 
+        <code>mm</code> 和 
+        <code>mmW</code> 。
+      </p><p><code>md</code> 命令以一个地址／符号和行计数为参数，显示从该地址开始的 
+        <code>line-count</code> 行的内存。如果没有指定 
+        <code>line-count</code> ，那么就使用环境变量所指定的缺省值。如果没有指定地址，那么 
+        <code>md</code> 就从上一次打印的地址继续。地址打印在开头，字符转换打印在结尾。
+      </p><p><code>mdr</code> 命令带有地址／符号以及字节计数，显示从指定的地址开始的 
+        <code>byte-count</code> 字节数的初始内存内容。它本质上和 
+        <code>md</code> 一样，但是它不显示起始地址并且不在结尾显示字符转换。 
+        <code>mdr</code> 命令较少使用。
+      </p><p><code>mm</code> 命令修改内存内容。它以地址／符号和新内容作为参数，用 
+        <code>new-contents</code> 替换地址处的内容。
+      </p><p><code>mmW</code> 命令更改从地址开始的 
+        <code>W</code> 个字节。请注意， 
+        <code>mm</code> 更改一个机器字。
+      </p><p><strong>示例</strong></p><h5 id="N100E4">显示从 0xc000000 开始的 15 行内存：</h5><div class="codesection"><pre class="displaycode">[0]kdb&gt; md 0xc000000 15</pre></div><h5 id="N100EC">将内存位置为 0xc000000 上的内容更改为 0x10：</h5><div class="codesection"><pre class="displaycode">[0]kdb&gt; mm 0xc000000 0x10</pre></div><h3 id="N100F2">寄存器显示和修改</h3><p>
+这一类别中的命令有 
+        <code>rd</code> 、 
+        <code>rm</code> 和 
+        <code>ef</code> 。
+      </p><p><code>rd</code> 命令（不带任何参数）显示处理器寄存器的内容。它可以有选择地带三个参数。如果传递了 
+        <code>c</code> 参数，则 
+        <code>rd</code> 显示处理器的控制寄存器；如果带有 
+        <code>d</code> 参数，那么它就显示调试寄存器；如果带有 
+        <code>u</code> 参数，则显示上一次进入内核的当前任务的寄存器组。
+      </p><p><code>rm</code> 命令修改寄存器的内容。它以寄存器名称和 
+        <code>new-contents</code> 作为参数，用 
+        <code>new-contents</code> 修改寄存器。寄存器名称与特定的体系结构有关。目前，不能修改控制寄存器。
+      </p><p><code>ef</code> 命令以一个地址作为参数，它显示指定地址处的异常帧。
+      </p><p><strong>示例</strong></p><h5 id="N10125">显示通用寄存器组：</h5><div class="codesection"><pre class="displaycode">[0]kdb&gt; rd</pre></div><h5 id="N1012D"><div class="codesection"><pre class="displaycode">[0]kdb&gt; rm %ebx 0x25</pre></div></h5><h3 id="N10132">断点</h3><p>
+常用的断点命令有 
+        <code>bp</code> 、 
+        <code>bc</code> 、 
+        <code>bd</code> 、 
+        <code>be</code> 和 
+        <code>bl</code> 。
+      </p><p><code>bp</code> 命令以一个地址／符号作为参数，它在地址处应用断点。当遇到该断点时则停止执行并将控制权交予 KDB。该命令有几个有用的变体。 
+        <code>bpa</code> 命令对 SMP 系统中的所有处理器应用断点。 
+        <code>bph</code> 命令强制在支持硬件寄存器的系统上使用它。 
+        <code>bpha</code> 命令类似于 
+        <code>bpa</code> 命令，差别在于它强制使用硬件寄存器。
+      </p><p><code>bd</code> 命令禁用特殊断点。它接收断点号作为参数。该命令不是从断点表中除去断点，而只是禁用它。断点号从 0 开始，根据可用性顺序分配给断点。
+      </p><p><code>be</code> 命令启用断点。该命令的参数也是断点号。
+      </p><p><code>bl</code> 命令列出当前的断点集。它包含了启用的和禁用的断点。
+      </p><p><code>bc</code> 命令从断点表中除去断点。它以具体的断点号或 
+        <code>*</code> 作为参数，在后一种情况下它将除去所有断点。
+      </p><p><strong>对函数 
+          <code>sys_write()</code> 设置断点：
+        </strong></p><h5 id="N10173">示例</h5><div class="codesection"><pre class="displaycode">[0]kdb&gt; bp sys_write</pre></div><h5 id="N1017B">列出断点表中的所有断点：</h5><div class="codesection"><pre class="displaycode">[0]kdb&gt; bl</pre></div><h5 id="N10183">清除断点号 1：</h5><div class="codesection"><pre class="displaycode">[0]kdb&gt; bc 1</pre></div><h3 id="N10189">&gt;堆栈跟踪</h3><p>
+主要的堆栈跟踪命令有 
+        <code>bt</code> 、 
+        <code>btp</code> 、 
+        <code>btc</code> 和 
+        <code>bta</code> 。
+      </p><p><code>bt</code> 命令设法提供有关当前线程的堆栈的信息。它可以有选择地将堆栈帧地址作为参数。如果没有提供地址，那么它采用当前寄存器来回溯堆栈。否则，它假定所提供的地址是有效的堆栈帧起始地址并设法进行回溯。如果内核编译期间设置了 
+        <code>CONFIG_FRAME_POINTER</code> 选项，那么就用帧指针寄存器来维护堆栈，从而就可以正确地执行堆栈回溯。如果没有设置 
+        <code>CONFIG_FRAME_POINTER</code> ，那么 
+        <code>bt</code> 命令可能会产生错误的结果。
+      </p><p><code>btp</code> 命令将进程标识作为参数，并对这个特定进程进行堆栈回溯。
+      </p><p><code>btc</code> 命令对每个活动 CPU 上正在运行的进程执行堆栈回溯。它从第一个活动 CPU 开始执行 
+        <code>bt</code> ，然后切换到下一个活动 CPU，以此类推。
+      </p><p><code>bta</code> 命令对处于某种特定状态的所有进程执行回溯。若不带任何参数，它就对所有进程执行回溯。可以有选择地将各种参数传递给该命令。将根据参数处理处于特定状态的进程。选项以及相应的状态如下：
+      </p><ul class="ibm-bullet-list"><li>D：不可中断状态</li><li>R：正运行</li><li>S：可中断休眠</li><li>T：已跟踪或已停止</li><li>Z：僵死</li><li>U：不可运行</li></ul><p>这类命令中的每一个都会打印出一大堆信息。请查阅下面的
+        <a href="#resources">参考资料</a>以获取这些字段的详细文档。
+      </p><p><strong>示例</strong></p><h5 id="N101D0">跟踪当前活动线程的堆栈：</h5><div class="codesection"><pre class="displaycode">[0]kdb&gt; bt</pre></div><h5 id="N101D8">跟踪标识为 575 的进程的堆栈：</h5><div class="codesection"><pre class="displaycode">[0]kdb&gt; btp 575</pre></div><h3 id="N101DE">其它命令</h3><p>
+下面是在内核调试过程中非常有用的其它几个 KDB 命令。</p><p><code>id</code> 命令以一个地址／符号作为参数，它对从该地址开始的指令进行反汇编。环境变量 
+        <code>IDCOUNT</code> 确定要显示多少行输出。
+      </p><p><code>ss</code> 命令单步执行指令然后将控制返回给 KDB。该指令的一个变体是 
+        <code>ssb</code> ，它执行从当前指令指针地址开始的指令（在屏幕上打印指令），直到它遇到将引起分支转移的指令为止。分支转移指令的典型示例有 
+        <code>call</code> 、 
+        <code>return</code> 和 
+        <code>jump</code> 。
+      </p><p><code>go</code> 命令让系统继续正常执行。一直执行到遇到断点为止（如果已应用了一个断点的话）。
+      </p><p><code>reboot</code> 命令立刻重新引导系统。它并没有彻底关闭系统，因此结果是不可预测的。
+      </p><p><code>ll</code> 命令以地址、偏移量和另一个 KDB 命令作为参数。它对链表中的每个元素反复执行作为参数的这个命令。所执行的命令以列表中当前元素的地址作为参数。
+      </p><p><strong>示例</strong></p><h5 id="N1020D">反汇编从例程 schedule 开始的指令。所显示的行数取决于环境变量 
+        <code>IDCOUNT</code> ：
+      </h5><div class="codesection"><pre class="displaycode">[0]kdb&gt; id schedule</pre></div><h5 id="N10218">执行指令直到它遇到分支转移条件（在本例中为指令 
+        <code>jne</code> ）为止：
+      </h5><div class="codesection"><pre class="displaycode">[0]kdb&gt; ssb
+        <br><br>
+0xc0105355  default_idle+0x25:  cli
+        <br>
+0xc0105356  default_idle+0x26:  mov  0x14(%edx),%eax
+        <br>
+0xc0105359  default_idle+0x29:  test %eax, %eax
+        <br>
+0xc010535b  default_idle+0x2b:  jne  0xc0105361 default_idle+0x31</pre></div><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="IDAYKQSE">技巧和诀窍</h2><p>
+调试一个问题涉及到：使用调试器（或任何其它工具）找到问题的根源以及使用源代码来跟踪导致问题的根源。单单使用源代码来确定问题是极其困难的，只有老练
+的内核黑客才有可能做得到。相反，大多数的新手往往要过多地依靠调试器来修正错误。这种方法可能会产生不正确的问题解决方案。我们担心的是这种方法只会修
+正表面症状而不能解决真正的问题。此类错误的典型示例是添加错误处理代码以处理 NULL 指针或错误的引用，却没有查出无效引用的真正原因。</p><p>结合研究代码和使用调试工具这两种方法是识别和修正问题的最佳方案。</p><p>调试器的主要用途是找到错误的位置、确认症状（在某些情况下还有起因）、确定变量的值，以及确定程序是如何出现这种情况的（即，建立调用堆栈）。有经验的黑客会知道对于某种特定的问题应使用哪一个调试器，并且能迅速地根据调试获取必要的信息，然后继续分析代码以识别起因。</p><p>因此，这里为您介绍了一些技巧，以便您能使用 KDB 快速地取得上述结果。当然，要记住，调试的速度和精确度来自经验、实践和良好的系统知识（硬件和内核内部机理等）。</p><h3 id="N10237">技巧 #1</h3><p>
+在 KDB 中，在提示处输入地址将返回与之最为匹配的符号。这在堆栈分析以及确定全局数据的地址／值和函数地址方面极其有用。同样，输入符号名则返回其虚拟地址。</p><p><strong>示例</strong></p><h5 id="N10243">表明函数 
+        <code>sys_read</code> 从地址 0xc013db4c 开始：
+      </h5><div class="codesection"><pre class="displaycode">[0]kdb&gt; 0xc013db4c
+        <br><br>
+0xc013db4c = 0xc013db4c (sys_read)</pre></div><p>同样，</p><h5 id="N10253">同样，表明 
+        <code>sys_write</code> 位于地址 0xc013dcc8：
+      </h5><div class="codesection"><pre class="displaycode">[0]kdb&gt; sys_write
+        <br><br>
+sys_write = 0xc013dcc8 (sys_write)</pre></div><p>这些有助于在分析堆栈时找到全局数据和函数地址。</p><h3 id="N10261">技巧 #2</h3><p>
+在编译带 KDB 的内核时，只要 
+        <code>CONFIG_FRAME_POINTER</code> 
+选项出现就使用该选项。为此，需要在配置内核时选择“Kernel hacking”部分下面的“Compile the kernel with 
+frame 
+pointers”选项。这确保了帧指针寄存器将被用作帧指针，从而产生正确的回溯。实际上，您可以手工转储帧指针寄存器的内容并跟踪整个堆栈。例如，在
+ i386 机器上，%ebp 寄存器可以用来回溯整个堆栈。
+      </p><p>例如，在函数 
+        <code>rmqueue()</code> 上执行第一个指令后，堆栈看上去类似于下面这样：
+      </p><div class="codesection"><pre class="displaycode">[0]kdb&gt; md %ebp
+        <br><br>
+0xc74c9f38 c74c9f60  c0136c40 000001f0 00000000
+        <br>
+0xc74c9f48 08053328 c0425238 c04253a8 00000000
+        <br>
+0xc74c9f58 000001f0  00000246 c74c9f6c c0136a25
+        <br>
+0xc74c9f68 c74c8000  c74c9f74  c0136d6d c74c9fbc
+        <br>
+0xc74c9f78 c014fe45  c74c8000  00000000 08053328
+        <br><br>
+[0]kdb&gt; 0xc0136c40
+        <br><br>
+0xc0136c40 = 0xc0136c40 (__alloc_pages +0x44)
+        <br><br>
+[0]kdb&gt; 0xc0136a25
+        <br><br>
+0xc0136a25 = 0xc0136a25 (_alloc_pages +0x19)
+        <br><br>
+[0]kdb&gt; 0xc0136d6d
+        <br><br>
+0xc0136d6d = 0xc0136d6d (__get_free_pages +0xd)</pre></div><p>我们可以看到 
+        <code>rmqueue()</code> 被 
+        <code>__alloc_pages</code> 调用，后者接下来又被 
+        <code>_alloc_pages</code> 调用，以此类推。
+      </p><p>每一帧的第一个双字（double word）指向下一帧，这后面紧跟着调用函数的地址。因此，跟踪堆栈就变成一件轻松的工作了。</p><h3 id="N1029E">技巧 #3</h3><p><code>go</code> 命令可以有选择地以一个地址作为参数。如果您想在某个特定地址处继续执行，则可以提供该地址作为参数。另一个办法是使用 
+        <code>rm</code> 命令修改指令指针寄存器，然后只要输入 
+        <code>go</code> 。如果您想跳过似乎会引起问题的某个特定指令或一组指令，这就会很有用。但是，请注意，该指令使用不慎会造成严重的问题，系统可能会严重崩溃。
+      </p><h3 id="N102AD">技巧 #4</h3><p>
+您可以利用一个名为 
+        <code>defcmd</code> 的有用命令来定义自己的命令集。例如，每当遇到断点时，您可能希望能同时检查某个特殊变量、检查某些寄存器的内容并转储堆栈。通常，您必须要输入一系列命令，以便能同时执行所有这些工作。 
+        <code>defcmd</code> 允许您定义自己的命令，该命令可以包含一个或多个预定义的 KDB 命令。然后只需要用一个命令就可以完成所有这三项工作。其语法如下：
+      </p><div class="codesection"><pre class="displaycode">[0]kdb&gt; defcmd name "usage" "help"
+        <br><br>
+[0]kdb&gt; [defcmd] type the commands here
+        <br><br>
+[0]kdb&gt; [defcmd] endefcmd</pre></div><p>例如，可以定义一个（简单的）新命令 
+        <code>hari</code> ，它显示从地址 0xc000000 开始的一行内存、显示寄存器的内容并转储堆栈：
+      </p><div class="codesection"><pre class="displaycode">[0]kdb&gt; defcmd hari "" "no arguments needed"
+        <br><br>
+[0]kdb&gt; [defcmd] md 0xc000000 1
+        <br><br>
+[0]kdb&gt; [defcmd] rd
+        <br><br>
+[0]kdb&gt; [defcmd] md %ebp 1
+        <br><br>
+[0]kdb&gt; [defcmd] endefcmd</pre></div><p>该命令的输出会是：</p><div class="codesection"><pre class="displaycode">[0]kdb&gt; hari
+        <br><br>
+[hari]kdb&gt; md 0xc000000 1
+        <br><br>
+0xc000000 00000001 f000e816 f000e2c3 f000e816
+        <br><br>
+[hari]kdb&gt; rd
+        <br><br>
+eax = 0x00000000 ebx = 0xc0105330 ecx = 0xc0466000 edx = 0xc0466000
+        <br>
+....
+        <br>
+...
+        <br><br>
+[hari]kdb&gt; md %ebp 1
+        <br><br>
+0xc0467fbc c0467fd0 c01053d2 00000002 000a0200
+        <br><br>
+[0]kdb&gt;</pre></div><h3 id="N102F8">技巧 #5</h3><p>
+可以使用 
+        <code>bph</code> 和 
+        <code>bpha</code> 命令（假如体系结构支持使用硬件寄存器）来应用读写断点。这意味着每当从某个特定地址读取数据或将数据写入该地址时，我们都可以对此进行控制。当调试数据／内存毁坏问题时这可能会极其方便，在这种情况中您可以用它来识别毁坏的代码／进程。
+      </p><p><strong>示例</strong></p><h5 id="N1030A">每当将四个字节写入地址 0xc0204060 时就进入内核调试器：</h5><div class="codesection"><pre class="displaycode">[0]kdb&gt; bph 0xc0204060 dataw 4</pre></div><h5 id="N10312">在读取从 0xc000000 开始的至少两个字节的数据时进入内核调试器：</h5><div class="codesection"><pre class="displaycode">[0]kdb&gt; bph 0xc000000 datar 2</pre></div><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="IDAL0QSE">结束语</h2><p>
+对于执行内核调试，KDB 是一个方便的且功能强大的工具。它提供了各种选项，并且使我们能够分析内存内容和数据结构。最妙的是，它不需要用另一台机器来执行调试。</p><!--CMA ID: 21077--><!--Site ID: 10--><!--XSLT stylesheet used to transform this file: dw-document-html-7.0.xsl-->
+
+
+</div>
+</div>
+<!-- 1_1_COLUMN_END -->
+
+<!-- SPLIT_COLUMNS_BEGIN -->
+<div class="ibm-columns">
+
+<!-- 6_4_COLUMN_BEGIN -->
+<div class="ibm-col-6-4">
+
+<h2 id="resources" class="ibm-rule">参考资料 </h2><ul class="ibm-bullet-list"><li>您可以参阅本文在 developerWorks 全球站点上的
+          <a href="http://www.ibm.com/developerworks/library/l-kdbug/index.html?S_TACT=105AGX52&amp;S_CMP=cn-a-l">英文原文</a>.
+        </li><li>请在 Documentation/kdb 目录中查找 KDB 手册页。
+          </li><li>有关设置串行控制台的信息，请查找 Documentation 目录中的 serial-console.txt。
+          </li><li>请在 SGI 的内核调试器项目网站上
+          <a href="http://oss.sgi.com/projects/kdb">下载 KDB</a>。
+          </li><li>有关几个基于方案的 Linux 调试技术的概述，请阅读“
+          <a href="http://www.ibm.com/developerworks/cn/linux/sdk/l-debug/index.html">掌握 Linux 调试技术</a>”（
+          <em>developerWorks</em>，2002 年 8 月）。
+          </li><li>教程“
+          <a href="http://www.ibm.com/developerworks/cn/views/linux/tutorials.jsp?cv_doc_id=85020">编译 Linux 内核</a>”（
+          <em>developerWorks</em>，2000 年 8 月）让您完整地了解配置、编译和安装内核的过程。
+          </li><li>IBM AIX 用户可以在
+          <a href="http://www16.boulder.ibm.com/pseries/en_US/aixprggd/kernextc/kdb.htm">KDB Kernel Debugger and Command</a>页面上获取有关用于 AIX 的 KDB 的使用帮助。
+          </li><li>那些寻求有关调试 OS/2 信息的读者应该阅读 IBM 红皮书
+          <em>The OS/2 Debugging Handbook</em>（共四卷）的
+          <a href="http://publib-b.boulder.ibm.com/Redbooks.nsf/9445fa5b416f6e32852569ae006bb65f/b797e96d6232122d8525659d002a5596?OpenDocument&amp;Highlight=0,xSeries,Netfinity">第 II 卷</a>。
+          </li><li>在
+          <em>developerWorks</em>Linux 专区中查找更多
+          <a href="http://www.ibm.com/developerworks/cn/linux/">针对 Linux 开发人员的参考资料</a>。
+          </li></ul>
+
+<!-- INLINE_COMMENTS_BEGIN -->
+<h2 id="icomments" class="ibm-alternate-rule ibm-no-print">条评论</h2>
+    
+<div class="ibm-no-print" id="dw-icomments-container">	
+	<div id="threadShow"><img style="display: none;" id="imgPlHdr" src="kdb_files/animated-progress-38x38c.gif" alt=""><div id="cmtTog" style=""><div class="ibm-container ibm-alternate-two dw-commentbox dw-noborder"><div class="ibm-container-body dw-commentbox dw-noborder"><p id="signInSect">请 <a onclick="var e=arguments[0] || window.event; dwsi.siInst &amp;&amp; dwsi.siInst.showSignIn(); if (e.stopPropagation){ e.stopPropagation();} else { e.cancelBubble = true; } e.preventDefault &amp;&amp; e.preventDefault(); return false;" href="#">登录</a> 或 <a href="http://www.ibm.com/developerworks/dwwi/jsp/ssoregister.jsp?d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-kdbug%2Findex.html%23icomments&amp;lang=cn&amp;a=dwmav">注册</a>  后发表评论。</p><p id="cmtHead"><label for="newCmt"><strong>添加评论:</strong></label></p><p>注意：评论中不支持 HTML 语法</p><div id="infoCmt"></div><form focus="name" enctype="multipart/form-data" method="post" action="" name="form" class="ibm-column-form ibm-styled-form"><p class="6-4-textarea"><textarea rows="5" name="newCmt" id="newCmt" class="dw-inoperable" disabled="disabled"></textarea><br></p><span class="ibm-input-group"><input value="1" name="comment_notification" id="comment_notification" disabled="disabled" type="checkbox"><label id="notifyText" class="ibm-form-note dw-btn-cancel-sec" for="comment_notification">有新评论时提醒我</label></span><span class="ibm-form-note dw-btn-cancel-sec notifySection" id="maxCharsCount">剩余 <span id="charCount">1000</span> 字符</span><p class="ibm-buttons-row"><input value="发布" name="postCmt" id="postCmt" class="ibm-btn-sec ibm-btn-small ibm-disabled" disabled="disabled" type="button"></p></form></div></div><div class="ibm-alternate-rule"><hr></div><div id="topControl" class="ibm-container ibm-alternate-two dw-comment-totals" style="display: none;"><div class="ibm-container-body"><form id="selectComments" method="get" action=""><p>&nbsp;<span class="dw-comment-totals-label"><strong>共有评论 (<span id="numCmts">0</span>)</strong></span><span class="dw-how-many-comments-label" style="display:none" id="dropdownCmts"><label for="howManyComments"><strong>显示：</strong></label>&nbsp;<select name="comments" id="howManyComments" class="dw-how-many-comments"><option selected="selected" value="recent">最新评论 </option></select><input class="ibm-btn-go" name="ibm-go" value="Go" src="kdb_files/short-btn.gif" alt="Go" type="image"><br></span></p></form></div></div><div id="cmtSect"><div class="comment"><div class="dw-icomment-container"><table class="dw-icomment-body" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><p>快来添加第一条评论</p></td></tr></tbody></table></div></div></div></div><div id="bottomControl" class="ibm-container ibm-alternate-two dw-comment-totals" style="display:none"><div class="ibm-container-body"><form id="selectComments2" method="get" action=""><p>&nbsp;<span class="dw-comment-totals-label"><strong>共有评论 (<span id="numCmts2">0</span>)</strong></span><span class="dw-how-many-comments-label" style="display:none" id="dropdownCmts2"><label for="howManyComments2"><strong>显示：</strong></label>&nbsp;<select name="comments" id="howManyComments2" class="dw-how-many-comments"><option selected="selected" value="recent">最新评论 </option></select><input class="ibm-btn-go" name="ibm-go" value="Go" src="kdb_files/short-btn.gif" alt="Go" type="image"><br></span></p></form></div></div></div>
+</div>
+<!-- Sign in OVERLAY STARTS HERE -->
+    
+<!-- Sign in OVERLAY STARTS HERE -->
+<div class="ibm-common-overlay" id="signin_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="dwsi.siInst.clearForm();">关闭 [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+
+ <div class="ibm-title">
+<h2>developerWorks: 登录</h2>
+<div id="ibm-overlay-error-signin" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">标有星（<span class="ibm-required">*</span>）号的字段是必填字段。</p> 
+<form class="ibm-column-form" id="sFormId" action="" method="post" name="sForm" onsubmit="return false;">
+<p><label for="ibmid">IBM ID:<span class="ibm-required">*</span></label><span>
+    <input name="ibm-id" id="ibmid" size="25" class="required" onkeypress="dwsi.siInst.handleEP(event,this.form);" type="text">
+    <br><a onclick="window.location='/developerworks/dwwi/DWAuthRouter?m=reg&amp;lang=zh_CN&amp;d='+encodeURIComponent(location.protocol + '//' + location.hostname + location.pathname + '#icomments'); return false;" href="#" class="ibm-forward-link">需要一个 IBM ID？</a> <br>
+    <a class="ibm-forward-link" href="http://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=zh_CN">忘记 IBM ID？</a> 
+</span>
+</p> 
+<p><label for="password">密码：<span class="ibm-required">*</span></label><span>
+    <input name="password" id="password" size="25" value="" class="required" onkeypress="dwsi.siInst.handleEP(event,this.form);" type="password">
+    <br><a class="ibm-forward-link" href="#" onclick="(function ()
+        {window.location='https://www.ibm.com/account/profile?page=forgot&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(dwsi.siInst.getAuthUrl())+'%3Fm%3Dloginpage%26lang%3Dzh_CN%26d%3D'+encodeURIComponent(location.href);})();">忘记密码？</a>
+    <br><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=chpw&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(location.href);})();">更改您的密码</a></span></p> 
+<p class="dw-perm-box">
+	<span><input id="perm" name="perm_name" type="checkbox"><label for="perm"> 保持登录。</label></span>
+</p>
+<p>单击提交则表示您同意developerWorks 的条款和条件。 <a href="http://www.ibm.com/developerworks/community/terms?lang=zh">查看条款和条件</a>。</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="提交" onclick="dwsi.siInst.signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+<input value="取消" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="dwsi.siInst.clearForm();ibmweb.overlay.hide('signin_overlay');return false;" type="button"></p>
+</div>
+</form>
+ <div class="ibm-overlay-rule"><hr></div> 
+
+<p>在您首次登录 developerWorks 时，会为您创建一份个人概要。<strong>您的个人概要中的信息（您的姓名、国家/地区，以及公司名称）是公开显示的，而且会随着您发布的任何内容一起显示，除非您选择隐藏您的公司名称。</strong>您可以随时更新您的 IBM 帐户。</p>
+<div><p class="dw-c-overlay-secure">所有提交的信息确保安全。</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Display name OVERLAY STARTS HERE -->
+<div class="ibm-common-overlay" id="displayname_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="dwsi.siInst.clearForm();">关闭 [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title">
+<h2>选择您的昵称</h2><br><br>
+<div id="ibm-overlay-error-dname" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">当您初次登录到 developerWorks 时，将会为您创建一份概要信息，您需要指定一个昵称。您的昵称将和您在 developerWorks 发布的内容显示在一起。</p><p><strong>昵称长度在 3 至 31 个字符之间</strong>。 
+    您的昵称在 developerWorks 社区中必须是唯一的，并且出于隐私保护的原因，不能是您的电子邮件地址。</p>
+<p class="ibm-overlay-intro">标有星（<span class="ibm-required">*</span>）号的字段是必填字段。</p> 
+<form id="dFormId" method="post" action="" name="dForm" onsubmit="return false;" class="ibm-column-form">
+<p><label for="displayname">昵称：<span class="ibm-required">*</span></label><span>
+    <input name="displayname" id="displayname" size="25" onkeypress="dwsi.siInst.handleEP(event,this.form);" type="text"></span>
+    <span class="ibm-form-note">(昵称长度在 3 至 31 个字符之间)</span>
+</p>
+<p>单击<strong>提交</strong>则表示您同意developerWorks 的条款和条件。 <a href="http://www.ibm.com/developerworks/community/terms?lang=zh">查看条款和条件</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="提交" onclick="dwsi.siInst.signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+<input value="取消" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="dwsi.siInst.clearForm();ibmweb.overlay.hide('displayname_overlay');return false;" type="button"></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr></div>
+<div><p class="dw-c-overlay-secure">所有提交的信息确保安全。</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+
+
+<!-- INLINE_COMMENTS_END -->
+
+</div>
+<!-- 6_4_COLUMN_END -->
+
+<!-- 6_2_COLUMN_BEGIN -->
+<div class="ibm-col-6-2">
+
+<!-- Next_Steps -->
+<!-- Dig_Deeper -->
+
+
+<!-- Promotion_Module -->
+    
+<!-- PROMOTION_MODULE_START -->
+<div class="ibm-alternate-rule"><hr></div>
+<ul class="ibm-portrait-module-list">
+<li><a role="presentation" tabindex="-1" class="" href="http://www.ibm.com/developerworks/cn/puresystems/"><img src="kdb_files/sm-f-cl-puresystems70.jpg" alt="" height="60" width="60"></a>
+<h3><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/puresystems/">IBM PureSystems</a></h3>
+<p>IBM PureSystems™ 系列解决方案是一个专家集成系统</p></li>
+<li><a role="presentation" tabindex="-1" class="" href="http://www.ibm.com/developerworks/cn/views/global/libraryview.jsp?type_by=Knowledge+paths"><img src="kdb_files/sm-f-knowledgepath50.jpg" alt="" height="60" width="60"></a>
+<h3><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/views/global/libraryview.jsp?type_by=Knowledge+paths">developerWorks 学习路线图</a></h3>
+<p>通过学习路线图系统掌握软件开发技能</p></li>
+<li><a role="presentation" tabindex="-1" class="" href="http://www.ibm.com/developerworks/cn/downloads/"><img src="kdb_files/sm-f-evaluationsoftware60.png" alt="" height="60" width="60"></a>
+<h3><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/downloads/">软件下载资源中心</a></h3>
+<p>软件下载、试用版及云计算</p></li>
+</ul>
+<!-- PROMOTION_MODULE_END -->
+
+</div>
+<!-- 6_2_COLUMN_END -->
+
+</div>
+<!-- SPLIT_COLUMNS_END -->
+
+<!-- BOTTOM_BACK_TO_TOP -->
+<div class="ibm-columns">
+<div class="ibm-col-1-1">
+	<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p>
+</div>
+</div>
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><div class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</div><div class="metavalue">SITE_ID=10</div><div class="metavalue">Zone=Linux</div><div class="metavalue">ArticleID=21077</div><div class="metavalue">ArticleTitle=Linux 内核调试器内幕</div><div class="metavalue">publish-date=09012003</div><script language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href.replace(/</g,  '%3C')+'</div>');</script><div class="metavalue">url=http://www.ibm.com/developerworks/cn/linux/l-kdbug/index.html</div><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</div>
+<!-- END_IBM_CONTENT_MAIN -->
+
+</div>
+<!-- END_IBM_CONTENT_BODY -->
+
+</div>
+<!-- END_IBM_CONTENT -->
+
+</div></div>
+<!-- LEADSPACE_END -->
+
+
+<!-- END_IBM_PCON -->
+<!-- FOOTER_BEGIN -->
+<div aria-label="页脚" id="ibm-footer"><!-- IBM footer container; disabled --></div>
+
+<div id="ibm-footer-module-dwwrapper" role="contentinfo" aria-label="developerWorks Footer">
+
+<div id="ibm-footer-module-dw">
+	<div class="dw-footer-columns">
+		<div class="dw-footer-col-6-1 dw-footer-col-6-1-cn">
+			<ul>
+				<li><a href="https://www.ibm.com/developerworks/secure/feedback.jsp?domain=dwchina" tabindex="0">帮助</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/author/" tabindex="0">联系编辑</a></li>
+				<li><a href="https://www.ibm.com/developerworks/secure/myideas2.jsp?domain=dwchina&amp;start=true" tabindex="0">提交内容</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/rss/" tabindex="0">订阅源</a></li>
+			</ul>
+        </div>
+		<div class="dw-footer-col-6-2">
+			<ul>
+				<li><a href="http://www.ibm.com/vrm/newsletter/10104?S_TACT=105AGX52&amp;S_CMP=dwcntop" tabindex="0">在线浏览每周时事通讯</a></li>
+				<li><a class="dwcn-sina-link" href="http://weibo.com/ibmdw/" target="_blank" tabindex="0">新浪微博</a></li>
+				<li><a href="https://www.ibm.com/developerworks/community/report?lang=zh" tabindex="0">报告滥用</a></li>
+				<li><a href="https://www.ibm.com/developerworks/community/terms?lang=zh" tabindex="0">使用条款</a></li>
+				<li><a href="https://www.ibm.com/developerworks/cn/community/terms/thirdparty/" tabindex="0">第三方提示</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-3">
+			<ul>
+				<li><a href="http://www.ibm.com/privacy/cn/zh/" tabindex="0">隐私条约</a></li>
+				<li><a href="http://www.ibm.com/ibm/accessibility/cn/" tabindex="0">浏览辅助</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/academic/" tabindex="0">IBM 教育学院教育培养计划</a></li><li><a href="http://www.ibm.com/developerworks/cn/gep/">IBM 创业企业全球扶持计划</a></li><li><a href="http://www.ibm.com/partnerworld/isv/">ISV 资源 (英语)</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-4"> 
+			<ul>
+				<li><a href="http://www.ibm.com/developerworks/cn/newsletter/" tabindex="0">dW 中国每周时事通讯</a></li>
+			</ul>
+			
+		</div>
+		<div class="dw-footer-col-6-5">
+			<ul>
+				<li class="dw-footer-lang-head">选择语言：</li>
+				<li><a href="http://www.ibm.com/developerworks/" tabindex="0">English</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/" tabindex="0" lang="zh">中文</a></li>
+				<li><a href="http://www.ibm.com/developerworks/jp/" tabindex="0" lang="ja">日本語</a></li>
+				<li><a href="http://www.ibm.com/developerworks/ru/" tabindex="0" lang="ru">Русский</a></li>
+				<li><a href="http://www.ibm.com/developerworks/br/" tabindex="0" lang="pt">Português (Brasil)</a></li>
+				<li><a href="http://www.ibm.com/developerworks/ssa/" tabindex="0" lang="es">Español</a></li>
+				<li><a href="http://www.ibm.com/developerworks/vn/" tabindex="0" lang="vi">Việt</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-6">
+			<img alt="IBM®" src="kdb_files/dwn-ibm-logo-v17.png" height="46" width="223">
+			<img class="dw-preload" src="kdb_files/ibm_sprite_social_blue_ON.png" alt="" height="1" width="1">
+		</div>
+	</div>
+</div>
+
+</div><!-- FOOTER_END -->
+
+<!-- END_IBM-TOP -->
+</div>
+
+<!-- SCRIPTS_INCLUDE_BEGIN -->
+<script type="text/javascript" src="kdb_files/dw-comments.js">//</script>
+<script type="text/javascript" language="JavaScript">
+	dojo.ready(function(){
+		rBHash = typeof rBHash == "undefined" ? {} : rBHash;
+		rBHash['viperLang'] = 'zh';
+		rBHash['urlLang'] = 'cn';
+		rBHash['dwwi2Lang'] = 'zh_CN';
+		rBHash['appCode'] = 'dwmav';
+		rBHash['signoutUrl'] = (location.host.toLowerCase() === "www.ibm.com" || location.host.toLowerCase() === "developer.ibm.com") ? 'http://www.ibm.com/developerworks/cn/' : ''; 
+		dwsi.siInst = new dwweb.dynnav.dwsi();
+		dwsi.siInst.initSI();		
+
+		// construct the comment widget
+dwc.cmts = '条评论';
+dwc.signInPreText = '请';
+dwc.signIn = '登录';
+dwc.or = '或';
+dwc.register = '注册';
+dwc.signInPostText = '';
+dwc.leaveCmt = '后发表评论。';
+dwc.view = '查看';
+dwc.totalCmts = '共有评论';
+dwc.postYourCmt = '添加您的评论';
+dwc.show = '显示：';
+dwc.recentCmts = '最新评论';
+dwc.allCmts = '所有评论';
+dwc.tooLongCmt = '您的评论超过了 1000 字符限制';
+dwc.numCharsLeft = '剩余 <span id="charCount">{1}</span> 字符';
+dwc.reportAbuse = '报告滥用';
+dwc.notifyMsg = '有新评论时提醒我';
+dwc.htmlWarning = '注意：评论中不支持 HTML 语法'; 
+dwc.cmt = '评论：';
+dwc.addCmts = '添加评论';
+dwc.addCmt = '添加评论';
+dwc.doNotErase = '--在下方添加评论--'; 
+dwc.viewOrAddCmts = '查看或添加评论';
+dwc.reportInapprCont = '举报不良信息';
+dwc.reportInapprContLink = 'http://www.ibm.com/developerworks/forums/forum.jspa?forumID=1834';
+dwc.postingCmt = '正在发布评论……';
+dwc.noCmt = '快来添加第一条评论';
+dwc.netwkErr = '在检索评论时出错，请稍后刷新。';
+dwc.addACmt = '添加评论';
+dwc.instructCmt = '标有星号（<span class="ibm-required">*</span>）的是必填项目。';
+dwc.btnPost = '发布';
+dwc.btnPostAnon = '匿名发布';
+dwc.btnClrCmt = '清除评论';
+dwc.btnCancel = '取消';
+dwc.showRecent = '显示最新的 {1} 条评论'; // {1} is the count to be substituted
+dwc.showNext = '显示后 {1} 条评论'; // {1} is the count to be substituted
+dwc.showAllCmts = '显示所有评论';
+dwc.enterCmt = '请输入评论内容。';
+dwc.loginErr = '暂时无法验证您的登录状态，请稍后再试。';
+dwc.postErr = '暂时无法发布您的评论，请稍后再试。';
+dwc.postBy = '由 <strong>{1}</strong>  于 {2} '; // {1} is the author to be substituted; {2} is the date
+dwc.siteId = 10;
+dwc.lang = 'zh_CN';
+dwc.viperLang = 'zh';
+//dwc.abuseHref =  null;
+dwc.maxChars = 1000;
+dwc.cmtTxt =  '评论：';
+dwc.cmtsTxt =  '评论：';  
+		dwc && new dwc.comments('threadShow','95%',5,'nCmts','icomments');
+		});
+</script>
+
+
+
+<!-- BEGIN: Use this section to set page specific variables for the Unica Page Tag -->
+<script language="JavaScript">var NTPT_PGEXTRA="ibmSkillLevel=1&ibmCmaId=21077&ibmContentAreas=linux";</script>
+<!--END --><!-- SCRIPTS_INCLUDE_END -->
+
+<div id="ibm-metrics">
+<script src="kdb_files/stats.js" type="text/javascript">//</script>
+</div>
+
+
+
+</body></html>

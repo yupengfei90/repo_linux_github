@@ -1,0 +1,153 @@
+.kf_qycn_com_cckf_icon_online {
+  background-image: url("images/online-zh-cn.png"); }
+
+.kf_qycn_com_cckf_icon_offline {
+  background-image: url("images/offline-zh-cn.png"); }
+
+.kf_qycn_com_cckf_icon .kf_qycn_com_cckf_caption {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 105px; }
+
+.kf_qycn_com_cckf_icon {
+  width: 120px;
+  height: 92px;
+  padding: 0px; }
+
+.kf_qycn_com_cckf_icon .kf_qycn_com_cckf_caption {
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  margin: 0px;
+  background: transparent;
+  text-shadow: none; }
+
+.kf_qycn_com_cckf_icon_online {
+  cursor: pointer; }
+
+.kf_qycn_com_cckf_icon_offline {
+  cursor: pointer; }
+
+.kf_qycn_com_cckf_icon {
+  background-repeat: no-repeat; }
+
+.kf_qycn_com_cckf_direct_talking_dialog {
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+  width: 120px;
+  height: auto;
+  background: transparent; }
+  .kf_qycn_com_cckf_direct_talking_dialog * {
+    margin: 0px;
+    padding: 0px;
+    width: auto;
+    height: auto;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 20px;
+    float: none; }
+  .kf_qycn_com_cckf_direct_talking_dialog strong {
+    font-weight: bold; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_item_icon_box {
+    width: 25px;
+    height: 20px;
+    position: absolute;
+    left: 0px;
+    line-height: 20px;
+    text-align: right;
+    overflow: hidden;
+    margin-top: 2px; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_inner {
+    margin: 0px 0px;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    overflow: hidden;
+    background: #ffffff; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_inner_content {
+    overflow: hidden;
+    background: #ffffff;
+    width: 118px; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_top {
+    margin: 0px 2px;
+    border-bottom: 1px solid;
+    font-size: 1px;
+    height: 1px;
+    background: transparent; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_middle {
+    margin: 0px 1px;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    font-size: 1px;
+    height: 1px;
+    background: #ffffff; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_bottom {
+    margin: 0px 2px;
+    border-top: 1px solid;
+    font-size: 1px;
+    height: 1px;
+    background: transparent; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_border_color {
+    border-color: #307ec3; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_border_color_gray {
+    border-color: #828282; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_text {
+    margin: 0px 5px;
+    line-height: 16px;
+    overflow: hidden;
+    word-break: break-all;
+    margin-top: 5px; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_item {
+    width: 100%;
+    line-height: 20px;
+    cursor: pointer;
+    position: relative;
+    color: #3171dd;
+    border-bottom: 1px solid #f5f5f5; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_qq_img {
+    position: absolute;
+    right: 2px;
+    top: 0; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_qq_img_wrap {
+    position: relative;
+    width: 17px;
+    height: 24px;
+    overflow: hidden;
+    margin-left: 8px; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_qq_img_mask {
+    background: white;
+    width: 2px;
+    height: 9px;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 7px;
+    font-size: 12px; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_qq_img, .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_ww_img, .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_msn_img {
+    margin-top: 2px;
+    cursor: pointer; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_ww_img {
+    margin-right: 1px; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_en_bb_img, .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_bb_img {
+    margin-top: 0;
+    margin-left: 2px;
+    cursor: pointer; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_msn_body, .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_ww_body, .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_qq_body {
+    margin-right: 6px;
+    margin-left: 35px;
+    font-size: 12px;
+    overflow: hidden;
+    height: 25px;
+    line-height: 25px;
+    width: 73px;
+    _line-height: 20px; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_qq_body {
+    line-height: 26px;
+    _line-height: 20px; }
+  .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_qq_, .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_msn_, .kf_qycn_com_cckf_direct_talking_dialog .kf_qycn_com_cckf_direct_talking_dialog_item_ww_ {
+    margin-right: 5px;
+    margin-top: 3px; }

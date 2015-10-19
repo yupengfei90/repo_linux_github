@@ -1,0 +1,5 @@
+#!/bin/bash
+for i in $(seq 500 532)
+do
+	echo $i >> 1
+done

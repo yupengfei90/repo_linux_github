@@ -1,0 +1,75 @@
+@charset "UTF-8";
+.Blue_main_box #chatTitle {
+  background: url(./titlegb.png); }
+
+.Blue_main_box #chatTitle .picbg {
+  background: url(./chatbg.png) scroll -4px -8px no-repeat; }
+
+.Blue_main_box #chatTitle .picbg div span.img {
+  background: url(./icon2.gif) scroll -169px -19px; }
+
+.Blue_main_box .Display_box {
+  background: white url(./chatAreabg.gif) repeat-x; }
+
+.Blue_main_box .main_right {
+  background: white url(./chatAreabg.gif) repeat-x top; }
+
+.Blue_main_box #main_left #innerLeft .Function_box #sentButtonBox #sentButton {
+  background: url(chatbg.png) scroll 5px -52px; }
+
+.Blue_main_box #main_left #innerLeft .Function_box .Function_top ul li a span.iconFont {
+  background: url(./icon2.gif) scroll 0px -78px; }
+
+/**select**/
+.Blue_main_box #main_left #innerLeft .Function_box .Function_top ul li a span.iconFontChoose {
+  background: url(./icon2.gif) scroll 0px -50px; }
+
+.Blue_main_box #main_left #innerLeft .Function_box .Function_top ul li a span.catchScreenButton {
+  background: url(./icon2.gif) scroll -96px -78px; }
+
+/**select**/
+.Blue_main_box #main_left #innerLeft .Function_box .Function_top ul li a span.catchScreenButtonChoose {
+  background: url(./icon2.gif) scroll -96px -50px; }
+
+.Blue_main_box #main_left #innerLeft .Function_box .Function_top ul li.fun6 p {
+  background: url(./icon2.gif) scroll 0px -105px; }
+
+.Blue_main_box #main_left #innerLeft #messageStyleSettingPanel .colorPickerButton {
+  background: url(./icon2.gif) scroll -87px -22px; }
+
+/**select**/
+.Blue_main_box #main_left #innerLeft #messageStyleSettingPanel .colorPickerButtonChoose {
+  background: url(./icon2.gif) scroll -87px 0px; }
+
+.Blue_main_box #main_left #innerLeft #messageStyleSettingPanel .fontTypeB {
+  background: url(./icon2.gif) scroll 0px -22px; }
+
+/**select**/
+.Blue_main_box #main_left #innerLeft #messageStyleSettingPanel .fontTypeBChoose {
+  background: url(./icon2.gif) scroll 0px 0px; }
+
+.Blue_main_box #main_left #innerLeft #messageStyleSettingPanel .fontTypeI {
+  background: url(./icon2.gif) scroll -29px -22px; }
+
+/**select**/
+.Blue_main_box #main_left #innerLeft #messageStyleSettingPanel .fontTypeIChoose {
+  background: url(./icon2.gif) scroll -29px 0px; }
+
+.Blue_main_box #main_left #innerLeft #messageStyleSettingPanel .fontTypeU {
+  background: url(./icon2.gif) scroll -59px -22px; }
+
+/**select**/
+.Blue_main_box #main_left #innerLeft #messageStyleSettingPanel .fontTypeUChoose {
+  background: url(./icon2.gif) scroll -59px 0px; }
+
+.Blue_main_box .Function_top ul li a:hover {
+  background: url(./icon2.gif) scroll -128px -103px; }
+
+/**select**/
+/**.Blue_main_box .Function_top ul li a:hover{background:url(./icon2.gif) scroll -128px  -0px;}  **/
+#sentButton {
+  background: url(chatbg.png) scroll -184px -52px; }
+
+/***************************** --------- 定义颜色 -----------****************************************/
+.Blue_main_box #main_left #innerLeft .Function_box .Function_top #toolMask {
+  background: #fff; }

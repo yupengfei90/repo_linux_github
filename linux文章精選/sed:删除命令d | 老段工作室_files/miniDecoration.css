@@ -1,0 +1,119 @@
+.kf_qycn_com_cckf_inpage_chat_window {
+  text-align: left;
+  background-color: #FFF;
+  background-image: url("titlegb.png");
+  width: auto;
+  height: auto; }
+
+.kf_qycn_com_cckf_inpage_chat_window * {
+  margin: 0px; }
+
+.kf_qycn_com_cckf_inpage_chat_window .kf_qycn_com_cckf_header {
+  background-image: url("chatbg.png");
+  background-position: -132px -7px;
+  background-repeat: no-repeat;
+  height: 39px;
+  border: 1px solid #ae8346;
+  border-bottom: none; }
+
+.kf_qycn_com_cckf_inpage_chat_window .kf_qycn_com_cckf_header, .kf_qycn_com_cckf_inpage_chat_window .kf_qycn_com_cckf_header * {
+  float: none; }
+
+.kf_qycn_com_cckf_inpage_chat_window .kf_qycn_com_cckf_icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-image: url("icon2.gif"); }
+
+.kf_qycn_com_cckf_inpage_chat_window .kf_qycn_com_cckf_icon_cckf {
+  position: absolute;
+  left: 8px;
+  top: 11px;
+  background-position: -169px -20px; }
+
+.kf_qycn_com_cckf_inpage_chat_window .kf_qycn_com_cckf_icon_icon_minimize {
+  position: absolute;
+  right: 28px;
+  top: 11px;
+  background-position: -224px -11px;
+  cursor: pointer; }
+
+.kf_qycn_com_cckf_inpage_chat_window .kf_qycn_com_cckf_icon_icon_open {
+  position: absolute;
+  right: 8px;
+  top: 11px;
+  background-position: -204px -11px;
+  cursor: pointer; }
+
+.kf_qycn_com_cckf_inpage_chat_window .kf_qycn_com_cckf_caption {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  margin: 13px 48px 0 28px;
+  overflow: hidden;
+  height: 14px;
+  line-height: 14px;
+  font-size: 12px;
+  color: white;
+  cursor: default;
+  text-shadow: none; }
+
+.kf_qycn_com_cckf_inpage_chat_window .kf_qycn_com_cckf_content {
+  background-color: #FFF;
+  margin: 0px;
+  border: 1px solid #afafaf;
+  border-top: none;
+  padding: 0px; }
+
+.kf_qycn_com_cckf_inpage_chat_window .kf_qycn_com_cckf_frame {
+  border: 0px;
+  margin: 0px;
+  padding: 0px; }
+
+.kf_qycn_com_cckf_inpage_chat_window_min {
+  display: block;
+  height: 28px;
+  background-color: gray;
+  background-image: url("chatbg.png");
+  background-position: -132px -7px;
+  border: 1px solid #ae8346;
+  width: auto;
+  cursor: pointer;
+  overflow: hidden; }
+
+.kf_qycn_com_cckf_inpage_chat_window_min .kf_qycn_com_cckf_caption {
+  display: block;
+  width: 80px;
+  margin: 8px 5px 0 24px;
+  color: white;
+  font-size: 12px;
+  text-align: left;
+  word-break: keep-all;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  text-shadow: none; }
+
+.kf_qycn_com_cckf_inpage_chat_window_min .kf_qycn_com_cckf_hint {
+  display: block;
+  width: 80px;
+  margin: 8px 5px 0 24px;
+  color: white;
+  font-size: 12px;
+  text-align: left;
+  word-break: keep-all;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: default; }
+
+.kf_qycn_com_cckf_inpage_chat_window_min .kf_qycn_com_cckf_icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  background-image: url("icon2.gif"); }
+
+.kf_qycn_com_cckf_inpage_chat_window_min .kf_qycn_com_cckf_icon_cckf {
+  position: absolute;
+  left: 4px;
+  top: 6px;
+  background-position: -169px -20px; }

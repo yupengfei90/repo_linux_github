@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html style="overflow: hidden;" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+    <title> sed:删除命令d | 老段工作室</title>
+
+    <style type="text/css">
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+            text-align: center;
+        }
+
+        object:focus {
+            outline: none;
+        }
+
+        #flashContent {
+            display: none;
+        }
+    </style>
+
+    <meta name="google" value="notranslate">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-store, must-revalidate">
+    <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+    <meta http-equiv="expires" content="0">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="keywords String">
+    <meta name="description" content="description String">
+    <meta name="robots" content="all">
+    <meta name="author" content="author string">
+
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+    <![endif]-->
+    <link href="a_data/miniv1.css" rel="stylesheet" type="text/css">
+    <link href="a_data/miniTheme.css" rel="stylesheet" type="text/css">
+
+    
+    <script type="text/javascript" src="a_data/swfobject.js"></script>
+
+    <script type="text/javascript" src="a_data/jquery.js"></script>
+    <script src="a_data/QYJSUtil.js" language="javascript" type="text/javascript"></script>
+    <script src="a_data/chat.js" language="javascript" type="text/javascript"></script>
+    <script src="a_data/miniChatExtra.js" language="javascript" type="text/javascript"></script>
+    <script src="a_data/chatInit.js" language="javascript" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        function createEmbedSWFObject(swfFile, flashContent, width, height, swfVersion, xiSwfUrlStr, flashVars, params, attributes, style) {
+            try {
+                swfobject.embedSWF(
+                        swfFile + '?2.5.0.6347', flashContent,
+                        width, height,
+                        swfVersion, xiSwfUrlStr,
+                        flashVars, params, attributes);
+                swfobject.createCSS("#" + flashContent, style);
+            } catch (e) {
+                setTimeout(function (swfFile, flashContent, width, height, swfVersion, xiSwfUrlStr, flashVars, params, attributes, style) {
+                    createEmbedSWFObject();
+                }, 1000);
+            }
+        }
+        var originPageUrl = 'http://www.rhce.cc/?p=1110';
+        var groupid = '0';
+        var visitorid = '456488377';
+        var clerkid = '0';
+        var websiteid = '33188';
+        var leavemsgclerkid = '0';
+        var sessionid = 'visitor-1432133168';
+        var isLeavingMessage = '0';
+        var isRobot = '';
+        var robotState = "1";
+        var justShowRobot = '0';
+        if(parseInt(isLeavingMessage) == 1 || (parseInt(isRobot) == 1 && parseInt(robotState) == 1)) {
+            justShowRobot = '1';
+        }
+        var documentTitle = (document.title).replace(/\\\'/g, '&#39;')
+        documentTitle = documentTitle.replace(/\'/g, '&#39;')
+        documentTitle = documentTitle.replace(/\\/g, '&#92;')
+
+        var xiSwfUrlStr = "playerProductInstall.swf";
+        var flashvars = {};
+
+        //flash所需传的参数
+        flashvars.logurl = encodeURIComponent("http://kefu.qycn.com/index.php?c=writeLog&type=vclient");
+        flashvars.groupid = groupid;
+        flashvars.visitorid = visitorid;
+        flashvars.clerkid = clerkid;
+        flashvars.websiteid = websiteid;
+        flashvars.sessionid = sessionid;
+        flashvars.leavemsgclerkid = leavemsgclerkid;
+
+        flashvars.ipaddress = '58.100.12.244';
+        flashvars.title = encodeURIComponent(documentTitle);
+        flashvars.referrer = originPageUrl ? encodeURIComponent(originPageUrl) : encodeURIComponent(document.referrer);
+
+        if (parseInt(visitorid)) {
+            var location_href = document.location.href;
+            location_href = location_href.replace(/%3A%2F%2F/gi, '://');
+            flashvars.location = location_href;
+        } else {   //固定链接
+            var location_refever = encodeURIComponent('http://www.rhce.cc/?p=1110')
+            location_refever = location_refever.replace(/%3A%2F%2F/gi, '://');
+            var document_referrer = encodeURIComponent(document.referrer)
+            document_referrer = document_referrer.replace(/%3A%2F%2F/gi, '://');
+            flashvars.location = location_refever ? location_refever : document_referrer;
+        }
+
+        //flashvars.location = parseInt(visitorid) ? location_href : flashvars.referrer;
+        flashvars.area1 = '浙江省杭州市';
+        flashvars.area2 = '浙江';
+        flashvars.areaKey = "12";
+        flashvars.leavingMessageSetting = "1";
+
+        flashvars.noAnswerReply = encodeURIComponent("根据您当前提问内容，没有找到合适的答案。请您输入简洁、完整的问题继续提问，您也可以直接咨询人工客服。");
+        flashvars.isDisable = "0";
+
+        flashvars.isautoonline = "0";
+        flashvars.wMode = "1";
+        flashvars.cqyonlineclerkurl = "http://kfrpc1.qycn.com/cgi-bin/qyonlineclerkcgi";
+        flashvars.cqywebsiteclerkmoduleurl = "http://kfrpc6.qycn.com/cgi-bin/qywebsiteclerkserver";
+        flashvars.cqyuploadfileurl = "http://kefu.qycn.com/index.php?c=Upload";
+        flashvars.host = "http://kefu.qycn.com/";
+        flashvars.colorValue = "red";
+        flashvars.miniColorValue = "red";
+        flashvars.admin_url = "kf/index_tg.html";
+        flashvars.langfile = "http://kefu.qycn.com/vclient/themes/zh-cn.xml?v3.1.1014";
+        flashvars.emotion = "http://kefu.qycn.com/vclient/chat/assets/emotions/zh-cn.xml";
+        flashvars.adver_state = "1";
+        flashvars.adver_picurl = "http://kefu.qycn.com/";
+        flashvars.adver_link = "";
+        flashvars.robot_state = "1";
+        flashvars.robot_isautohide = "0";
+        flashvars.robot_name = "智能客服小C";
+        flashvars.robot_icourl = "http://kefu.qycn.com/templates/images/kf_cp/automan.png";
+        flashvars.robot_welcomewords = "%E6%82%A8%E5%A5%BD%EF%BC%8C%E6%88%91%E6%98%AF%E6%99%BA%E8%83%BD%E5%AE%A2%E6%9C%8D%E5%B0%8FC%EF%BC%8C%E7%8E%B0%E5%9C%A8%E7%94%B1%E6%88%91%E4%B8%BA%E6%82%A8%E6%9C%8D%E5%8A%A1%E3%80%82%E8%AF%B7%E6%82%A8%E8%BE%93%E5%85%A5%E9%9C%80%E8%A6%81%E5%92%A8%E8%AF%A2%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%8C%E6%88%91%E4%BC%9A%E5%B8%AE%E6%82%A8%E5%BF%AB%E9%80%9F%E6%89%BE%E5%88%B0%E5%90%88%E9%80%82%E7%9A%84%E7%AD%94%E6%A1%88%E3%80%82";
+        flashvars.ROBOT_URL = "http://cckfrobot.qycn.com/ask";
+        flashvars.justShowRobot = justShowRobot;
+        flashvars.miniWelcome = "%3Cstrong%3E%3Cspan+style%3D%22color%3A%23FF0000%3B%22%3E%E9%A6%96%E6%9C%9F%E8%99%9A%E6%8B%9F%E5%8C%962%E6%9C%888%E6%97%A5%E5%BC%80%E8%AF%BE%EF%BC%8C%E5%8F%AA%E8%A6%812980%3C%2Fspan%3E%3Ca+href%3D%22http%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fspm%3Da1z10.1.w4004-6290411729.4.aKL1xa%26id%3D38215246093%22+target%3D%22_blank%22%3E%3Cspan+id%3D%22__kindeditor_bookmark_start_14__%22%3E%3C%2Fspan%3E%26nbsp%3B%E8%AF%A6%E6%83%85%26gt%3B%26gt%3B%3C%2Fa%3E%3C%2Fstrong%3E%3Cbr+%2F%3E";
+        flashvars.sessionId = sessionid;
+
+        var swfVersionStr = "10.0.0";
+        var params = {};
+        params.quality = "high";
+        params.bgcolor = "#C19D99";
+        params.allowscriptaccess = "sameDomain";
+        params.allowfullscreen = "true";
+        var attributes = {};
+        attributes.id = "chatwindow";
+        attributes.name = "chatwindow";
+        attributes.align = "middle";
+        createEmbedSWFObject("chatwindow.swf", 'flashContent', 1, 1, swfVersionStr, xiSwfUrlStr, flashvars, params, attributes, 'display:block;text-align:left;');
+
+        //history
+        var swfVersionStr = "10.0.0";
+
+        var xiSwfUrlStr = "playerProductInstall.swf";
+        var flashvars2 = {};
+        var params2 = {};
+
+        flashvars2.upSkinUrl = "assets/images/saveHistory.gif";
+        params2.quality = "high";
+        params2.wmode = "transparent";
+
+        var attributes2 = {};
+        attributes2.id = "saveChatHitstoryButton";
+        attributes2.name = "saveChatHitstoryButton";
+        attributes2.align = "middle";
+
+        createEmbedSWFObject("savechathistorybutton.swf", 'uploadSWFButton', 17, 17, swfVersionStr, xiSwfUrlStr, flashvars2, params2, attributes2, 'display:block;text-align:left;');
+
+    </script><style media="screen" type="text/css">#flashContent {visibility:hidden}#flashContent {display:block;text-align:left;}#uploadSWFButton {visibility:hidden}#uploadSWFButton {display:block;text-align:left;}</style>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var chat = new QYChatRunInit('{\"visitorInfoRegIsOpen\":0,\"robotState\":1,\"emotionImgPath\":\"http:\\/\\/kefu.qycn.com\\/vclient\\/chat\\/assets\\/emotions\\/\",\"fileUploadFlashAddr\":\"assets\\/js\\/plupload.flash.swf\",\"fileDownloadAddr\":\"http:\\/\\/kefu.qycn.com\\/vclient\\/download.php\",\"version\":\"2.5.0.6347\",\"language\":\"zh-cn\",\"imgPath\":\"http:\\/\\/kefu.qycn.com\\/vclient\\/chat\\/assets\\/images\\/\",\"fileTypePath\":\"http:\\/\\/kefu.qycn.com\\/vclient\\/chat\\/assets\\/filetype\\/\",\"fileUploadFileAddr\":\"http:\\/\\/kefu.qycn.com\\/vclient\\/upload.php\",\"assessAddr\":\"http:\\/\\/kefu.qycn.com\\/vclient\\/chat\\/assess.php\",\"openAssess\":1,\"companyLogo\":\"app\\/upload\\/nopic.jpg\",\"companyDesc\":\"\\u60a8\\u597d\\uff01\\u6b22\\u8fce\\u60a8\\u8bbf\\u95ee\\u8001\\u6bb5\\u5de5\\u4f5c\\u5ba4\\uff01<\\/br><br/>\\u8001\\u6bb5\\u5de5\\u4f5c\\u5ba4\\u4e13\\u6ce8\\u4e8eLinux\\u8fdc\\u7a0b\\u57f9\\u8bad\\u3002<\\/br>\\u57f9\\u8bad\\u8303\\u56f4\\uff1aRHCE\\uff0cRHCA\\uff0cshell\\uff0cMySQL\\uff0cLinux\\u96c6\\u7fa4\",\"companyLogoUrl\":\"http:\\/\\/www.rhce.cc\",\"wMode\":\"mini\",\"originPageTitle\":\"sed%3A%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d+%7C+%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4\",\"originPageUrl\":\"http://www.rhce.cc/?p=1110\",\"originPageReferver\":\"http://www.rhce.cc/?p=1110\",\"visitorId\":\"456488377\",\"clerkId\":\"\",\"websiteId\":\"33188\",\"isLeavingMessage\":\"0\",\"isRobot\":\"\",\"clientUrl\":\"\",\"visitorRegState\":\"0\",\"allUploadImages\":\"jpg,gif,png\",\"allUploadTxTs\":\"doc,docx,ppt,pptx,xlsx,xls,txt,et,dps,wps,html,htm\",\"allUploadZips\":\"zip,rar,7z,tar,tz,gz\",\"allAllowFilesType\":\"*\",\"allowUploadFileSize\":[\"5mb\",\"5242880\"],\"adverState\":1,\"adverPicurl\":\"http:\\/\\/kefu.qycn.com\\/?2.5.0.6347\",\"adverLink\":\"\",\"adverWorkStatus\":1,\"floatAd\":{\"adUrl\":\"\",\"adImage\":\"\",\"adBgColor\":\"\",\"displayTime\":\"\"},\"fonts\":[\"\\u5b8b\\u4f53\",\"\\u4eff\\u5b8b\",\"\\u9ed1\\u4f53\",\"\\u6977\\u4f53\",\"\\u96b6\\u4e66\",\"\\u5e7c\\u5706\",\"\\u5fae\\u8f6f\\u96c5\\u9ed1\",\"\\u65b0\\u5b8b\\u4f53\",\"Arial\",\"Book Antiqua\",\"Century Gothic\",\"Courier New\",\"Georgia\",\"Impact\",\"PmingLiu\",\"Tahoma\",\"Times New Roman\",\"Verdana\"],\"fontSizes\":[\"12\",\"13\",\"14\",\"15\",\"16\",\"17\",\"18\",\"19\",\"20\",\"21\",\"22\",\"23\",\"24\"],\"webSite\":\"http:\\/\\/kefu.qycn.com\\/\",\"webChatPath\":\"http:\\/\\/kefu.qycn.com\\/vclient\\/\",\"sentInputtingTime\":1000,\"qiyeQQImage\":\"http:\\/\\/kefu.qycn.com\\/vclient\\/chat\\/assets\\/images\\/qq.gif\",\"windowMinHeight\":480,\"windowMinWidth\":640,\"screenCatchPlus\":{\"activex\":\"http:\\/\\/kf.qycn.com\\/index.php?c=Upload&a=activex\",\"version\":\"1,0,0,3\"},\"leavingMessageSetting\":1,\"statisticFileAddress\":\"http:\\/\\/kefu.qycn.com\\/vclient\\/chat\\/chatStatistic.php\"}', "<?xml version=\"1.0\" encoding=\"utf-8\"?><data><item name=\"微笑\"     pic=\"0.swf\"     fix=\"0fix.jpg\"     symbol=\"/:801\" textsymbol=\":-)\"/><item name=\"爱慕\"     pic=\"1.swf\"     fix=\"1fix.jpg\"     symbol=\"/:802\" textsymbol=\"&lt;※\"/><item name=\"悲泣\"     pic=\"2.swf\"	    fix=\"2fix.jpg\"     symbol=\"/:803\" textsymbol=\"(T_T)\"/><item name=\"鄙视你\"   pic=\"3.swf\"	    fix=\"3fix.jpg\"     symbol=\"/:804\" textsymbol=\"q(~~)p\"/><item name=\"闭嘴\"     pic=\"4.swf\"	    fix=\"4fix.jpg\"     symbol=\"/:805\" textsymbol=\":-x\"/><item name=\"不会吧\"   pic=\"5.swf\"	    fix=\"5fix.jpg\"     symbol=\"/:806\" textsymbol=\"囧\"/><item name=\"财迷\"     pic=\"6.swf\"	    fix=\"6fix.jpg\"     symbol=\"/:807\" textsymbol=\"$_$\"/><item name=\"查找\"     pic=\"7.swf\"	    fix=\"7fix.jpg\"     symbol=\"/:808\" textsymbol=\"@_*\"/><item name=\"大哭\"     pic=\"8.swf\"	    fix=\"8fix.jpg\"     symbol=\"/:809\" textsymbol=\"T_T\"/><item name=\"大笑\"     pic=\"9.swf\"	    fix=\"9fix.jpg\"     symbol=\"/:810\" textsymbol=\":-D\"/><item name=\"呆若木鸡\" pic=\"10.swf\"	fix=\"10fix.jpg\"    symbol=\"/:811\" textsymbol=\":-O\"/><item name=\"愤怒\"     pic=\"11.swf\"	fix=\"11fix.jpg\"    symbol=\"/:812\" textsymbol=\"&gt;_&lt;\"/><item name=\"鬼脸\"     pic=\"12.swf\"	fix=\"12fix.jpg\"    symbol=\"/:813\" textsymbol=\"[鬼脸]\"/><item name=\"害羞\"     pic=\"13.swf\"	fix=\"13fix.jpg\"    symbol=\"/:814\" textsymbol=\"(\"/><item name=\"怀疑\"     pic=\"14.swf\"	fix=\"14fix.jpg\"    symbol=\"/:815\" textsymbol=\"[怀疑]\"/><item name=\"加油\"     pic=\"15.swf\"	fix=\"15fix.jpg\"    symbol=\"/:816\" textsymbol=\"*\\(^_^)/*\"/><item name=\"流汗\"     pic=\"16.swf\"	fix=\"16fix.jpg\"    symbol=\"/:817\" textsymbol=\"= =b\"/><item name=\"流口水\"   pic=\"17.swf\"	fix=\"17fix.jpg\"    symbol=\"/:818\" textsymbol=\"(￣﹁￣)\"/><item name=\"露齿笑\"	pic=\"18.swf\"	fix=\"18fix.jpg\"    symbol=\"/:819\" textsymbol=\"[露齿笑]\"/><item name=\"亲吻\"	    pic=\"19.swf\"	fix=\"19fix.jpg\"    symbol=\"/:820\" textsymbol=\":-*\"/><item name=\"偷笑\"	    pic=\"20.swf\"	fix=\"20fix.jpg\"    symbol=\"/:821\" textsymbol=\"[偷笑]\"/><item name=\"吐\"	    pic=\"21.swf\"	fix=\"21fix.jpg\"    symbol=\"/:822\" textsymbol=\"[吐]\"/><item name=\"吐舌头\"	pic=\"22.swf\"	fix=\"22fix.jpg\"    symbol=\"/:823\" textsymbol=\":-P\"/><item name=\"委屈\"	    pic=\"23.swf\"	fix=\"23fix.jpg\"    symbol=\"/:824\" textsymbol=\"(︶︿︶)\"/><item name=\"忧伤\"     pic=\"24.swf\"	fix=\"24fix.jpg\"    symbol=\"/:825\" textsymbol=\":-(\"/><item name=\"晕\"	    pic=\"25.swf\"	fix=\"25fix.jpg\"    symbol=\"/:826\" textsymbol=\"(×_×)\"/><item name=\"安慰\"	    pic=\"26.swf\"	fix=\"26fix.jpg\"    symbol=\"/:827\" textsymbol=\"[安慰]\"/><item name=\"疑问\"	    pic=\"27.swf\"	fix=\"27fix.jpg\"    symbol=\"/:828\" textsymbol=\"[疑问]\"/><item name=\"抓狂\"	    pic=\"28.swf\"	fix=\"28fix.jpg\"    symbol=\"/:829\" textsymbol=\"[抓狂]\"/><item name=\"胜利\"	    pic=\"29.swf\"	fix=\"29fix.jpg\"    symbol=\"/:830\" textsymbol=\"[胜利]\"/><item name=\"激动\"	    pic=\"30.swf\"	fix=\"30fix.jpg\"    symbol=\"/:831\" textsymbol=\"[激动]\"/><item name=\"惊讶\"	    pic=\"31.swf\"	fix=\"31fix.jpg\"    symbol=\"/:832\" textsymbol=\"[惊讶]\"/><item name=\"再见\"	    pic=\"32.swf\"	fix=\"32fix.jpg\"    symbol=\"/:833\" textsymbol=\"[再见]\"/><item name=\"强利害\"   pic=\"33.swf\"	fix=\"33fix.jpg\"    symbol=\"/:834\" textsymbol=\"[强利害]\"/><item name=\"弱差\"	    pic=\"34.swf\"	fix=\"34fix.jpg\"    symbol=\"/:835\" textsymbol=\"[弱差]\"/><item name=\"不需要\"   pic=\"35.swf\"	fix=\"35fix.jpg\"    symbol=\"/:836\" textsymbol=\"[不需要]\"/><item name=\"对不起\"   pic=\"36.swf\"	fix=\"36fix.jpg\"    symbol=\"/:837\" textsymbol=\"[对不起]\"/><item name=\"服了你\"	pic=\"37.swf\"	fix=\"37fix.jpg\"    symbol=\"/:838\" textsymbol=\"[服了你]\"/><item name=\"思考\"	    pic=\"38.swf\"	fix=\"38fix.jpg\"    symbol=\"/:839\" textsymbol=\"[思考]\"/><item name=\"无聊\"	    pic=\"39.swf\"	fix=\"39fix.jpg\"    symbol=\"/:840\" textsymbol=\"[无聊]\"/><item name=\"无奈\"	    pic=\"40.swf\"	fix=\"40fix.jpg\"    symbol=\"/:841\" textsymbol=\"[无奈]\"/><item name=\"遗憾\"	    pic=\"41.swf\"	fix=\"41fix.jpg\"    symbol=\"/:842\" textsymbol=\"[遗憾]\"/><item name=\"生病\"	    pic=\"42.swf\"	fix=\"42fix.jpg\"    symbol=\"/:843\" textsymbol=\"[生病]\"/><item name=\"天使\"	    pic=\"43.swf\"	fix=\"43fix.jpg\"    symbol=\"/:844\" textsymbol=\"[天使]\"/><item name=\"开心\"	    pic=\"44.swf\"	fix=\"44fix.jpg\"    symbol=\"/:845\" textsymbol=\"[开心]\"/><item name=\"生气\"	    pic=\"45.swf\"	fix=\"45fix.jpg\"    symbol=\"/:846\" textsymbol=\"[生气]\"/><item name=\"邪恶\"	    pic=\"46.swf\"	fix=\"46fix.jpg\"    symbol=\"/:847\" textsymbol=\"[邪恶]\"/><item name=\"握手\"	    pic=\"47.swf\"	fix=\"47fix.jpg\"    symbol=\"/:848\" textsymbol=\"[握手]\"/><item name=\"喝茶\"	    pic=\"48.swf\"	fix=\"48fix.jpg\"    symbol=\"/:849\" textsymbol=\"[喝茶]\"/><item name=\"花\"	    pic=\"49.swf\"	fix=\"49fix.jpg\"    symbol=\"/:850\" textsymbol=\"[花]\"/><item name=\"礼品\"	    pic=\"50.swf\"	fix=\"50fix.jpg\"    symbol=\"/:851\" textsymbol=\"[礼品]\"/></data>", "");
+        })
+
+    </script>
+
+    <script for="CCWebCtrl" event="OutputPictureURL()">
+        chat.uploadCatchScreen(CCWebCtrl.GetPictureURL);
+    </script>
+
+</head>
+
+<body style="overflow: hidden; padding:0px;">
+
+<div class="Blue_main_box cls" id="chatWindowBox" style="overflow: hidden;margin-top:0px; padding:0px;">
+    <div class="main_left" id="main_left" style="overflow: hidden; margin-top: 0px; height: 221px;">
+        <div id="innerLeft">
+            <div class="Display_box" id="chatMessageAreaBox" style="margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px; border-bottom: medium none; height: 146px;">
+
+                <div class="title" id="chatMessageTitle"><strong><span style="color:#FF0000;">首期虚拟化2月8日开课，只要2980</span><a href="http://item.taobao.com/item.htm?spm=a1z10.1.w4004-6290411729.4.aKL1xa&amp;id=38215246093" target="_blank"><span id="__kindeditor_bookmark_start_14__"></span>&nbsp;详情&gt;&gt;</a></strong><br></div>
+
+                <div class="ms_info" id="chatMessageArea" style="margin-top: 0px; margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px">
+                </div>
+
+            </div>
+
+            <div style="height: 20px; padding: 5px 0px;" class="fun1_box" id="messageStyleSettingPanel">
+                    <span>
+                        <select name="text_in_font_type" class="t_inp" style="width:100px;" id="fontFamilty"><option selected="selected" value="宋体">宋体</option><option value="仿宋">仿宋</option><option value="黑体">黑体</option><option value="楷体">楷体</option><option value="隶书">隶书</option><option value="幼圆">幼圆</option><option value="微软雅黑">微软雅黑</option><option value="新宋体">新宋体</option><option value="Arial">Arial</option><option value="Book Antiqua">Book Antiqua</option><option value="Century Gothic">Century Gothic</option><option value="Courier New">Courier New</option><option value="Georgia">Georgia</option><option value="Impact">Impact</option><option value="PmingLiu">PmingLiu</option><option value="Tahoma">Tahoma</option><option value="Times New Roman">Times New Roman</option><option value="Verdana">Verdana</option></select>
+                    </span>
+
+                    <span>
+                        <select id="fontSize" name="text_in_font_size" class="h_inp" style="width:50px; "><option selected="selected" value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option></select>
+                    </span>
+
+                    <span alt="颜色" title="颜色" interpret="颜色" complete="n" lable="interpret" displaytext="n">
+                        <input id="colorPickerButton" class="colorPickerButton" type="button">
+                        <div style="position: absolute; display: none; left: 0px; top: -46px;" id="colorPickerObj"><div class="colorPickTitle"><p align="center">点击拾取颜色</p></div><div class="colorValue" style="background:#fe0000;cursor:pointer"></div><div class="colorValue" style="background:#fd7f06;cursor:pointer "></div><div class="colorValue" style="background:#008100;cursor:pointer "></div><div class="colorValue" style="background:#0080ca;cursor:pointer "></div><div class="colorValue" style="background:#07fbff;cursor:pointer "></div><div class="colorValue" style="background:#654946;cursor:pointer "></div><div class="colorValue" style="background:#807600;cursor:pointer "></div><div class="colorValue" style="background:#fc81ff;cursor:pointer "></div><div class="colorValue" style="background:#fc3e80;cursor:pointer "></div><div class="colorValue" style="background:#8200fe;cursor:pointer "></div><div class="colorValue" style="background:#000000;cursor:pointer "></div><div class="colorValue" style="background:#818181;cursor:pointer "></div></div>
+                    </span>
+
+                     <span alt="加粗" title="加粗" interpret="加粗" complete="n" lable="interpret" displaytext="n">
+                        <input id="fontTypeB" class="fontTypeB" type="button">
+                    </span>
+
+                     <span alt="斜体" title="斜体" interpret="斜体" complete="n" lable="interpret" displaytext="n">
+                        <input id="fontTypeI" class="fontTypeI" type="button">
+                    </span>
+
+                     <span alt="下划线" title="下划线" interpret="下划线" complete="n" lable="interpret" displaytext="n">
+                        <input id="fontTypeU" class="fontTypeU" type="button">
+                    </span>
+            </div>
+
+            <div class="Function_box" style="height: 31px;">
+                <div class="Function_top" id="chatToolBar" style="position: relative;">
+                    <ul class="cls">
+                        <li class="fun1" style="cursor: pointer">
+                            <a href="#">
+                            <span class="iconFont" id="fontButton" alt="字体" title="字体" interpret="字体" complete="n" lable="interpret" displaytext="n"></span>
+                            </a>
+                        </li>
+
+                        <li class="fun4" style="cursor: pointer">
+                            <a href="#">
+
+                            <span class="catchScreenButton" id="catchScreenButton" alt="截图" title="截图" interpret="截图" complete="n" lable="interpret" displaytext="n"></span>
+                            </a>
+                        </li>
+
+                        <li class="fun5" style="cursor: pointer" interpret="保存会话" complete="n" lable="interpret" title="保存会话" displaytext="n">
+                            <a href="#" style="width:25px;">
+
+                                <div style="padding-top:4px; padding-left: 4px; height: 20px;">
+                                    <object data="a_data/savechathistorybutton.swf" name="saveChatHitstoryButton" id="saveChatHitstoryButton" type="application/x-shockwave-flash" align="middle" height="17" width="17"><param value="high" name="quality"><param value="transparent" name="wmode"><param value="upSkinUrl=assets/images/saveHistory.gif" name="flashvars"></object>
+                                </div>
+
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div style="position: absolute; width: 100%; height: 73px; display: none; background: none repeat scroll 0% 0% rgb(255, 255, 255); top: 0px; z-index: 2147483647; opacity: 0.3;" id="inputPanelMask">
+                    <div id="inputPanelToolMask" style="height: 31px; width: 100%; background: none repeat scroll 0% 0% white; opacity: 0.5;"></div>
+                    <div id="inputPaneleditorMask" style="height: 42px; width: 100%; background: none repeat scroll 0% 0% rgb(128, 128, 128); opacity: 0.5;"></div>
+                </div>
+
+                <div style="height: 43px;background: #fff; width: 100%;" id="chatMessageInputBox">
+                    <div class="textarea" id="chatMessageInputPanel" style="width: 248px; height: 43px; background: none repeat scroll 0% 0% rgb(255, 255, 255); float: left; clear: none;"><iframe style="padding: 0px; width: 100%; height: 100%;" frameborder="0"></iframe></div>
+                    <div id="sentButton" style="width: 52px; padding-top: 14px; height: 38px; cursor: pointer; text-align: center; clear: none; float: right; left: 161px;">
+                        <p><span interpret="发送" complete="n" class="pointer">发送</span></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    var iniConfig = new (QYChat.config.iniConfig)();
+    iniConfig.addConfigObj({
+        'windowResize': true
+    });
+
+    var layOutSetter = new (QYChat.layerOut)();
+    var windowLayerOut = new (QYMiniChatExtra.windowLayerOut)(layOutSetter, iniConfig);
+    var chatMessageAreaLayerOut = new (QYChat.chatMessageAreaLayerOut)(iniConfig, layOutSetter);
+    layOutSetter.entireLayerOut();
+    chatMessageAreaLayerOut = layOutSetter = windowLayerOut = iniConfig = '';
+</script>
+
+<object data="a_data/chatwindow.swf" name="chatwindow" id="chatwindow" type="application/x-shockwave-flash" align="middle" height="1" width="1"><param value="high" name="quality"><param value="#C19D99" name="bgcolor"><param value="sameDomain" name="allowscriptaccess"><param value="true" name="allowfullscreen"><param value="logurl=http%3A%2F%2Fkefu.qycn.com%2Findex.php%3Fc%3DwriteLog%26type%3Dvclient&amp;groupid=0&amp;visitorid=456488377&amp;clerkid=0&amp;websiteid=33188&amp;sessionid=visitor-1432133168&amp;leavemsgclerkid=0&amp;ipaddress=58.100.12.244&amp;title=sed%3A%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4&amp;referrer=http%3A%2F%2Fwww.rhce.cc%2F%3Fp%3D1110&amp;location=http://kefu.qycn.com/vclient/chat/?websiteid=33188&amp;visitorid=456488377&amp;&amp;m=pc&amp;originPageTitle=sed%3A%E5%88%A0%E9%99%A4%E5%91%BD%E4%BB%A4d%20%7C%20%E8%80%81%E6%AE%B5%E5%B7%A5%E4%BD%9C%E5%AE%A4&amp;originPageUrl=http://www.rhce.cc%2F%3Fp%3D1110&amp;sessionid=visitor-1432133168&amp;winmode=1&amp;area1=浙江省杭州市&amp;area2=浙江&amp;areaKey=12&amp;leavingMessageSetting=1&amp;noAnswerReply=%E6%A0%B9%E6%8D%AE%E6%82%A8%E5%BD%93%E5%89%8D%E6%8F%90%E9%97%AE%E5%86%85%E5%AE%B9%EF%BC%8C%E6%B2%A1%E6%9C%89%E6%89%BE%E5%88%B0%E5%90%88%E9%80%82%E7%9A%84%E7%AD%94%E6%A1%88%E3%80%82%E8%AF%B7%E6%82%A8%E8%BE%93%E5%85%A5%E7%AE%80%E6%B4%81%E3%80%81%E5%AE%8C%E6%95%B4%E7%9A%84%E9%97%AE%E9%A2%98%E7%BB%A7%E7%BB%AD%E6%8F%90%E9%97%AE%EF%BC%8C%E6%82%A8%E4%B9%9F%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E5%92%A8%E8%AF%A2%E4%BA%BA%E5%B7%A5%E5%AE%A2%E6%9C%8D%E3%80%82&amp;isDisable=0&amp;isautoonline=0&amp;wMode=1&amp;cqyonlineclerkurl=http://kfrpc1.qycn.com/cgi-bin/qyonlineclerkcgi&amp;cqywebsiteclerkmoduleurl=http://kfrpc6.qycn.com/cgi-bin/qywebsiteclerkserver&amp;cqyuploadfileurl=http://kefu.qycn.com/index.php?c=Upload&amp;host=http://kefu.qycn.com/&amp;colorValue=red&amp;miniColorValue=red&amp;admin_url=kf/index_tg.html&amp;langfile=http://kefu.qycn.com/vclient/themes/zh-cn.xml?v3.1.1014&amp;emotion=http://kefu.qycn.com/vclient/chat/assets/emotions/zh-cn.xml&amp;adver_state=1&amp;adver_picurl=http://kefu.qycn.com/&amp;adver_link=&amp;robot_state=1&amp;robot_isautohide=0&amp;robot_name=智能客服小C&amp;robot_icourl=http://kefu.qycn.com/templates/images/kf_cp/automan.png&amp;robot_welcomewords=%E6%82%A8%E5%A5%BD%EF%BC%8C%E6%88%91%E6%98%AF%E6%99%BA%E8%83%BD%E5%AE%A2%E6%9C%8D%E5%B0%8FC%EF%BC%8C%E7%8E%B0%E5%9C%A8%E7%94%B1%E6%88%91%E4%B8%BA%E6%82%A8%E6%9C%8D%E5%8A%A1%E3%80%82%E8%AF%B7%E6%82%A8%E8%BE%93%E5%85%A5%E9%9C%80%E8%A6%81%E5%92%A8%E8%AF%A2%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%8C%E6%88%91%E4%BC%9A%E5%B8%AE%E6%82%A8%E5%BF%AB%E9%80%9F%E6%89%BE%E5%88%B0%E5%90%88%E9%80%82%E7%9A%84%E7%AD%94%E6%A1%88%E3%80%82&amp;ROBOT_URL=http://cckfrobot.qycn.com/ask&amp;justShowRobot=0&amp;miniWelcome=%3Cstrong%3E%3Cspan+style%3D%22color%3A%23FF0000%3B%22%3E%E9%A6%96%E6%9C%9F%E8%99%9A%E6%8B%9F%E5%8C%962%E6%9C%888%E6%97%A5%E5%BC%80%E8%AF%BE%EF%BC%8C%E5%8F%AA%E8%A6%812980%3C%2Fspan%3E%3Ca+href%3D%22http%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fspm%3Da1z10.1.w4004-6290411729.4.aKL1xa%26id%3D38215246093%22+target%3D%22_blank%22%3E%3Cspan+id%3D%22__kindeditor_bookmark_start_14__%22%3E%3C%2Fspan%3E%26nbsp%3B%E8%AF%A6%E6%83%85%26gt%3B%26gt%3B%3C%2Fa%3E%3C%2Fstrong%3E%3Cbr+%2F%3E&amp;sessionId=visitor-1432133168" name="flashvars"></object>
+
+<div id="ccweb"></div>
+
+
+
+
+</body></html>

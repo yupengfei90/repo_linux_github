@@ -1,0 +1,11 @@
+Script started on 2015年06月08日 星期一 22时38分47秒
+]0;root@localhost:~/script[?1034h[root@localhost script]# ls
+file.txt  IFS.sh  output.session  password.sh  timing.log
+]0;root@localhost:~/script[root@localhost script]# file file.txt 
+file.txt: ASCII text
+]0;root@localhost:~/script[root@localhost script]# ls -d
+[0m[01;34m.[0m
+[m]0;root@localhost:~/script[root@localhost script]# exit
+exit
+
+Script done on 2015年06月08日 星期一 22时39分04秒

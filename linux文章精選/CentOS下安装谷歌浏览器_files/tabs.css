@@ -1,0 +1,42 @@
+.sonMenu
+{
+	height: 42px;
+}
+.sonMenu UL
+{
+	height: 42px;
+}
+.sonMenu UL LI
+{
+	float: left;
+}
+.sonMenu UL LI A
+{
+	line-height: 42px;
+	color: #20A2D9;
+	font-size: 13px;
+	padding: 2px 10px;
+}
+.sonMenu UL LI A:hover
+{
+	background-color: #48B5E4;
+	color: #FFFFFF;
+}
+#mytop
+{
+	height: 148px;
+}
+.threead
+{
+	padding: 0;
+	border: 1px solid #BEDFF8;
+	height: 90px;
+	width: 958px;
+	margin-top: 4px;
+}
+.threead A
+{
+	display: block;
+	float: left;
+	padding: 2px;
+}

@@ -1,0 +1,88 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+body{ font-size:12px; text-align:left; font-family:"宋体"; background:#FEFEFE; height:100%}
+a{ color:#656565;text-decoration:none;outline:none}
+*{margin:0;padding:0;}
+img { border:none;}
+ul,li{ padding:0px; list-style:none;}
+select,input { vertical-align:middle}
+
+.left{ float:left}
+.right{ float:right}
+.Enter {word-wrap:break-word; word-break:keep-all; white-space:normal;}
+.Abridge { text-overflow: ellipsis; -moz-text-overflow: ellipsis; overflow:hidden; white-space:nowrap;}
+.middle{ vertical-align:middle}
+.center{ text-align:center}
+.text_center{ text-align:center}
+.right_boder{}
+.cls {zoom:1;}
+.cls:after {content:"";visibility:hidden;display:block;height:0;clear:both;}
+.mt5{ margin-top:5px}
+
+select{border: solid 1px #c0bfbf}
+
+/**title**/
+#chatTitle{ width:100%;height:39px; background: red }
+
+/*蓝色风格*/
+.Blue_main_box{  padding:0px; background:#fff; color:#38476c;}
+.Blue_main_box .Display_box{ overflow-y:auto; overflow-x:hidden; padding:5px 7px; background:#FFF url(../images/bg_36_blue.gif) repeat-x top ; line-height:24px; height:350px;   }
+/**.Blue_main_box .Display_box .title{ line-height:18px }**/
+.Blue_main_box .Display_box .title img{ vertical-align:-2px}
+.Blue_main_box .Function_box{ border-top:1px solid #dadada;  position:relative }
+.Blue_main_box .Function_box .fun1_box{background: none repeat scroll 0 0 #fff; border:1px solid #ebebeb ; border-bottom:none;     color: #000000;    display: none ;    height: 25px;    left: -1px;    line-height: 21px;    padding-top: 3px;    position: absolute;    top: -30px;    width: 99.2%;    z-index: 3; padding-left:10px;}
+.Blue_main_box .Function_top{ }
+.Blue_main_box .Function_top ul{ border-bottom:1px solid #dadada; padding:3px 10px 3px}
+.Blue_main_box .Function_top ul li{ float:left; margin-right:9px; cursor:pointer}
+.Blue_main_box .Function_top ul li a{ display:block}
+.Blue_main_box .Function_top ul li a:hover{ background:url(../images/fun_bg.gif) no-repeat 0 0; width:24px; height:24px;}
+
+.Blue_main_box .main_right{ float:right; width:198px; border:1px solid #ebebeb;background:#FFF url(../images/bg_36_blue.gif) repeat-x top ; height:527px; position:relative }
+
+.Blue_main_box #main_left #innerLeft #chatMessageAreaBox #chatMessageTitle  {margin: 0px; margin-top: 0px; margin-bottom: 0px;padding-top: 5px;padding-bottom:0px;padding-left: 0px;}
+
+.textarea1{ width:100%; height:115px; border:none;border:1px solid none; resize: none; overflow:auto}
+
+label.pointer{cursor: pointer}
+
+#messageStyleSettingPanel{    border-top:1px solid #dadada;    border-bottom:none;}
+
+#messageStyleSettingPanel span{    float: left; margin-left: 5px; height: 20px;}
+
+.Blue_main_box #main_left #innerLeft #messageStyleSettingPanel #fontTypeB { width:20px;}
+
+.Blue_main_box #main_left #innerLeft #messageStyleSettingPanel #fontTypeI { width:20px;}
+
+.Blue_main_box #main_left #innerLeft #messageStyleSettingPanel #fontTypeU { width:20px;}
+
+#messageStyleSettingPanel input,#messageStyleSettingPanel select{    cursor: pointer;}
+
+#messageStyleSettingPanel input{    width:20px; height: 20px; border: none;}
+
+.Blue_main_box #main_left #innerLeft #messageStyleSettingPanel  { cursor: pointer;display: none; position: relative; display: none;}
+
+.Blue_main_box #main_left #innerLeft .Function_box  .Function_top ul li a span{ cursor: pointer;width: 24px; height: 24px;  display: block; clear: none}
+
+.Blue_main_box #main_left #innerLeft .Function_box  .Function_top #toolMask{position: absolute;width: 170px; height: 31px; display:none; top: 0px;z-index:9999999999}
+
+#colorPickerObj {display: block;  width: 241px; height: 40px; border: 1px solid #808080; padding: 1px; display: none; background: #ffffff}
+#colorPickerObj .colorPickTitle{width: 100%; height: 20px; }
+#colorPickerObj .colorValue{ height: 18px;width: 18px; background: pink; float: left; margin-left:2px;}
+
+
+/** 消息颜色**/
+.Blue_main_box #main_left #innerLeft #chatMessageAreaBox  #chatMessageArea .sentMessageTitle {color:#066e44}
+.Blue_main_box #main_left #innerLeft #chatMessageAreaBox  #chatMessageArea .receiveMessageTitle {color:#044b96}
+.Blue_main_box #main_left #innerLeft #chatMessageAreaBox  #chatMessageArea .CCRobotMessage{color:#535d69}
+.Blue_main_box #main_left #innerLeft #chatMessageAreaBox  #chatMessageArea .queue{color:#0066cc}
+.Blue_main_box #main_left #innerLeft #chatMessageAreaBox  #chatMessageArea .noticeMessage{}
+.Blue_main_box #main_left #innerLeft #chatMessageAreaBox  #chatMessageArea .errorMessage{}
+
+.Blue_main_box #main_left #innerLeft #chatMessageAreaBox  #chatMessageArea a{color: blue;  text-decoration: underline; cursor: pointer;}
+
+/**缩进**/
+.Blue_main_box #main_left #innerLeft #chatMessageAreaBox  #chatMessageArea .textIndent{ padding-left: 12px;}
+.Blue_main_box #main_left #innerLeft #chatMessageAreaBox  #chatMessageArea .CCRobotMessage{ padding-left: 12px;}
+
+

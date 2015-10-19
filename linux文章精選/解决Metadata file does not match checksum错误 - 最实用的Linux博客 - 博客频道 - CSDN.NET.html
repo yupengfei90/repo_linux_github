@@ -1,0 +1,934 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><script src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ga.js" async="" type="text/javascript"></script><script data-view="original" data-preview="0" data-entry="1" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/allmobilize.js" charset="utf-8" type="text/javascript" id="allmobilize"></script><style type="text/css"></style><script src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/m.js" defer="defer" charset="utf-8" type="text/javascript"></script>
+
+    <style type="text/css"></style>
+ <meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" media="handheld" href="#">
+
+    <title>解决Metadata file does not match checksum错误 - 最实用的Linux博客
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="原贴:http://www.linuxfly.org/post/174/[解]处理auxpropfunc error no mechanism available错误[原]putty使用密钥登陆OpenSSH	Nov	16			[原]解决Metadata file does not match checksum错误   				 linu">
+    <script src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ad.js"></script>
+        <!--new top-->
+       
+        <link rel="stylesheet" href="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/index.css">
+        <!--new top-->
+
+    <link rel="Stylesheet" type="text/css" href="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/style.css">
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://blog.csdn.net/chinalinuxzend/rss/list">
+    <link rel="shortcut icon" href="http://csdnimg.cn/public/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/default.css">
+ 
+
+
+
+<script src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/share.js"></script><link type="text/css" rel="stylesheet" href="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/bdsstyle.css"><script src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/tracking.js" charset="utf-8" type="text/javascript"></script><script src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/main_002.js" charset="utf-8" type="text/javascript"></script><script src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/sm.html" async="" charset="utf-8"></script><link rel="stylesheet" type="text/css" href="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/style_003.css"><link href="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/style_002.css" rel="stylesheet" type="text/css"><script src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/logger.js"></script><link href="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/share_style0_16.css" rel="stylesheet"><link href="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/floatingPanel.css" type="text/css" rel="stylesheet"><link href="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/floatingPanel.css" type="text/css" rel="stylesheet"></head><body><iframe style="display: none;" frameborder="0"></iframe>
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/html.js" type="text/javascript"></script><div class="csdn-toolbar csdn-toolbar-skin-black ">        <div class="container row center-block ">          <div class="col-md-3 pull-left logo clearfix"><a href="http://www.csdn.net/?ref=toolbar" title="CSDN首页" target="_blank" class="icon"></a><a title="频道首页" href="http://blog.csdn.net/?ref=toolbar_logo" target="_blank" class="img blog-icon"></a></div>          <div class="pull-right login-wrap unlogin">            <ul class="btns">              <li class="loginlink"><a href="https://passport.csdn.net/account/login?ref=toolbar" target="_top">登录&nbsp;</a>|<a target="_top" href="https://passport.csdn.net/account/register?ref=toolbar">&nbsp;注册</a></li>              <li class="search">                <div class="icon on-search-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <form action="http://so.csdn.net/search" method="get" target="_blank">                      <input value="toolbar" name="ref" accesskey="2" type="hidden">                      <div class="border">                        <input placeholder="搜索" name="q" accesskey="2" type="text"><span class="icon-enter-sm"></span>                      </div>                    </form>                  </div>                </div>              </li>              <li class="favor">                <div class="icon on-favor-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div style="display:none;" class="favor-success"><span class="msg">收藏成功</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <div style="display:none;" class="favor-failed"><span class="icon-danger-lg"></span><span class="msg">收藏失败，请重新收藏</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <form role="form" class="form-horizontal favor-form">                      <div class="form-group">                        <div class="clearfix">                          <label for="input-title" class="col-sm-2 control-label">标题</label>                          <div class="col-sm-10">                            <input value="解决Metadata file does not match checksum错误 - 最实用的Linux博客 - 博客频道 - CSDN.NET" id="inputTitle" placeholder="" class="title form-control" type="text">                          </div>                        </div>                        <div class="alert alert-danger"><strong></strong>标题不能为空</div>                      </div>                      <div class="form-group">                        <label for="input-url" class="col-sm-2 control-label">网址</label>                        <div class="col-sm-10">                          <input value="http://blog.csdn.net/chinalinuxzend/article/details/3940849" id="input-url" placeholder="" class="url form-control" type="text">                        </div>                      </div>                      <div class="form-group">                        <label for="input-tag" class="col-sm-2 tag control-label">标签</label>                        <div class="col-sm-10">                          <input id="input-tag" class="form-control tag" type="text">                        </div>                      </div>                      <div class="form-group">                        <label for="input-description" class="description col-sm-2 control-label">摘要</label>                        <div class="col-sm-10">                          <textarea id="input-description" class="form-control description"></textarea>                        </div>                      </div>                      <div class="form-group">                        <div class="col-sm-offset-2 col-sm-10 ft">                          <div class="col-sm-4 pull-left">                            <div class="checkbox">                              <label>                                <input name="share" checked="checked" class="share" type="checkbox">公开                              </label>                            </div>                          </div>                          <div class="col-sm-8 pull-right favor-btns">                            <button type="button" class="cancel btn btn-default">取消</button>                            <button type="submit" class="submit btn btn-primary">收藏</button>                          </div>                        </div>                      </div>                    </form>                  </div>                </div>              </li>              <li class="notify">                <div style="display:none" class="number"></div>                <div style="display:none" class="icon-hasnotes-sm"></div>                <div id="header_notice_num"></div>                <div class="icon on-notify-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div id="note1" class="csdn_note">                      <div class="box"></div>                    <iframe src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/a.html" allowtransparency="true" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent" frameborder="0"></iframe></div>                  </div>                </div>              </li>              <li class="ugc">                <div class="icon on-ugc-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <dl>                      <dt><a href="http://geek.csdn.net/news/expert?ref=toolbar" target="_blank" class="p-news clearfix"><em class="icon"></em><span>分享资讯</span></a></dt>                      <dt><a href="http://share.csdn.net/slides/new?ref=toolbar" target="_blank" class="p-doc clearfix"><em class="icon"></em><span>传PPT/文档</span></a></dt>                      <dt><a href="http://bbs.csdn.net/topics/new?ref=toolbar" target="_blank" class="p-ask clearfix"><em class="icon"></em><span>提问题</span></a></dt>                      <dt><a href="http://write.blog.csdn.net/postedit?ref=toolbar" target="_blank" class="p-blog clearfix"><em class="icon"></em><span>写博客</span></a></dt>                      <dt><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-src clearfix"><em class="icon"></em><span>传资源</span></a></dt>                      <dt><a href="https://code.csdn.net/projects/new?ref=toolbar" target="_blank" class="c-obj clearfix"><em class="icon"></em><span>创建项目</span></a></dt>                      <dt><a href="https://code.csdn.net/snippets/new?ref=toolbar" target="_blank" class="c-code clearfix"><em class="icon"></em><span>创建代码片</span></a></dt>                    </dl>                  </div>                </div>              </li>              <li class="profile">                <div class="icon on-profile-icon"><img src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/100x100.jpg" class="curr-icon-img">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div class="bd">                      <dl class="clearfix">                        <dt class="pull-left img"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="avatar"><img src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/100x100.jpg"></a></dt>                        <dd class="info"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="nickname"></a><a class="set-nick" href="https://passport.csdn.net/account/profile">设置昵称<span class="write-icon"></span></a><span class="dec"><a class="fill-dec" href="http://my.csdn.net/" target="_blank">编辑自我介绍，让更多人了解你<span class="write-icon"></span></a></span></dd>                      </dl>                    </div>                    <div class="ft clearfix"><a target="_blank" href="http://my.csdn.net/my/account/changepwd?ref=toolbar" class="pull-left"><span class="icon-cog"></span>帐号设置</a><a href="https://passport.csdn.net/account/logout?ref=toolbar" target="_top" class="pull-right "><span class="icon-signout"></span><span class="out">退出</span></a></div>                  </div>                </div>              </li>              <li class="apps">                <div class="icon on-apps-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>社区</h5>                      </dt>                      <dd> <a href="http://blog.csdn.net/?ref=toolbar" target="_blank">博客</a></dd>                      <dd> <a href="http://bbs.csdn.net/?ref=toolbar" target="_blank">论坛</a></dd>                      <dd> <a href="http://download.csdn.net/?ref=toolbar" target="_blank">下载</a></dd>                      <dd><a href="http://share.csdn.net/?ref=toolbar" target="_blank">Share</a></dd>                      <dd><a href="http://geek.csdn.net/?ref=toolbar" target="_blank">极客头条</a></dd>                    </dl>                  </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>服务</h5>                      </dt>                      <dd> <a href="https://code.csdn.net/?ref=toolbar" target="_blank">CODE</a></dd>                      <dd> <a href="http://hero.csdn.net/?ref=toolbar" target="_blank">英雄会</a></dd>                      <dd> <a href="http://huiyi.csdn.net/?ref=toolbar" target="_blank">活动</a></dd>                      <dd> <a href="http://www.csto.com/?ref=toolbar" target="_blank">CSTO</a></dd>                    </dl>                  </div>                  <div class="detail last">                    <dl>                      <dt>                        <h5>俱乐部</h5>                      </dt>                      <dd> <a href="http://cto.csdn.net/?ref=toolbar" target="_blank">CTO俱乐部</a></dd>                      <dd> <a href="http://student.csdn.net/?ref=toolbar" target="_blank">高校俱乐部</a></dd>                    </dl>                  </div>                </div>              </div>            </li>            </ul>          </div>        </div>    </div>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/chinalinuxzend">最实用的Linux博客</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+                <li id="btnContents"><a href="http://blog.csdn.net/chinalinuxzend?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/chinalinuxzend?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/chinalinuxzend/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ico_rss.gif">订阅</span></a></li>                
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "chinalinuxzend";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/chinalinuxzend";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod="popu_3"> 
+
+<a href="http://bbs.csdn.net/topics/390812950?page=2#post-398116601" target="_blank">
+<font color="blue">博客专家福利
+</font></a>
+&nbsp;&nbsp;&nbsp;
+
+<a target="_blank" href="http://blog.csdn.net/csdnproduct/article/details/40181275">
+<font color="red">公告：CSDN博客积分系统升级</font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a target="_blank" href="http://blog.csdn.net/blogdevteam/article/details/40047403">
+<font color="blue">有奖试读&amp;征文:我们在互联网上奋斗的故事
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a target="_blank" href="http://blog.csdn.net/blogdevteam/article/details/39894901">
+<font color="red">参与话题讨论，好礼等你拿
+</font></a>
+
+
+</div>                        </div>
+                        
+
+  
+<link href="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/comment1.css" type="text/css" rel="stylesheet">
+<link href="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/style1.css" type="text/css" rel="stylesheet">
+<script language="JavaScript" type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/jquery_002.js"></script>
+<script type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/main.js"></script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Repost"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="http://blog.csdn.net/chinalinuxzend/article/details/3940849">
+        解决Metadata file does not match checksum错误
+        </a></span>
+    </h1>
+</div>
+
+    <div class="article_manage">
+        <span class="link_categories">
+        分类：
+            <a href="http://blog.csdn.net/chinalinuxzend/article/category/266303" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">linux网络管理</a> 
+            <a href="http://blog.csdn.net/chinalinuxzend/article/category/265492" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">linux系统管理</a> 
+        </span>
+    <span class="link_postdate">2009-02-26 22:09</span>
+    <span class="link_view" title="阅读次数">3777人阅读</span>
+    <span class="link_comments" title="评论次数"><a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(0)</span>
+    <span class="link_collect"><a href="javascript:void(0);" onclick="javascript:_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shoucang']);collectArticle('解决Metadata file does not match checksum错误','3940849');return false;" title="收藏">收藏</a></span>
+    <span class="link_report"><a href="#report" onclick="javascript:_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_jubao']);report(3940849,2);return false;" title="举报">举报</a></span>
+    
+</div>
+<div class="tag2box"><a href="http://www.csdn.net/tag/file" target="_blank" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">file</a><a href="http://www.csdn.net/tag/%e7%bd%91%e7%bb%9c" target="_blank" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">网络</a><a href="http://www.csdn.net/tag/centos" target="_blank" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">centos</a><a href="http://www.csdn.net/tag/download" target="_blank" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">download</a><a href="http://www.csdn.net/tag/%e6%9c%8d%e5%8a%a1%e5%99%a8" target="_blank" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">服务器</a><a href="http://www.csdn.net/tag/%e4%bb%bb%e5%8a%a1" target="_blank" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">任务</a></div>
+
+  
+    
+<div id="article_content" class="article_content">
+<p>原贴:http://www.linuxfly.org/post/174/<br></p>
+<div class="article-top">
+<div class="prev-article"><a title="上一篇 [解]处理auxpropfunc error no mechanism available错误" href="http://www.linuxfly.org/post/173/"><img src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/toolbar_previous.gif" alt="" border="0">[解]处理auxpropfunc error no mechanism available错误</a></div>
+<div class="next-article"><a title="下一篇 [原]putty使用密钥登陆OpenSSH" href="http://www.linuxfly.org/post/175/"><img src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/toolbar_next.gif" alt="" border="0">[原]putty使用密钥登陆OpenSSH</a></div>
+</div>
+<div class="textbox">
+<div class="textbox-calendar">
+	<span class="textbox-calendar-month">Nov</span>
+	<span class="textbox-calendar-day">16</span>
+	</div>
+<div class="textbox-title">
+<h4>
+		[原]解决Metadata file does not match checksum错误 <span id="starid174"><img title="未加星标" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/unstarred.gif" alt="" border="0"></span> <img title="晴" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/sunny.gif" alt="晴"> 
+		</h4>
+<div class="textbox-label">
+		 <a href="http://www.linuxfly.org/user/1/" target="_blank">linuxing</a> , 14:04 , <a title="查看分类： 基础知识" href="http://www.linuxfly.org/category/2/">基础知识</a> » <a title="查看分类： 故障处理" href="http://www.linuxfly.org/category/15/">故障处理</a> , <a title="发表您的评论" href="http://www.linuxfly.org/post/174/#reply">评论(2)</a> , <a title="查看引用地址" onclick='showhidediv("tb174"); if (document.getElementById("tbb174")) document.getElementById("tbb174").innerHTML=decodetburl("2%106%118%118%114%60%49%49%121%121%121%48%110%107%112%119%122%104%110%123%48%113%116%105%49%118%100%48%114%106%114%65%118%63%51%57%54%40%99%111%114%61%103%122%118%116%99%63%101%102%52%53%56", 1, 174);' href="javascript:%20void(0);">引用(0)</a> , <a href="http://www.linuxfly.org/post/174/">阅读(4535)</a> ,  Via 本站原创 <span class="text-label-indented"><img title="字体大小" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/toolbar_fontsize.gif" alt="" border="0"> <a href="javascript:%20doZoom(16);">大</a> | <a href="javascript:%20doZoom(14);">中</a> | <a href="javascript:%20doZoom(12);">小</a> <a href="http://www.linuxfly.org/feed.php?go=entry_174"><img title="订阅本文" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/toolbar_rss.gif" alt="" border="0"></a></span>
+		</div>
+</div>
+<div id="tb174" class="textbox-tburl" style="display: none;"><strong>引用地址：</strong>  <br><strong>注意：</strong> 该地址仅在今日23:59:59之前有效</div>
+<div id="zoomtext" class="textbox-content">
+	 	 &nbsp; &nbsp;最近发现，在使用yum更新包的时候，常报下面的错误：<br>
+<div class="quote">
+<div class="quote-title">引用</div>
+<div class="quote-content">Reading repository metadata in from local files<br>primary.xml.gz &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;100% |=========================| 1.7 MB &nbsp; &nbsp;02:25<br>http://www.mirrorservice.org/sites/apt.sw.be/redhat/el4/en/i386/dag/repodata/primary.xml.gz: <br>[Errno -1] <span style="color: #ff4500;">Metadata file does not match checksum</span><br>Trying other mirror.</div>
+</div>
+<br> &nbsp; &nbsp;有时候当替换了几个镜像后就可以了。但经常也会发现最终是失败的。由于我的系统是依赖yum更新的，若使用国外网络源的时候出这样的问题，影响挺大的。<br> &nbsp; &nbsp;Google搜索了一下，是一个常见问题，也提供了一些方法。只是后来发现，这些方法要不就是没有说清楚，要不就是误解。经过测试，最终基本可以解决了。<a name="entrymore"></a><br><strong><span style="color: #4169e1;">一、原因</span></strong><br>从该地址找到一段说明：<a href="http://forums.fedoraforum.org/archive/index.php/t-107480.html" target="_blank">点击</a><br>
+<div class="quote">
+<div class="quote-title">引用</div>
+<div class="quote-content">To
+reduce load, download.fedora.redhat.com (official host) contains the
+~1kB checksum for the metadata. The metadata (usually ~1 - 2 MB) is
+downloaded off mirrors. After downloading metadata, Yum compares the
+two to make sure they're one and the same.<br>Now, think of this:
+download.fedora.redhat.com updates their metadata and checksums, so
+you're getting the new checksum. The mirror's cronjobs havn't gone yet,
+therefore no synching and the metadata isn't the newest, it doesn't
+match.<br><br>The solution is not to makecache; Although it may help it
+will take forever and still not 100% solve the problem. The main
+problem is not giving the mirrors enough synch time. Typically, cron
+runs every hour, and give it a bit of time to download the changes, so
+I'd say try running maybe 10 minutes after an hour and you'll have no
+problem (eg 3:10, 4:10, 5:10, etc...). If you get closer to :50 (3:50,
+:50, etc) you'll start seeing more syncing issues.<br><br>Again, this too isn't 100% perfect but more of a guideline. There's a lot of guesswork...</div>
+</div>
+<br>大概的意思是说：<br>
+<div class="quote">
+<div class="quote-title">引用</div>
+<div class="quote-content">当
+生成metadata数据的时候，会一同产生校验数据。而传输的时候，会用该校验数据判断metadata是否完整。这时候就会产生一个问
+题，mirror镜像当从源网络拷贝数据回来时，下载了metadata，但还没下载校验数据（或由定时任务产生校验数据，但这时定时任务还没有执行）。
+这时，如果刚好你正使用yum从该镜像更新，就会发生<span style="color: #ff4500;">Metadata file does not match checksum</span>的问题了。<br>文中提供的解决方法是，根据大部分的镜像都是每小时进行一次数据同步或生成校验数据的，所以，不要选择接近整点的时候更新数据，而应选择整点过后再更新。但这只是建议，不能保证一定能解决该问题。</div>
+</div>
+<br>参考该文章的内容，我们可以看看yum更新下载的数据： /var/cache/yum，根据你定义的repo.d文件内容，会分开多层目录，每层代表一个更新路径。<br>
+<div class="quote">
+<div class="quote-title">引用</div>
+<div class="quote-content">例如：<span style="color: #ff0000;">/var/cache/yum/rpmforge</span><br>其中，primary.xml.gz、filelists.xml.gz、和other.xml.gz就是metadata信息，而repomd.xml就是校验数据。其使用的是sha1进行校验的。</div>
+</div>
+<br>找到原因，解决就不难了。<br><br><strong><span style="color: #4169e1;">二、解决</span></strong><br><strong>1、清空缓存</strong><br>执行：<br>
+<div class="code"># yum clean all</div>
+<br>先把就的缓存数据都去掉。<br><br><strong>2、下载metadata和校验数据</strong><br>先进入yum对应的目录，再下载：<br>
+<div class="code"># cd /var/cache/yum/rpmforge<br># wget --cache=off http://apt.sw.be/redhat/el4/en/i386/dag/repodata/repomd.xml<br># wget --cache=off http://apt.sw.be/redhat/el4/en/i386/dag/repodata/primary.xml.gz<br># wget --cache=off http://apt.sw.be/redhat/el4/en/i386/dag/repodata/filelists.xml.gz<br># wget --cache=off http://apt.sw.be/redhat/el4/en/i386/dag/repodata/other.xml.gz</div>
+<br><br><strong>3、校验数据</strong><br>执行：<br>
+<div class="quote">
+<div class="quote-title">引用</div>
+<div class="quote-content"># sha1sum other.xml.gz filelists.xml.gz primary.xml.gz<br>74fcc9f9e218cfdbc1ac2b5ac17ff7d912267bdf &nbsp;other.xml.gz<br>3f4b2e9a5efc67c0cdf329c69f041daa82a2346c &nbsp;filelists.xml.gz<br>bd2033e1fd7a7d1f1b92ce7b880919bd685217f8 &nbsp;primary.xml.gz</div>
+</div>
+<br>对比repomd.xml中的信息：<br>
+<div class="quote">
+<div class="quote-title">引用</div>
+<div class="quote-content"># cat repomd.xml |grep -w 'checksum'|grep -v 'open-checksum'<br> &nbsp; &nbsp;&lt;checksum type="sha"&gt;74fcc9f9e218cfdbc1ac2b5ac17ff7d912267bdf&lt;/checksum&gt;<br> &nbsp; &nbsp;&lt;checksum type="sha"&gt;3f4b2e9a5efc67c0cdf329c69f041daa82a2346c&lt;/checksum&gt;<br> &nbsp; &nbsp;&lt;checksum type="sha"&gt;bd2033e1fd7a7d1f1b92ce7b880919bd685217f8&lt;/checksum&gt;</div>
+</div>
+<br>若数据正确，则说明metadata和校验数据是匹配的。可以使用yum更新了，不会再重新下载metadata。<br>否则，可以再等待一下，或需要从其他的镜像获取更新咯。<br><br><strong><span style="color: #4169e1;">三、建议</span></strong><br>因为我们不能控制镜像更新的速度和时间，而我们的工作只是避免了yum可能发生误判的情况，但并不能完全保证上面的工作是成功的。<br>从尽可能避免该问题的角度出发，有几个建议：<br><strong>1、选择好的镜像</strong><br>设置yum.repos.d中baseurl或mirrorlist从好的镜像下载。若知道某个镜像速度快，则干脆用baseurl固定，而不要使用mirrorlist了。<br><br><strong>2、排查网络问题</strong><br>网上提供的方法大部分是转载<a href="http://lists.freshrpms.net/pipermail/freshrpms-list/2005-May/013037.html" target="_blank">这里</a>的。其建议使用--cache=off参数（表示不使用服务器中的高速缓存中的数据）。<br><strong><span style="color: #ff0000;">但实际上，我发现除非网络有问题，否则是否使用该参数拿回来的数据不应该有有区别的。</span></strong><br>如：<br>
+<div class="quote">
+<div class="quote-title">引用</div>
+<div class="quote-content"># sha1sum primary.xml.gz*<br>bd2033e1fd7a7d1f1b92ce7b880919bd685217f8 &nbsp;primary.xml.gz<br>bd2033e1fd7a7d1f1b92ce7b880919bd685217f8 &nbsp;primary.xml.gz.1</div>
+</div>
+<br><strong><span style="color: #00008b;">※primary.xml.gz是使用--cache=off参数的，而primary.xml.gz.1是没有使用该参数的。</span></strong><br>所以，如果网络出现问题，是会影响到yum下载数据的完整性的。而使用--cache=off既然没坏，不妨使用咯。<br><br><strong><span style="color: #4169e1;">四、参考资料</span></strong><br><a href="http://lists.freshrpms.net/pipermail/freshrpms-list/2005-May/013037.html" target="_blank">http://lists.freshrpms.net/pipermail/freshrpms-list/2005-May/013037.html</a><br><a href="http://lists.freshrpms.net/pipermail/freshrpms-list/2004-November/011553.html" target="_blank">http://lists.freshrpms.net/pipermail/freshrpms-list/2004-November/011553.html</a><br><a href="http://www.fedorachina.cn/index.php?topic=26.0" target="_blank">http://www.fedorachina.cn/index.php?topic=26.0</a><br><a href="http://www.linuxsir.org/bbs/printthread.php?t=316600" target="_blank">http://www.linuxsir.org/bbs/printthread.php?t=316600</a><br><a href="http://sillyboy422.spaces.live.com/blog/cns%21aab0c086212d33cc%21195.entry" target="_blank">http://sillyboy422.spaces.live.com/blog/cns!aab0c086212d33cc!195.entry</a><br><!-- Added by RelatedTopic, plugin for Bo-Blog 2.0.0 -->
+<div style="padding: 5px; clear: both; text-align: left; margin-top: 12px; margin-bottom: 15px;"><strong>相关日志</strong><br><a href="http://www.linuxfly.org/read.php?297">[原]使用fastestmirror插件给yum加速</a><br><a href="http://www.linuxfly.org/read.php?250">[转]yum.conf 配置文件详解</a><br><a href="http://www.linuxfly.org/read.php?212">[原]CentOS国内更新服务器及yum对组更新</a><br><a href="http://www.linuxfly.org/read.php?199">[原]创建VPS OS模板</a><br><a href="http://www.linuxfly.org/read.php?193">[原]yum命令常见参数</a><br></div>
+<!-- RelatedTopic over --> 
+	</div>
+<div class="textbox-bottom">
+	</div>
+<div class="tags" style="display: block;"> Tags:  <a title="Tags:  yum" rel="tag" href="http://www.linuxfly.org/tags/yum/">yum</a> , <a title="Tags:  sha" rel="tag" href="http://www.linuxfly.org/tags/sha/">sha</a>
+	</div>
+</div>
+<p>&nbsp;</p>
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+<div data-bd-bind="1414069981923" class="bdsharebuttonbox bdshare-button-style0-16" style="float: right;">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间" style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博" style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博" style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网" style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信" style="background-position:0 -1612px !important"></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+<!--192.168.100.35-->
+<ul class="article_next_prev">
+            <li class="prev_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/chinalinuxzend/article/details/3939920';">上一篇</span><a href="http://blog.csdn.net/chinalinuxzend/article/details/3939920" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">[转]手工释放linux内存——/proc/sys/vm/drop_caches</a></li>
+            <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/chinalinuxzend/article/details/3941069';">下一篇</span><a href="http://blog.csdn.net/chinalinuxzend/article/details/3941069" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">Linux 下分析性能 nmon 也挺好用</a></li>
+</ul>
+
+<!-- Baidu Button BEGIN -->
+<script src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/bds_s_v2.js" type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434"></script>
+
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+
+</div>
+      <dl class="blog-associat-tag">
+        <dt>主题推荐</dt>
+        <dd>
+                <a href="http://www.csdn.net/tag/metadata" target="_blank" class="blog-tage-red">metadata</a> 
+                <a href="http://www.csdn.net/tag/%E6%9C%8D%E5%8A%A1%E5%99%A8" target="_blank" class="blog-tage-red">服务器</a> 
+                <a href="http://www.csdn.net/tag/%E7%BD%91%E7%BB%9C" target="_blank" class="blog-tage-red">网络</a> 
+                <a href="http://www.csdn.net/tag/%E7%BC%93%E5%AD%98" target="_blank" class="blog-tage-red">缓存</a> 
+                <a href="http://www.csdn.net/tag/openssh" target="_blank" class="blog-tage-red">openssh</a> 
+        </dd>
+    </dl> 
+
+
+<dl class="blog-ass-articl tracking-ad" data-mod="popu_36" id="res-relatived"> 
+     <dt><span>猜你在找</span></dt>    
+<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/stephenzcl/article/details/8548444" title="解压u-boot源码包错误解决" strategy="CFRecommendAlgorithm">解压u-boot源码包错误解决</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/t0nsha/article/details/18234495" title="Linux Shell - kill 0 直接终止正在运行的脚本" strategy="CFRecommendAlgorithm">Linux Shell - kill 0 直接终止正在运行的脚本</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/wayz11/article/details/7763266" title="STL容器之 deque" strategy="CFRecommendAlgorithm">STL容器之 deque</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/xiaofanku/article/details/12883775" title="Apache HttpComponents 简单说明" strategy="CFRecommendAlgorithm">Apache HttpComponents 简单说明</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/lujinjian605894472/article/details/8395793" title="简单的学生成绩管理系统 （用链表 多个文件）" strategy="CFRecommendAlgorithm">简单的学生成绩管理系统 （用链表 多个文件）</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/chenfei_5201213/article/details/7453515" title="tcp 6个标记位" strategy="CFRecommendAlgorithm">tcp 6个标记位</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/Dream19881003/article/details/5498912" title="oracle dg 的基本命令" strategy="CFRecommendAlgorithm">oracle dg 的基本命令</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/oneRain88/article/details/7629484" title="shell学习（一）：统计文本行数脚本" strategy="CFRecommendAlgorithm">shell学习（一）：统计文本行数脚本</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/kingepoch/article/details/8084683" title="Android项目工程里面Android Dependencies不显示问题" strategy="CFRecommendAlgorithm">Android项目工程里面Android Dependencies不显示问题</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/delicioustian/article/details/7100582" title="MAC OS X   L2TP/IPSEC VPN" strategy="CFRecommendAlgorithm">MAC OS X   L2TP/IPSEC VPN</a></dd></dl>
+
+<script type="text/javascript">
+    var searchtitletags = '解决Metadata file does not match checksum错误' + ',' + 'metadata,服务器,网络,缓存,openssh';
+    searchService({
+        index: 'blog',
+        query: searchtitletags,
+        from: 10,
+        size: 10,
+        appendTo: '#res-relatived',
+        url: 'recommend',
+        his: 2,
+        client: "blog_cf_enhance",
+        tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+    });
+
+ </script>   
+
+
+    <div id="ad_cen">
+   
+          <script type="text/javascript">
+              new Ad(4, 'ad_cen');
+          </script>
+    <iframe src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ad.html" style="border-width: 0px; overflow: hidden; width: 746px; height: 90px;" id="ad_frm_0" frameborder="0" scrolling="no"></iframe></div>
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list"><br>&nbsp;&nbsp;暂无评论<br><br><div class="clear"></div></div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form"><div class="guest_link">您还没有登录,请<a href="javascript:void(0);" onclick="javascript:csdn.showLogin(function (dat) {js_logined(dat.data.userName);});">[登录]</a>或<a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Fchinalinuxzend%2Farticle%2Fdetails%2F3940849">[注册]</a></div></div>
+
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '3940849';
+    var commentscount = 0;
+    var islock = false
+</script>
+<script type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/comment.js"></script>
+    <div id="ad_bot">
+    <iframe src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ad_002.html" style="border-width: 0px; overflow: hidden; width: 746px; height: 0px;" id="ad_frm_1" frameborder="0" scrolling="no"></iframe></div>
+    <script type="text/javascript">
+    new Ad(5, 'ad_bot');
+    </script>
+<div id="report_dialog">
+</div>
+
+<div id="d-top" style="bottom:60px;">
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop" style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])">         
+         <img src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);
+        
+
+        if($("#comment_content").length>0)
+        {
+            $("#quick-reply").show();
+
+            $("#quick-reply").click(function(){
+                setEditorFocus();
+            });
+        }       
+     
+        var d_top = $('#d-top-a');
+        document.onscroll = function ()
+        {
+            var scrTop = (document.body.scrollTop || document.documentElement.scrollTop);
+            if (scrTop > 500)
+            {
+                d_top.show();
+            } else
+            {
+                d_top.hide();
+            }
+        }
+        $('#d-top-a').click(function ()
+        {
+            scrollTo(0, 0);
+            this.blur();
+            return false;
+        });
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+<div class="tag_list">
+    <h5>
+        <a href="http://www.csdn.net/tag/" target="_blank">核心技术类目</a></h5>
+    <div class="classify">
+<a title="全部主题" href="http://www.csdn.net/tag" target="_blank" onclick="LogClickCount(this,336);">全部主题</a>
+<a title="Hadoop" href="http://g.csdn.net/5272865" target="_blank" onclick="LogClickCount(this,336);">Hadoop</a>
+<a title="AWS" href="http://g.csdn.net/5272866" target="_blank" onclick="LogClickCount(this,336);">AWS</a>
+<a title="移动游戏" href="http://g.csdn.net/5272870" target="_blank" onclick="LogClickCount(this,336);">移动游戏</a>
+<a title="Java" href="http://g.csdn.net/5272871" target="_blank" onclick="LogClickCount(this,336);">Java</a>
+<a title="Android" href="http://g.csdn.net/5272872" target="_blank" onclick="LogClickCount(this,336);">Android</a>
+<a title="iOS" href="http://g.csdn.net/5272873" target="_blank" onclick="LogClickCount(this,336);">iOS</a>
+<a title="Swift" href="http://g.csdn.net/5272868" target="_blank" onclick="LogClickCount(this,336);">Swift</a>
+<a title="智能硬件" href="http://g.csdn.net/5272869" target="_blank" onclick="LogClickCount(this,336);">智能硬件</a>
+<a title="Docker" href="http://g.csdn.net/5272867" target="_blank" onclick="LogClickCount(this,336);">Docker</a>
+<a title="OpenStack" href="http://g.csdn.net/5272925" target="_blank" onclick="LogClickCount(this,336);">OpenStack</a>
+<a title="VPN" href="http://www.csdn.net/tag/vpn" target="_blank" onclick="LogClickCount(this,336);">VPN</a>
+<a title="Spark" href="http://g.csdn.net/5272924" target="_blank" onclick="LogClickCount(this,336);">Spark</a>
+<a title="ERP" href="http://www.csdn.net/tag/erp" target="_blank" onclick="LogClickCount(this,336);">ERP</a>
+<a title="IE10" href="http://www.csdn.net/tag/ie10" target="_blank" onclick="LogClickCount(this,336);">IE10</a>
+<a title="Eclipse" href="http://www.csdn.net/tag/eclipse" target="_blank" onclick="LogClickCount(this,336);">Eclipse</a>
+<a title="CRM" href="http://www.csdn.net/tag/crm" target="_blank" onclick="LogClickCount(this,336);">CRM</a>
+<a title="JavaScript" href="http://www.csdn.net/tag/javascript" target="_blank" onclick="LogClickCount(this,336);">JavaScript</a>
+<a title="数据库" href="http://www.csdn.net/tag/%E6%95%B0%E6%8D%AE%E5%BA%93" target="_blank" onclick="LogClickCount(this,336);">数据库</a>
+<a title="Ubuntu" href="http://www.csdn.net/tag/ubuntu" target="_blank" onclick="LogClickCount(this,336);">Ubuntu</a>
+<a title="NFC" href="http://www.csdn.net/tag/nfc" target="_blank" onclick="LogClickCount(this,336);">NFC</a>
+<a title="WAP" href="http://www.csdn.net/tag/wap" target="_blank" onclick="LogClickCount(this,336);">WAP</a>
+<a title="jQuery" href="http://www.csdn.net/tag/jquery" target="_blank" onclick="LogClickCount(this,336);">jQuery</a>
+<a title="BI" href="http://www.csdn.net/tag/bi" target="_blank" onclick="LogClickCount(this,336);">BI</a>
+<a title="HTML5" href="http://www.csdn.net/tag/html5" target="_blank" onclick="LogClickCount(this,336);">HTML5</a>
+<a title="Spring" href="http://www.csdn.net/tag/spring" target="_blank" onclick="LogClickCount(this,336);">Spring</a>
+<a title="Apache" href="http://www.csdn.net/tag/apache" target="_blank" onclick="LogClickCount(this,336);">Apache</a>
+<a title=".NET" href="http://www.csdn.net/tag/.net" target="_blank" onclick="LogClickCount(this,336);">.NET</a>
+<a title="API" href="http://www.csdn.net/tag/api" target="_blank" onclick="LogClickCount(this,336);">API</a>
+<a title="HTML" href="http://www.csdn.net/tag/html" target="_blank" onclick="LogClickCount(this,336);">HTML</a>
+<a title="SDK" href="http://www.csdn.net/tag/sdk" target="_blank" onclick="LogClickCount(this,336);">SDK</a>
+<a title="IIS" href="http://www.csdn.net/tag/iis" target="_blank" onclick="LogClickCount(this,336);">IIS</a>
+<a title="Fedora" href="http://www.csdn.net/tag/fedora" target="_blank" onclick="LogClickCount(this,336);">Fedora</a>
+<a title="XML" href="http://www.csdn.net/tag/xml" target="_blank" onclick="LogClickCount(this,336);">XML</a>
+<a title="LBS" href="http://www.csdn.net/tag/lbs" target="_blank" onclick="LogClickCount(this,336);">LBS</a>
+<a title="Unity" href="http://www.csdn.net/tag/unity" target="_blank" onclick="LogClickCount(this,336);">Unity</a>
+<a title="Splashtop" href="http://www.csdn.net/tag/splashtop" target="_blank" onclick="LogClickCount(this,336);">Splashtop</a>
+<a title="UML" href="http://www.csdn.net/tag/uml" target="_blank" onclick="LogClickCount(this,336);">UML</a>
+<a title="components" href="http://www.csdn.net/tag/components" target="_blank" onclick="LogClickCount(this,336);">components</a>
+<a title="Windows Mobile" href="http://www.csdn.net/tag/windowsmobile" target="_blank" onclick="LogClickCount(this,336);">Windows Mobile</a>
+<a title="Rails" href="http://www.csdn.net/tag/rails" target="_blank" onclick="LogClickCount(this,336);">Rails</a>
+<a title="QEMU" href="http://www.csdn.net/tag/qemu" target="_blank" onclick="LogClickCount(this,336);">QEMU</a>
+<a title="KDE" href="http://www.csdn.net/tag/kde" target="_blank" onclick="LogClickCount(this,336);">KDE</a>
+<a title="Cassandra" href="http://www.csdn.net/tag/cassandra" target="_blank" onclick="LogClickCount(this,336);">Cassandra</a>
+<a title="CloudStack" href="http://www.csdn.net/tag/cloudstack" target="_blank" onclick="LogClickCount(this,336);">CloudStack</a>
+<a title="FTC" href="http://www.csdn.net/tag/ftc" target="_blank" onclick="LogClickCount(this,336);">FTC</a>
+<a title="coremail" href="http://www.csdn.net/tag/coremail" target="_blank" onclick="LogClickCount(this,336);">coremail</a>
+<a title="OPhone " href="http://www.csdn.net/tag/ophone" target="_blank" onclick="LogClickCount(this,336);">OPhone </a>
+<a title="CouchBase" href="http://www.csdn.net/tag/couchbase" target="_blank" onclick="LogClickCount(this,336);">CouchBase</a>
+<a title="云计算" href="http://www.csdn.net/tag/%E4%BA%91%E8%AE%A1%E7%AE%97" target="_blank" onclick="LogClickCount(this,336);">云计算</a>
+<a title="iOS6" href="http://www.csdn.net/tag/iOS6" target="_blank" onclick="LogClickCount(this,336);">iOS6</a>
+<a title="Rackspace " href="http://www.csdn.net/tag/rackspace" target="_blank" onclick="LogClickCount(this,336);">Rackspace </a>
+<a title="Web App" href="http://www.csdn.net/tag/webapp" target="_blank" onclick="LogClickCount(this,336);">Web App</a>
+<a title="SpringSide" href="http://www.csdn.net/tag/springside" target="_blank" onclick="LogClickCount(this,336);">SpringSide</a>
+<a title="Maemo" href="http://www.csdn.net/tag/maemo" target="_blank" onclick="LogClickCount(this,336);">Maemo</a>
+<a title="Compuware" href="http://www.csdn.net/tag/compuware" target="_blank" onclick="LogClickCount(this,336);">Compuware</a>
+<a title="大数据" href="http://www.csdn.net/tag/%E5%A4%A7%E6%95%B0%E6%8D%AE" target="_blank" onclick="LogClickCount(this,336);">大数据</a>
+<a title="aptech" href="http://www.csdn.net/tag/aptech" target="_blank" onclick="LogClickCount(this,336);">aptech</a>
+<a title="Perl" href="http://www.csdn.net/tag/perl" target="_blank" onclick="LogClickCount(this,336);">Perl</a>
+<a title="Tornado" href="http://www.csdn.net/tag/tornado" target="_blank" onclick="LogClickCount(this,336);">Tornado</a>
+<a title="Ruby" href="http://www.csdn.net/tag/ruby" target="_blank" onclick="LogClickCount(this,336);">Ruby</a>
+<a title="Hibernate" href="http://www.csdn.net/hibernate" target="_blank" onclick="LogClickCount(this,336);">Hibernate</a>
+<a title="ThinkPHP" href="http://www.csdn.net/tag/thinkphp" target="_blank" onclick="LogClickCount(this,336);">ThinkPHP</a>
+<a title="HBase" href="http://www.csdn.net/tag/hbase" target="_blank" onclick="LogClickCount(this,336);">HBase</a>
+<a title="Pure" href="http://www.csdn.net/tag/pure" target="_blank" onclick="LogClickCount(this,336);">Pure</a>
+<a title="Solr" href="http://www.csdn.net/tag/solr" target="_blank" onclick="LogClickCount(this,336);">Solr</a>
+<a title="Angular" href="http://www.csdn.net/tag/angular" target="_blank" onclick="LogClickCount(this,336);">Angular</a>
+<a title="Cloud Foundry" href="http://www.csdn.net/tag/cloudfoundry" target="_blank" onclick="LogClickCount(this,336);">Cloud Foundry</a>
+<a title="Redis" href="http://www.csdn.net/tag/redis" target="_blank" onclick="LogClickCount(this,336);">Redis</a>
+<a title="Scala" href="http://www.csdn.net/tag/scala" target="_blank" onclick="LogClickCount(this,336);">Scala</a>
+<a title="Django" href="http://www.csdn.net/tag/django" target="_blank" onclick="LogClickCount(this,336);">Django</a>
+<a title="Bootstrap" href="http://www.csdn.net/tag/bootstrap" target="_blank" onclick="LogClickCount(this,336);">Bootstrap</a>
+    </div>
+</div>
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+            <div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/chinalinuxzend" target="_blank">
+    <img src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/1_chinalinuxzend.jpg" title="访问我的空间" style="max-width:90%">
+    </a>
+    <br>
+    <span><a href="http://my.csdn.net/chinalinuxzend" class="user_name" target="_blank">chinalinuxzend</a></span>
+</div>
+<div class="interact">
+<a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_guanzhu'])"></a>
+
+ <a href="javascript:void(0);" class="letter" title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=chinalinuxzend','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>1795040次</span></li>
+    <li>积分：<span>20190</span> </li>    
+    <li>等级： <span style="position:relative;display:inline-block;z-index:1">
+            <img src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/blog7.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：20190 </div>
+        </span>  </li>
+    <li>排名：<span>第113名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>76篇</span></li>
+    <li>转载：<span>1209篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>182条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" class="blogsearch" title="请输入关键字" type="text"></span>
+        <input id="btnSubmit" value="搜索" title="search in blog" type="button">
+        <input name="q" id="inputQ" type="hidden">
+        <input name="t" value="blog" type="hidden">
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script>
+<div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/377607" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">APC</a><span>(8)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/339740" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">awstats</a><span>(6)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/336947" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">bash和正则</a><span>(43)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/265301" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">lamp系统优化</a><span>(87)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/265311" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">lamp配置管理</a><span>(19)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/346522" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">LDAP和NIS</a><span>(7)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/342883" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">LFS</a><span>(3)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/265261" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">lighttpd</a><span>(22)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/265257" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">linux安全</a><span>(100)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/377598" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">linux客户端工具</a><span>(3)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/347093" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">linux开发之汇编</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/265273" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">linux性能监控与调整</a><span>(49)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/328768" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">linux服务器深度历险(电子书)</a><span>(12)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/265492" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">linux系统管理</a><span>(336)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/337903" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">linux网站</a><span>(0)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/266303" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">linux网络管理</a><span>(138)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/346989" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">LVM</a><span>(3)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/265260" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">memcached</a><span>(68)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/332591" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">mysql分表</a><span>(15)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/332040" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">mysql服务器深度历险(电子书)</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/332041" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">mysql服务器管理优化</a><span>(117)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/341601" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">mysql的升级相关</a><span>(19)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/346764" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">POSTFIX和邮件系统</a><span>(11)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/344494" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">raid</a><span>(10)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/333248" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Redhat相关文档</a><span>(34)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/335093" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">squid</a><span>(41)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/265263" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">TCP/IP</a><span>(17)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/342882" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">udev</a><span>(9)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/344871" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">vsftp</a><span>(2)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/336067" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">windows</a><span>(2)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/265258" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">公司网站数据库结构调整</a><span>(4)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/339619" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">团队管理</a><span>(18)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/446652" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">图像视频处理工具</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/377608" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">基准测试</a><span>(4)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/265262" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">大规模系统架构</a><span>(130)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/344836" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">数学</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/339360" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">文件系统</a><span>(36)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/345631" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">模块与核心</a><span>(12)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/339618" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">测试技术</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/484419" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">版本管理</a><span>(2)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/330427" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">程序员的轻松一刻</a><span>(48)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/341333" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">算法</a><span>(27)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/375204" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">网站前端技术</a><span>(12)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/345238" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">邮件系统</a><span>(15)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/chinalinuxzend/article/category/339232" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">集群</a><span>(4)</span>
+            </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list"><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2010/07">2010年07月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2009/09">2009年09月</a><span>(16)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2009/08">2009年08月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2009/06">2009年06月</a><span>(10)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2009/05">2009年05月</a><span>(4)</span></li><span class="hidelist" style="display:none;"><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2009/04">2009年04月</a><span>(16)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2009/03">2009年03月</a><span>(79)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2009/02">2009年02月</a><span>(59)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2009/01">2009年01月</a><span>(35)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2008/12">2008年12月</a><span>(38)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2008/11">2008年11月</a><span>(78)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2008/10">2008年10月</a><span>(24)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2008/09">2008年09月</a><span>(46)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2008/08">2008年08月</a><span>(25)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2008/07">2008年07月</a><span>(14)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2008/06">2008年06月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2008/05">2008年05月</a><span>(27)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2008/04">2008年04月</a><span>(32)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2008/03">2008年03月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2008/02">2008年02月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2008/01">2008年01月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2007/12">2007年12月</a><span>(12)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2007/11">2007年11月</a><span>(66)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2007/10">2007年10月</a><span>(261)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2007/09">2007年09月</a><span>(334)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2007/08">2007年08月</a><span>(42)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2007/01">2007年01月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/chinalinuxzend/article/month/2006/12">2006年12月</a><span>(25)</span></li></span><div id="archive_list_button" class="list_closed">展开</div></div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/4236354" title="libmysqlclient.so.15: cannot open shared object file: No such file or directory">libmysqlclient.so.15: cannot open shared object file: No such file or directory</a><span>(43056)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/3327602" title="记录一linux命令：xargs ">记录一linux命令：xargs </a><span>(30067)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/1789809" title="CentOS3 Linux 服务器环境配置优化详解">CentOS3 Linux 服务器环境配置优化详解</a><span>(18499)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/2350464" title="perl cpan 模块安装">perl cpan 模块安装</a><span>(17836)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/2813827" title="关闭SELinux的方法：">关闭SELinux的方法：</a><span>(14753)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/1836761" title="nfs的一个报错:mount.nfs: Input/output error">nfs的一个报错:mount.nfs: Input/output error</a><span>(14234)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/4516841" title="CentOS下yum安装MemCached">CentOS下yum安装MemCached</a><span>(12965)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/1812602" title="[转]开发大型高负载类网站应用的几个要点 ">[转]开发大型高负载类网站应用的几个要点 </a><span>(12240)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/2430429" title="Tcl/Tk快速入门">Tcl/Tk快速入门</a><span>(11913)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/3870362" title="[原]Linux下的rename命令   ">[原]Linux下的rename命令   </a><span>(11783)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/3667717" title="关于主机远程唤醒（WOL,Wake on Lan）的几种方法">关于主机远程唤醒（WOL,Wake on Lan）的几种方法</a><span>(8)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/1811514" title="说说大型高并发高负载网站的系统架构（from tianya）">说说大型高并发高负载网站的系统架构（from tianya）</a><span>(7)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/1812602" title="[转]开发大型高负载类网站应用的几个要点 ">[转]开发大型高负载类网站应用的几个要点 </a><span>(7)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/3109390" title="[职业生涯] 28句话让你的人际关系更上一层楼! ">[职业生涯] 28句话让你的人际关系更上一层楼! </a><span>(6)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/3355923" title="百度脚本笔试题两道">百度脚本笔试题两道</a><span>(6)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/3874512" title="一个目录下有大量文件时的删除">一个目录下有大量文件时的删除</a><span>(5)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/1828451" title="flv在线录制、视频转换网站开发文档">flv在线录制、视频转换网站开发文档</a><span>(4)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/3327602" title="记录一linux命令：xargs ">记录一linux命令：xargs </a><span>(4)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/4236354" title="libmysqlclient.so.15: cannot open shared object file: No such file or directory">libmysqlclient.so.15: cannot open shared object file: No such file or directory</a><span>(4)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/chinalinuxzend/article/details/4516841" title="CentOS下yum安装MemCached">CentOS下yum安装MemCached</a><span>(4)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend"><iframe src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ad_003.html" style="border-width: 0px; overflow: hidden; width: 182px; height: 200px;" id="ad_frm_2" frameborder="0" scrolling="no"></iframe></ul>
+</div>
+<script type="text/javascript">
+ new Ad(12, 'ad_commend');
+</script><div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="http://blog.csdn.net/chinalinuxzend/article/details/1842617#comments">检测木马</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/yebai" class="user_name">yebai</a>:
+写的很好啊
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chinalinuxzend/article/details/3355923#comments">百度脚本笔试题两道</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/u013377753" class="user_name">abc344949679</a>:
+2、#!/bin/bashdiff b a | grep "^&lt;" | sed 's/ cwc -l...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chinalinuxzend/article/details/1770596#comments">MySQL分表实现上百万上千万记录分布存储的批量查询设计模式</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/qilangye" class="user_name">qilangye</a>:
+楼主能否传下代码？563514106@qq.com
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chinalinuxzend/article/details/3964130#comments">修改Linux时间一般涉及到3个命令： date， clock， hwclock</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/hnrayer" class="user_name">www_elesos_com站长</a>:
+mark
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chinalinuxzend/article/details/3860113#comments">用tar打包时忽略文件的目录结构,不保存目录结构</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/yang15225094594" class="user_name">月光xia漫步</a>:
+笔者写的并没有错误，上面的两位应该是遇到了下面的错误：$ tar -cvf a.tar  -C  ~...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chinalinuxzend/article/details/3687334#comments">用lftp通过sftp进行文件传输</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/bzhao" class="user_name">bzhao</a>:
+我省略  /home/lhd/ 就不行， 然后使用相对路径？
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chinalinuxzend/article/details/1796486#comments">不笑你杀我,笑了不顶不是人</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/ygl250712" class="user_name">竹临仙</a>:
+牛逼
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chinalinuxzend/article/details/1796486#comments">用tar打包时忽略文件的目录结构,不保存目录结构</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/wpc062" class="user_name">wpc062</a>:
+太不负责任了！
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chinalinuxzend/article/details/3327602#comments">记录一linux命令：xargs </a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/shixingui" class="user_name">shixingui</a>:
+简单明了，终于明白了xargs的基本用途了
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/chinalinuxzend/article/details/4516841#comments">CentOS下yum安装MemCached</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/shyandsy" class="user_name">楚天乐</a>:
+谢谢您
+    </p>
+    </li>
+</ul>
+</div>
+
+
+<div id="custom_column_974179" class="panel">
+<ul class="panel_head"><span>linux网站</span></ul>
+<ul class="panel_body">
+<ul><li><a href="http://hi.baidu.com/linux_kernel/blog/index/8" target="_blank">深度探索Linux内核</a> (<a href="http://hi.baidu.com/linux_kernel/blog/index/8" target="_blank">RSS</a>)</li><li><a href="http://www.firtex.org/" target="_blank">欢迎来到FirteX网站</a> (<a href="http://www.firtex.org/" target="_blank">RSS</a>)</li><li><a href="http://highscalability.com/" target="_blank">highscalability研究网站架构</a> (<a href="http://highscalability.com/" target="_blank">RSS</a>)</li><li><a href="http://www.toplee.com/blog/" target="_blank">一只逐渐老去的IT菜鸟…</a> (<a href="http://www.toplee.com/blog/" target="_blank">RSS</a>)</li><li><a href="http://blog.s135.com/" target="_blank">回忆未来</a> (<a href="http://blog.s135.com/" target="_blank">RSS</a>)</li><li><a href="http://blog.csdn.net/absurd/" target="_blank">absurd的专栏</a> (<a href="http://blog.csdn.net/absurd/" target="_blank">RSS</a>)</li></ul>
+</ul>
+</div>
+
+<div id="custom_column_974180" class="panel">
+<ul class="panel_head"><span>牛逼的网站</span></ul>
+<ul class="panel_body">
+<ul><li><a href="http://cid.whofund.com/" target="_blank">辉哥的网站</a> (<a href="http://cid.whofund.com/" target="_blank">RSS</a>)</li></ul>
+</ul>
+</div>    </div>
+    <div class="clear">
+    </div>
+</div>
+
+            <div class="clear">
+            </div>
+        </div>
+        
+
+<script type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/cnick.js"></script>
+<script type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/newblog.js"></script>
+
+
+<script type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/showblogmedal.js"></script>
+<script type="text/javascript">
+    document.write('<script type="text/javascript" src="http://csdnimg.cn/pubfooter/js/publib_footer.js?' + Math.floor(new Date() / 120000).toString(36) + '="></' + 'script>');
+</script><script type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/publib_footer.js"></script><link rel="stylesheet" type="text/css" href="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/pub_footer_2012.css"><div id="pub_footerall" class="pub_footerall"><dl><dt></dt> <dd><a href="http://www.csdn.net/company/about.html" target="_blank">公司简介</a>|<a href="http://www.csdn.net/company/recruit.html" target="_blank">招贤纳士</a>|<a href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</a>|<a href="http://www.csdn.net/company/account.html" target="_blank">银行汇款帐号</a>|<a href="http://www.csdn.net/company/contact.html" target="_blank">联系方式</a>|<a href="http://www.csdn.net/company/statement.html" target="_blank">版权声明</a>|<a href="http://www.csdn.net/company/layer.html" target="_blank">法律顾问</a>|<a href="mailto:webmaster@csdn.net">问题报告</a>|<a target="_blank" href="http://www.csdn.net/friendlink.html">合作伙伴</a>|<a href="http://bbs.csdn.net/forums/Service" target="_blank">论坛反馈</a></dd><dd><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=2355263776&amp;site=qq&amp;menu=yes" target="_blank" class="qq">网站客服</a> <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=2251809102&amp;site=qq&amp;menu=yes" target="_blank" class="qq">杂志客服</a> <a href="http://e.weibo.com/csdnsupport/profile" target="_blank" class="weibo">微博客服</a> <a href="mailto:webmaster@csdn.net" class="email" title="联系邮箱">webmaster@csdn.net</a> <span class="phone" title="服务热线">400-600-2320</span></dd><dd>京&nbsp;ICP&nbsp;证&nbsp;070598&nbsp;号</dd><dd>北京创新乐知信息技术有限公司 版权所有</dd><dd>江苏乐知网络技术有限公司 提供商务支持</dd><dd>Copyright © 1999-2014, CSDN.NET, All Rights Reserved&nbsp;<a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><img src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/gongshang_logos.gif" alt="GongshangLogo" title=""></a></dd></dl></div><div id="note1" class="csdn_note" style="display:none; position:absolute; z-index:9999; width:440px">  <span class="notice_top_arrow"><span class="inner"></span></span>  <div class="box"></div></div><div class="csdn_notice_tip" style="display:none; position:absolute; z-index:9990; width:170px">  <iframe src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/a_002.html" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent" frameborder="0" scrolling="no"></iframe>  <div class="tip_text">您有<strong>0</strong>条新通知</div>  <a href="javascript:void%200" class="close2"></a></div><script id="noticeScript" type="text/javascript" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/notify.js"></script>
+    <script type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script><img src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/pv.asc" height="0" width="0" border="0">
+<script type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/counter.js"></script><script type="text/javascript" charset="UTF-8" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/msg.js"></script>
+<script type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ad-blog.js"></script><script type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ad-ms1036_2.js"></script>
+<script type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ad-ms1042_3.js"></script>
+
+<script type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/count.js"></script><iframe src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/logs.html" frameborder="0" height="0" width="0"></iframe>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a>"
+                    + "<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+    });
+</script>
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" type="text/javascript" src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/toolbar.js"></script>
+     <!--new top-->
+
+
+<div id="tag-suggest-pop">
+  <div class="relative">
+    <div class="close"></div>
+    <div class="content"></div>
+  </div>
+</div><iframe src="%E8%A7%A3%E5%86%B3Metadata%20file%20does%20not%20match%20checksum%E9%94%99%E8%AF%AF%20-%20%E6%9C%80%E5%AE%9E%E7%94%A8%E7%9A%84Linux%E5%8D%9A%E5%AE%A2%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/log.swf" style="width: 1px; height: 1px; position: absolute; visibility: hidden;"></iframe><div style="bottom: auto; left: 524px; right: auto; top: 199px; display: none;" class="translator-theme-default" id="translator-floating-panel"><div title="點選開始翻譯" id="translator-floating-panel-button"></div></div><div style="bottom: auto; left: 524px; right: auto; top: 199px; display: none;" class="translator-theme-default" id="translator-floating-panel"><div title="點選開始翻譯" id="translator-floating-panel-button"></div></div></body></html>

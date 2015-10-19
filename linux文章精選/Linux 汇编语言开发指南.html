@@ -1,0 +1,753 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html class="dj_gecko dj_contentbox" xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Linux 汇编语言开发指南</title>
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/">
+<link rel="SHORTCUT ICON" href="http://www.ibm.com/favicon.ico">
+<meta name="DC.Rights" content="© Copyright&nbsp;IBM Corporation&nbsp;2003">
+<meta name="Keywords" content="Linux, 汇编, 汇编语言开发, tttlca">
+<meta name="DC.Date" scheme="iso8601" content="2003-07-03">
+<meta name="Source" content="v17 delivery:developerWorks">
+<meta name="Security" content="Public">
+<meta name="Abstract" content="汇编语言的优点是速度快，可以直接对硬件进行操作，这对诸如图形处理等关键应用是非常重要的。Linux是一个用C语言开发的操作系统，这使得很多程序员开始忘记在Linux中还可以直接使用汇编这一底层语言来优化程序的性能。本文为那些在Linux平台上编写汇编代码的程序员提供指南，介绍Linux汇编语言的语法格式和开发工具，并辅以具体的例子讲述如何开发实用的Linux汇编程序。">
+<meta name="Description" content="汇编语言的优点是速度快，可以直接对硬件进行操作，这对诸如图形处理等关键应用是非常重要的。Linux是一个用C语言开发的操作系统，这使得很多程序员开始忘记在Linux中还可以直接使用汇编这一底层语言来优化程序的性能。本文为那些在Linux平台上编写汇编代码的程序员提供指南，介绍Linux汇编语言的语法格式和开发工具，并辅以具体的例子讲述如何开发实用的Linux汇编程序。">
+<meta name="IBM.Effective" scheme="W3CDTF" content="2003-07-03">
+<meta name="Owner" content="developerWorks/China/IBM">
+<meta name="DC.Language" scheme="rfc1766" content="zh-CN">
+<meta name="IBM.SpecialPurpose" content="SP001">
+<meta name="IBM.Country" content="CN">
+<meta name="Robots" content="index,follow">
+<meta name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316">
+<meta name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="SWGC0">
+<meta name="dW.ContentArea" content="2">
+<meta name="dW.Topic" content="489,87">
+
+<meta scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCLNXCN">
+
+<link rel="canonical" href="http://www.ibm.com/developerworks/cn/linux/l-assembly/index.html">
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/www.css" rel="stylesheet" title="www" type="text/css">
+<link href="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/cnzh.css" rel="stylesheet" title="www" type="text/css">
+<!-- Masthead/footer -->
+<link href="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/dw-mfN2015-01.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/dw-article-6.css" rel="stylesheet" title="www" type="text/css">
+<link href="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/dw-common-features.css" rel="stylesheet" title="www" type="text/css">
+<link href="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/dw-local-site-v17-N2014-05.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<script type="text/javascript" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/www.js">//</script><script type="text/javascript" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/eluminate.js"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/head.js"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/50200000.js" type="text/javascript" language="javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/rules_50200000.js" type="text/javascript" language="javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/dispatcher-v3.js" type="text/javascript" language="javascript"></script><script type="text/javascript" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/yahoo-min.js"></script><script type="text/javascript" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/cp-v3.js"></script><script type="text/javascript" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/json-min.js"></script>
+<script type="text/javascript" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/dw-www-v2.js">//</script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/Dialog.js" charset="utf-8" type="text/javascript"></script> 
+<script type="text/javascript">
+//  ibmweb.config.set({ sbs: { enabled: false }});
+</script>
+<!-- Exp -->
+<script type="text/javascript">dojo.addOnLoad(function(){var dw_source="dwchina";var dw_register="注册免费的 Bluemix 试用版";var dw_connect="连接 Bluemix 开发者";var dw_vp="在 IBM Bluemix 云平台上开发并部署您的下一个应用。";var dw_cta="现在就开始免费试用";var dw_tile_alt="在 IBM Bluemix 云平台上开发并部署您的下一个应用。现在就开始免费试用";var dw_campaign="bluemix";var dw_content=window.location.pathname.split("/")[window.location.pathname.split("/").length-2];if(dw_content=="library"){dw_content=window.location.pathname.split("/")[window.location.pathname.split("/").length-1];dw_content=window.location.pathname.split("/")[window.location.pathname.split("/").length-3]+"-"+dw_content.substring(0,dw_content.indexOf(".html"))}var bluDevComURL="https://developer.ibm.com/bluemix/";var bluLink="https://www.bluemix.net/";var watsonLink="https://www.bluemix.net/#/solutions/solution=watson";var iotLink="http://www.bluemix.net/#/solutions/solution=internet_of_things";var lnkID;var lnkIDd;var lnkIDt;var bLinkEnd;var bLinkTemp;var idTrkr=[];var idCnt;var artTop=dojo.query("div.ibm-col-1-1")[0];var artChildren=dojo.query(artTop).children();var edgy=false;if(dojo.hasClass(artChildren[0],"ibm-inset"))edgy=true;if((artChildren[0].nodeName=="H2")&&(dojo.hasClass(artChildren[1],"ibm-inset")))edgy=true;if(dojo.hasClass(artChildren[0],"codesection"))edgy=true;if((artChildren[0].nodeName=="H5")&&(dojo.hasClass(artChildren[1],"codesection")))edgy=true;if((artChildren[0].nodeName=="H5")&&(artChildren[1].width>=701))edgy=true;if(artChildren[1].width>=701)edgy=true;if(dojo.hasClass(artChildren[0],"ibm-data-table"))edgy=true;if((artChildren[0].nodeName=="H5")&&(dojo.hasClass(artChildren[1],"ibm-data-table")))edgy=true;if(!(edgy)){var sBarAB='<div class="dw-article-sidebar dw-bluemix" id="dwc-exp-a">'+'<img src="//dw1.s81c.com/developerworks/i/bluemix-graphic.png" height="64" width="64" alt=""/>'+'<p>'+dw_vp+'</p>'+'<p class="ibm-button-link-alternate dw-button-green">'+'<a id="tutc-sbar-bmix-home-btn-ABa" href="'+bluLink+'" class="dw-button-large">'+dw_cta+'</a></p></div>';dojo.place(sBarAB,artTop,"first");}dojo.forEach(dojo.query("#ibm-content-main a"),function(item,index){var dw_medium="article";var bLink=dojo.attr(item,"href");if((dojo.attr(item,"id")!=null)&&(dojo.attr(item,"id").indexOf("-sbar-")>-1)){if(bLink.indexOf("solution=internet_of_things")>-1){dw_medium="sidebar-iot"}else if(bLink.indexOf("solution=watson")>-1){dw_medium="sidebar-watson"}else{dw_medium="sidebar"}}if(bLink&&(bLink.indexOf("//bluemix.net")>-1))bLink=bLink.replace("//bluemix.net","//www.bluemix.net");if(bLink&&(bLink.indexOf("//ace.ng.bluemix.net")>-1))bLink=bLink.replace("//ace.ng.bluemix.net","//www.bluemix.net");if(bLink&&(bLink.indexOf("//console.ng.bluemix.net")>-1))bLink=bLink.replace("//console.ng.bluemix.net","//www.bluemix.net");if(bLink&&((bLink.indexOf("//www.bluemix.net")>-1)||(bLink.indexOf("//www.ng.bluemix.net")>-1)||(bLink.indexOf("//hub.jazz.net")>-1))){bLinkEnd="";bLink=bLink.split("?");if((bLink[1])&&(bLink[1].indexOf("/")!=-1))bLinkEnd=bLink[1].substring(bLink[1].indexOf("/"));bLink=bLink[0];if(bLink.indexOf("//hub.jazz.net")>-1){if((bLink.indexOf("//hub.jazz.net/git")>-1)||(bLink.indexOf("//hub.jazz.net/project")>-1)){bLink="https://login.jazz.net/psso/proxy/jazzregister?utm_source="+dw_source+"&utm_medium="+dw_medium+"&utm_content="+dw_content+"&utm_campaign="+dw_campaign+"&redirect_uri="+bLink}else{bLink=bLink+"?utm_source="+dw_source+"&utm_campaign="+dw_campaign+"&utm_content="+dw_content+"&utm_medium="+dw_medium}}else{if(bLink.indexOf("/#/")==-1){if(bLink.substring(bLink.length-7)=="/docs/#"){bLink=bLink.replace("/docs/#","/docs/"+"?cm_mmc="+dw_source+"-_-"+dw_campaign+"-_-"+dw_content+"-_-"+dw_medium+"#")}else{bLink=bLink+"?cm_mmc="+dw_source+"-_-"+dw_campaign+"-_-"+dw_content+"-_-"+dw_medium}}else{bLink=bLink.substring(0,bLink.indexOf("#"))+"?cm_mmc="+dw_source+"-_-"+dw_campaign+"-_-"+dw_content+"-_-"+dw_medium+bLink.substring(bLink.indexOf("#")-1)}}if(bLinkEnd)bLink=bLink+bLinkEnd;dojo.attr(item,"href",bLink);}});});</script><!-- LEADSPACE_STYLES -->
+
+<script charset="utf-8" id="dojoIoScript1" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/cnzh-utf8.js" type="text/javascript"></script><script charset="utf-8" id="dojoIoScript2" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/a.json" type="text/javascript"></script><script charset="utf-8" id="dojoIoScript3" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/profiling.js" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/move.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/TimedMoveable.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/_CssStateMixin.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/_FormMixin.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/_DialogMixin.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/DialogUnderlay.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/ContentPane.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/common_002.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/TooltipDialog.js" charset="utf-8" type="text/javascript"></script><script charset="utf-8" id="dojoIoScript4" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/blackwhite_lists.asc" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/Mover.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/Moveable.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/_ContentPaneResizeMixin.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/html.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/loading.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/common.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/autoscroll.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/_LayoutWidget.js" charset="utf-8" type="text/javascript"></script></head>
+
+<body aria-busy="false" class="v17" id="ibm-com">
+
+	<div id="ibm-top" class="ibm-landing-page ibm-no-scroll"><img src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/ibm_logo_print.png" id="ibm-print-masthead" alt="IBM Print" height="15" width="43">
+
+<!-- MASTHEAD_BEGIN -->		
+<div role="banner" id="ibm-masthead">
+
+    <!-- TOP ROW -->    
+	<div id="dw-masthead-top-row">
+		<ul id="ibm-mast-options-dw" role="toolbar" aria-label="Masthead navigation">
+			<li id="dw-mast-top-4" role="presentation">
+				<a href="http://www.ibm.com/developerworks/cn/" tabindex="0"><img src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/dwn-dw-badge.png" alt="dW" aria-label="dW" height="22" width="43"></a>
+			</li>
+			<li id="dw-mast-top-0" role="presentation">
+				<div id="dw-mast-signin">
+					<a id="dw-mf-signin-link" class="" href="http://www.ibm.com/developerworks/dwwi/jsp/ssologin.jsp?d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-assembly%2F&amp;lang=zh_CN&amp;a=dwmav" title="" tabindex="2">登录</a>
+					<span class="dw-mf-signin-spacer">|</span>
+					<a id="dw-mf-reg-link" class="" href="http://www.ibm.com/developerworks/dwwi/jsp/ssoregister.jsp?d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-assembly%2F&amp;lang=zh_CN&amp;a=dwmav" title="" tabindex="3">注册</a>
+				</div>
+				<div id="dw-mast-auth-link" class="dw-mf-hide">
+					<a class="authenticated ibm-active" href="#" role="button" tabindex="2"></a>
+					<ul id="dw-mast-auth-menu" class="dw-mf-hide">
+						<li class="dw-mast-auth-menu-title" aria-hidden="true">developerWorks 社区</li>
+						<li>
+							<span class="dw-mast-auth-menu-arrow" aria-hidden="true">›</span><a href="http://www.ibm.com/developerworks/community/profiles/html/myProfileView.do?lang=zh" tabindex="3">我的概要信息</a>
+						</li>
+						<li>
+							<span class="dw-mast-auth-menu-arrow" aria-hidden="true">›</span><a href="http://www.ibm.com/developerworks/community/groups/service/html/mycommunities?lang=zh" tabindex="4">我的社区</a>
+						</li>
+						<li>
+							<span class="dw-mast-auth-menu-arrow" aria-hidden="true">›</span><a href="http://www.ibm.com/developerworks/community/news/?lang=zh" tabindex="5">设置</a>
+						</li>
+						<li class="dw-mast-auth-menu-divider"><hr></li>
+						<li>
+							<span class="dw-mast-auth-menu-arrow" aria-hidden="true">›</span><a id="dw-mast-signout-link" href="http://www.ibm.com/developerworks/dwwi/jsp/ssologout.jsp?d=http://www.ibm.com/developerworks/cn/&amp;a=dwmav" tabindex="6">退出</a>
+						</li>
+					</ul>				
+				</div>
+			</li>
+			<li id="dw-mast-top-1">
+				<div></div>
+			</li>
+			<li id="dw-mast-top-3" role="presentation">
+				<a href="http://www.ibm.com/cn/zh/" tabindex="1">IBM</a>
+			</li>
+		</ul>
+	</div>
+
+    <!-- BOTTOM ROW -->
+	<div id="ibm-universal-nav-dw" aria-label="Site map">
+		<ul id="ibm-unav-links-dw">
+			<li id="ibm-unav-home-dwlogo">
+				<a href="http://www.ibm.com/developerworks/cn/"><img src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/dwn-dw-wordmark.png" alt="developerWorks®" height="28" width="225"></a>
+			</li>
+		</ul>
+		<ul id="ibm-menu-links-dw" class="ibm-menu-links-dw-cn" role="toolbar" aria-label="Site map">
+			<li id="dw-mast-nav-0" role="presentation"><a href="http://www.ibm.com/developerworks/cn/topics/" tabindex="0">技术主题</a></li>
+			<li id="dw-mast-nav-1" role="presentation"><a href="http://www.ibm.com/developerworks/cn/downloads/" tabindex="0">软件下载</a></li>
+			<li id="dw-mast-nav-2" role="presentation"><a href="http://www.ibm.com/developerworks/community/?lang=zh" tabindex="0">社区</a></li>
+			<li id="dw-mast-nav-3" role="presentation"><a href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=6d7f9e5d-5f89-4767-a006-a81b8d186370&amp;lang=zh" tabindex="0">技术讲座</a></li>
+		</ul>
+		<form id="ibm-search-form" action="//www.ibm.com/search/csass/search/" method="get" name="form1" aria-label="搜索 developerWorks" role="search">
+			<p>
+				<label for="q"><span class="ibm-access">搜索 developerWorks</span></label>
+				<input id="q" name="q" value="搜索 developerWorks" maxlength="100" type="text">
+				<input name="sn" value="dw" type="hidden">
+				<input name="lang" value="zh" type="hidden">
+				<input name="cc" value="CN" type="hidden">
+				<input name="en" value="utf" type="hidden">
+				<input name="hpp" value="20" type="hidden">
+				<input name="dws" value="cndw" type="hidden">
+				<input name="lo" value="zh" type="hidden">
+				<input id="ibm-search" class="ibm-btn-search" value="提交" type="submit">
+			</p>
+		</form>
+	</div>    
+	
+<div aria-label="社交工具" role="navigation" style="display: block;" id="ibm-social-tools"><ul aria-label="Social tool list" role="toolbar"><li><a tabindex="0" role="button" dojoattrid="1" rel="print" href="#" title="打印本页面" class="ibm-share-print">打印本页面</a></li><li><a tabindex="-1" role="button" dojoattrid="2" rel="email" href="#" title="用电子邮件发送本页面" class="ibm-share-email">用电子邮件发送本页面</a></li><li></li><li></li><li><a class="ibm-share-weibo" tabindex="-1" role="button" dojoattrid="2" rel="新浪微博" title="新浪微博" href="http://service.weibo.com/share/share.php?title=Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97&amp;url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-assembly%2F&amp;language=zh_cn" onclick="ibmweb.sbs.clickHandler(event,{url:'http://service.weibo.com/share/share.php?title=%{TITLE}&amp;url=%{URL}&amp;language=zh_cn'});">新浪微博</a></li><li><a class="ibm-share-renren" tabindex="-1" role="button" dojoattrid="3" rel="人人网" title="人人网" href="http://share.renren.com/share/buttonshare?title=Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97&amp;link=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-assembly%2F" onclick="ibmweb.sbs.clickHandler(event,{url:'http://share.renren.com/share/buttonshare?title=%{TITLE}&amp;link=%{URL}'});">人人网</a></li><li><a class="dwcn-tencent-link" tabindex="-1" role="button" dojoattrid="4" rel="腾讯微博" title="腾讯微博" href="http://v.t.qq.com/share/share.php?title=Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97&amp;url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-assembly%2F" onclick="ibmweb.sbs.clickHandler(event,{url:'http://v.t.qq.com/share/share.php?title=%{TITLE}&amp;url=%{URL}'});">腾讯微博</a></li><li><a class="dwcn-sohu-link" tabindex="-1" role="button" dojoattrid="5" rel="搜狐微博" title="搜狐微博" href="http://t.sohu.com/third/post.jsp?title=Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97%20&amp;link=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-assembly%2F" onclick="ibmweb.sbs.clickHandler(event,{url:'http://t.sohu.com/third/post.jsp?title=%{TITLE}%20&amp;link=%{URL}'});">搜狐微博</a></li><li><a class="dwcn-netease-link" tabindex="-1" role="button" dojoattrid="6" rel="网易微博" title="网易微博" href="http://t.163.com/article/user/checkLogin.do?info=Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97%20http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-assembly%2F" onclick="ibmweb.sbs.clickHandler(event,{url:'http://t.163.com/article/user/checkLogin.do?info=%{TITLE}%20%{URL}'});">网易微博</a></li><li><a class="ibm-share-digg" title="Digg" href="http://digg.com/submit?phase=2&amp;url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-assembly%2F&amp;title=Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97" rel="digg" dojoattrid="7" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://digg.com/submit?phase=2&amp;url=%{URL}&amp;title=%{TITLE}'});">Digg</a></li><li><a class="ibm-share-facebook" title="Facebook" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-assembly%2F&amp;t=Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97" rel="facebook" dojoattrid="8" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://www.facebook.com/sharer.php?u=%{URL}&amp;t=%{TITLE}'});">Facebook</a></li><li><a class="ibm-share-twitter" title="Twitter" href="http://twitter.com/?status=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-assembly%2F%20-%20Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97" rel="twitter" dojoattrid="9" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://twitter.com/?status=%{URL}%20-%20%{TITLE}'});">Twitter</a></li><li><a class="ibm-share-delicious" title="Delicious" href="http://delicious.com/post?url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-assembly%2F&amp;title=Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97" rel="delicious" dojoattrid="10" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://delicious.com/post?url=%{URL}&amp;title=%{TITLE}'});">Delicious</a></li><li><a class="ibm-share-linkedin" title="Linked In" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-assembly%2F&amp;title=Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97" rel="linkedin" dojoattrid="11" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://www.linkedin.com/shareArticle?mini=true&amp;url=%{URL}&amp;title=%{TITLE}'});">Linked In</a></li></ul></div></div>
+<div id="fdiv" class="ibm-access"></div><!-- MASTHEAD_END -->
+	    
+<!-- LAYOUT -->
+<!-- LEADSPACE_BEGIN --> 
+<div role="main" id="ibm-access-cntr"><div id="ibm-leadspace-head">
+	<!-- LEADSPACE_BODY_BEGIN --> 
+	<div id="ibm-leadspace-body">
+		<!-- Navigation_Trail_BEGIN -->
+      <ul aria-label="Bread Crumbs" role="navigation" id="ibm-navigation-trail"><li><a href="http://www.ibm.com/developerworks/cn/">developerWorks 中国</a></li><li><a href="http://www.ibm.com/developerworks/cn/topics/">技术主题</a></li><li><a href="http://www.ibm.com/developerworks/cn/linux/">Linux</a></li><li><a href="http://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp">文档库</a></li></ul>
+		<!-- END_Navigation_Trail -->
+			<!-- Title_Subtitle -->
+			<h1>Linux 汇编语言开发指南</h1>
+	</div>
+	<!-- LEADSPACE_BODY_END --> 
+	<!-- SUMMARY_BEGIN -->
+	<div id="dw-summary-area" class="dw-summary-columns">
+		<div class="ibm-col-6-4">
+		<p>汇编语言的优点是速度快，可以直接对硬件进行操作，这对诸如图形处理等关键应用是非常重要的。Linux 是一个用 C 
+语言开发的操作系统，这使得很多程序员开始忘记在 Linux 中还可以直接使用汇编这一底层语言来优化程序的性能。本文为那些在Linux 
+平台上编写汇编代码的程序员提供指南，介绍 Linux 汇编语言的语法格式和开发工具，并辅以具体的例子讲述如何开发实用的Linux 汇编程序。</p>
+		<p class="ibm-no-print ibm-ind-link">
+
+			
+			<span id="nCmts"><span>6</span><img class="dw-cmts-arrow" alt="" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/dw-cmts-arrow.png" height="7" width="7"> <a href="#icomments" class="dw-cmt-link">评论：</a></span>
+		</p>
+		</div>
+		<div class="ibm-col-6-2 dw-toc-margin">
+			<p class="dw-summary-author"><a href="#authorN10017" class="ibm-popup-link" onclick="ibmweb.overlay.show('authorN10017',this);return false;">肖文鹏</a> (<a href="mailto:xiaowp@263.net?subject=Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97&amp;cc=">xiaowp@263.net</a>), 北京理工大学计算机系硕士研究生</p>
+<div id="authorN10017" class="ibm-common-overlay"><div class="ibm-head"><p><a href="#close" class="ibm-common-overlay-close">关闭 [x]</a></p></div><div class="ibm-body"><div class="ibm-main"><div class="ibm-title"><!--this is where the h2 usually goes--></div><div class="ibm-container ibm-alternate"><div class="ibm-container-body">
+<p><!--.-->
+本文作者
+        <strong>肖文鹏</strong>是北京理工大学计算机系的一名硕士研究生，主要从事操作系统和分布式计算环境的研究，喜爱Linux和Python。你可以通过
+        <a href="mailto:xiaowp@263.net?cc=">xiaowp@263.net</a>与他取得联系。
+      </p><br><br></div></div></div></div><div class="ibm-footer"><!----></div></div>
+			<p class="dw-summary-date">2003 年 7 月 03 日</p>
+			
+
+
+			<div aria-hidden="true" class="ibm-container" id="dw-toc"><div class="ibm-container-body"><ul class="ibm-twisty"><li><a href="#toggle" class="ibm-twisty-trigger ibm-twisty-trigger-closed"><img src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/c.gif" alt="+"></a><span class="ibm-twisty-head">内容</span><div style="display: none;" class="ibm-twisty-body"><ul style="font-size:0.8em" class="ibm-link-list">
+<li><a class="ibm-anchor-down-em-link" href="#N10031">一、简介</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N10054">二、Linux 汇编语法格式</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N10152">三、Hello World!</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N1016D">四、Linux 汇编工具</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N101C8">五、系统调用</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N101E5">六、命令行参数</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N101F2">七、GCC 内联汇编</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N1027D">八、小结</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#resources">参考资料 </a></li>
+<li><a class="ibm-anchor-down-em-link" href="#icomments">评论</a></li></ul></div></li></ul></div></div>
+		</div>
+	</div>
+	<!-- SUMMARY_END -->
+</div><div id="ibm-pcon">
+
+<!-- BEGIN_IBM-CONTENT -->
+<div id="ibm-content">
+
+<!-- BEGIN_IBM-CONTENT-BODY -->
+<div id="ibm-content-body">
+
+<!-- BEGIN_IBM-CONTENT-MAIN -->
+<div id="ibm-content-main">
+
+<!-- 1_1_COLUMN_BEGIN -->
+<div class="ibm-columns">
+<div class="ibm-col-1-1"><div class="dw-article-sidebar dw-bluemix" id="dwc-exp-a"><img src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/bluemix-graphic.png" alt="" height="64" width="64"><p>在 IBM Bluemix 云平台上开发并部署您的下一个应用。</p><p class="ibm-button-link-alternate dw-button-green"><a id="tutc-sbar-bmix-home-btn-ABa" href="https://www.bluemix.net/?cm_mmc=dwchina-_-bluemix-_-l-assembly-_-sidebar" class="dw-button-large">现在就开始免费试用</a></p></div>
+
+<h2 id="N10031">一、简介</h2><p>作为最基本的编程语言之一，汇编语言虽然应用的范围不算很广，但重要性却勿庸置疑，因为它能够
+完成许多其它语言所无法完成的功能。就拿 Linux 内核来讲，虽然绝大部分代码是用 C 
+语言编写的，但仍然不可避免地在某些关键地方使用了汇编代码，其中主要是在 Linux 的启动部分。由于这部分代码与硬件的关系非常密切，即使是 C 
+语言也会有些力不从心，而汇编语言则能够很好扬长避短，最大限度地发挥硬件的性能。</p><p>大多数情况下 Linux 
+程序员不需要使用汇编语言，因为即便是硬件驱动这样的底层程序在 Linux 操作系统中也可以用完全用 C 语言来实现，再加上 GCC 
+这一优秀的编译器目前已经能够对最终生成的代码进行很好的优化，的确有足够的理由让我们可以暂时将汇编语言抛在一边了。但实现情况是 Linux 
+程序员有时还是需要使用汇编，或者不得不使用汇编，理由很简单：精简、高效和 libc 无关性。假设要移植 Linux 
+到某一特定的嵌入式硬件环境下，首先必然面临如何减少系统大小、提高执行效率等问题，此时或许只有汇编语言能帮上忙了。</p><p>汇编语言直接同计算机的底层软件甚至硬件进行交互，它具有如下一些优点：
+        </p><ul class="ibm-bullet-list"><li>	能够直接访问与硬件相关的存储器或 I/O 端口；
+</li><li>	能够不受编译器的限制，对生成的二进制代码进行完全的控制；
+</li><li>	能够对关键代码进行更准确的控制，避免因线程共同访问或者硬件设备共享引起的死锁；
+</li><li>	能够根据特定的应用对代码做最佳的优化，提高运行速度；
+</li><li>	能够最大限度地发挥硬件的功能。
+</li></ul><p>同时还应该认识到，汇编语言是一种层次非常低的语言，它仅仅高于直接手工编写二进制的机器指令码，因此不可避免地存在一些缺点：
+        </p><ul class="ibm-bullet-list"><li>	编写的代码非常难懂，不好维护；
+</li><li>	很容易产生 bug，难于调试；
+</li><li>	只能针对特定的体系结构和处理器进行优化；
+</li><li>	开发效率很低，时间长且单调。
+</li></ul><p>Linux 
+下用汇编语言编写的代码具有两种不同的形式。第一种是完全的汇编代码，指的是整个程序全部用汇编语言编写。尽管是完全的汇编代码，Linux 
+平台下的汇编工具也吸收了 C 语言的长处，使得程序员可以使用 #include、#ifdef 
+等预处理指令，并能够通过宏定义来简化代码。第二种是内嵌的汇编代码，指的是可以嵌入到C语言程序中的汇编代码片段。虽然 ANSI 的 C 
+语言标准中没有关于内嵌汇编代码的相应规定，但各种实际使用的 C 编译器都做了这方面的扩充，这其中当然就包括 Linux 平台下的 GCC。</p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N10054">二、Linux 汇编语法格式</h2><p>绝大多数 Linux 程序员以前只接触过DOS/Windows 下的汇编语言，这些汇编代码都是 Intel 风格的。但在 Unix 和 Linux 系统中，更多采用的还是 AT&amp;T 格式，两者在语法格式上有着很大的不同：
+        </p><ol><li><p>在 AT&amp;T 汇编格式中，寄存器名要加上 '%' 作为前缀；而在 Intel 汇编格式中，寄存器名不需要加前缀。例如：</p><table class="ibm-data-table" border="1" cellpadding="2" cellspacing="0"><thead xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><th align="center" bgcolor="#D9D9D9" width="200">AT&amp;T 格式</th><th align="center" bgcolor="#D9D9D9" width="200">Intel 格式</th></tr></thead><tbody xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><td>
+pushl %eax</td><td width="200">
+push eax</td></tr></tbody></table></li><li><p>在 AT&amp;T 汇编格式中，用 '$' 前缀表示一个立即操作数；而在 Intel 汇编格式中，立即数的表示不用带任何前缀。例如：</p><table class="ibm-data-table" border="1" cellpadding="2" cellspacing="0"><thead xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><th align="center" bgcolor="#D9D9D9" width="200">AT&amp;T 格式</th><th align="center" bgcolor="#D9D9D9" width="200">Intel 格式</th></tr></thead><tbody xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><td>
+pushl $1</td><td width="200">
+push 1</td></tr></tbody></table></li><li><p>AT&amp;T 和 Intel 格式中的源操作数和目标操作数的位置正好相反。在 Intel 汇编格式中，目标操作数在源操作数的左边；而在 AT&amp;T 汇编格式中，目标操作数在源操作数的右边。例如：</p><table class="ibm-data-table" border="1" cellpadding="2" cellspacing="0"><thead xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><th align="center" bgcolor="#D9D9D9" width="200">AT&amp;T 格式</th><th align="center" bgcolor="#D9D9D9" width="200">Intel 格式</th></tr></thead><tbody xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><td>
+addl $1, %eax</td><td width="200">
+add eax, 1</td></tr></tbody></table></li><li><p>在 AT&amp;T 
+汇编格式中，操作数的字长由操作符的最后一个字母决定，后缀'b'、'w'、'l'分别表示操作数为字节（byte，8 比特）、字（word，16 
+比特）和长字（long，32比特）；而在 Intel 汇编格式中，操作数的字长是用 "byte ptr" 和 "word ptr" 
+等前缀来表示的。例如：</p><table class="ibm-data-table" border="1" cellpadding="2" cellspacing="0"><thead xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><th align="center" bgcolor="#D9D9D9" width="200">AT&amp;T 格式</th><th align="center" bgcolor="#D9D9D9" width="200">Intel 格式</th></tr></thead><tbody xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><td>
+movb val, %al</td><td width="200">
+mov al, byte ptr val</td></tr></tbody></table></li><li>
+在 AT&amp;T 汇编格式中，绝对转移和调用指令（jump/call）的操作数前要加上'*'作为前缀，而在 Intel 格式中则不需要。
+</li><li><p>远程转移指令和远程子调用指令的操作码，在 AT&amp;T 汇编格式中为 "ljump" 和 "lcall"，而在 Intel 汇编格式中则为 "jmp far" 和 "call far"，即：</p><table class="ibm-data-table" border="1" cellpadding="2" cellspacing="0"><thead xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><th align="center" bgcolor="#D9D9D9" width="200">AT&amp;T 格式</th><th align="center" bgcolor="#D9D9D9" width="200">Intel 格式</th></tr></thead><tbody xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><td>
+ljump $section, $offset</td><td width="200">
+jmp far section:offset</td></tr><tr><td>
+lcall $section, $offset</td><td width="200">
+call far section:offset</td></tr></tbody></table><p>与之相应的远程返回指令则为：</p><table class="ibm-data-table" border="1" cellpadding="2" cellspacing="0"><thead xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><th align="center" bgcolor="#D9D9D9" width="200">AT&amp;T 格式</th><th align="center" bgcolor="#D9D9D9" width="200">Intel 格式</th></tr></thead><tbody xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><td>
+lret $stack_adjust</td><td width="200">
+ret far stack_adjust</td></tr></tbody></table></li><li><p>在 AT&amp;T 汇编格式中，内存操作数的寻址方式是</p><div class="codesection"><pre class="displaycode">section:disp(base, index, scale)</pre></div><p>而在 Intel 汇编格式中，内存操作数的寻址方式为：</p><div class="codesection"><pre class="displaycode">section:[base + index*scale + disp]</pre></div><p>由于 Linux 工作在保护模式下，用的是 32 位线性地址，所以在计算地址时不用考虑段基址和偏移量，而是采用如下的地址计算方法：</p><div class="codesection"><pre class="displaycode">disp + base + index * scale</pre></div><p>下面是一些内存操作数的例子：</p><table class="ibm-data-table" border="1" cellpadding="2" cellspacing="0"><thead xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><th align="center" bgcolor="#D9D9D9" width="200">AT&amp;T 格式</th><th align="center" bgcolor="#D9D9D9" width="200">Intel 格式</th></tr></thead><tbody xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><td>
+movl -4(%ebp), %eax</td><td width="200">
+mov eax, [ebp - 4]</td></tr><tr><td>
+movl array(, %eax, 4), %eax</td><td width="200">
+mov eax, [eax*4 + array]</td></tr><tr><td>
+movw array(%ebx, %eax, 4), %cx</td><td width="200">
+mov cx, [ebx + 4*eax + array]</td></tr><tr><td>
+movb $4, %fs:(%eax)</td><td width="200">
+mov fs:eax, 4</td></tr></tbody></table></li></ol><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N10152">三、Hello World!</h2><p>真不知道打破这个传统会带来什么样的后果，但既然所有程序设计语言的第一个例子都是在屏幕上打印一个字符串 "Hello World!"，那我们也以这种方式来开始介绍 Linux 下的汇编语言程序设计。</p><p>在
+ Linux 操作系统中，你有很多办法可以实现在屏幕上显示一个字符串，但最简洁的方式是使用 Linux 
+内核提供的系统调用。使用这种方法最大的好处是可以直接和操作系统的内核进行通讯，不需要链接诸如 libc 这样的函数库，也不需要使用 ELF 
+解释器，因而代码尺寸小且执行速度快。</p><p>Linux 是一个运行在保护模式下的 32 位操作系统，采用 flat memory 
+模式，目前最常用到的是 ELF 格式的二进制代码。一个 ELF 格式的可执行程序通常划分为如下几个部分：.text、.data 和 
+.bss，其中 .text 是只读的代码区，.data 是可读可写的数据区，而 .bss 则是可读可写且没有初始化的数据区。代码区和数据区在 
+ELF 中统称为 section，根据实际需要你可以使用其它标准的 section，也可以添加自定义 section，但一个 ELF 
+可执行程序至少应该有一个 .text 部分。
+下面给出我们的第一个汇编程序，用的是 AT&amp;T 汇编语言格式：</p><p>例1. AT&amp;T 格式</p><div class="codesection"><pre class="displaycode">#hello.s 
+.data                    # 数据段声明
+        msg : .string "Hello, world!\\n" # 要输出的字符串
+        len = . - msg                   # 字串长度
+.text                    # 代码段声明
+.global _start           # 指定入口函数
+        
+_start:                  # 在屏幕上显示一个字符串
+        movl $len, %edx  # 参数三：字符串长度
+        movl $msg, %ecx  # 参数二：要显示的字符串
+        movl $1, %ebx    # 参数一：文件描述符(stdout) 
+        movl $4, %eax    # 系统调用号(sys_write) 
+        int  $0x80       # 调用内核功能
+        
+                         # 退出程序
+        movl $0,%ebx     # 参数一：退出代码
+        movl $1,%eax     # 系统调用号(sys_exit) 
+        int  $0x80       # 调用内核功能</pre></div><p>初次接触到 AT&amp;T 格式的汇编代码时，很多程序员都认为太晦涩难懂了，没有关系，在 Linux 平台上你同样可以使用 Intel 格式来编写汇编程序：</p><p>例2. Intel 格式</p><div class="codesection"><pre class="displaycode">; hello.asm 
+section .data            ; 数据段声明
+        msg db "Hello, world!", 0xA     ; 要输出的字符串
+        len equ $ - msg                 ; 字串长度
+section .text            ; 代码段声明
+global _start            ; 指定入口函数
+_start:                  ; 在屏幕上显示一个字符串
+        mov edx, len     ; 参数三：字符串长度
+        mov ecx, msg     ; 参数二：要显示的字符串
+        mov ebx, 1       ; 参数一：文件描述符(stdout) 
+        mov eax, 4       ; 系统调用号(sys_write) 
+        int 0x80         ; 调用内核功能
+                         ; 退出程序
+        mov ebx, 0       ; 参数一：退出代码
+        mov eax, 1       ; 系统调用号(sys_exit) 
+        int 0x80         ; 调用内核功能</pre></div><p>上面两个汇编程序采用的语法虽然完全不同，但功能却
+都是调用 Linux 内核提供的 sys_write 来显示一个字符串，然后再调用 sys_exit 退出程序。在 Linux 内核源文件 
+include/asm-i386/unistd.h 中，可以找到所有系统调用的定义。</p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N1016D">四、Linux 汇编工具</h2><p>Linux 平台下的汇编工具虽然种类很多，但同 DOS/Windows 一样，最基本的仍然是汇编器、连接器和调试器。</p><p><strong>1.汇编器</strong></p><p>汇
+编器（assembler）的作用是将用汇编语言编写的源程序转换成二进制形式的目标代码。Linux 平台的标准汇编器是 GAS，它是 GCC 
+所依赖的后台汇编工具，通常包含在 binutils 软件包中。GAS 使用标准的 AT&amp;T 汇编语法，可以用来汇编用 AT&amp;T 
+格式编写的程序：</p><div class="codesection"><pre class="displaycode">[xiaowp@gary code]$ as -o hello.o hello.s</pre></div><p>Linux
+ 平台上另一个经常用到的汇编器是 NASM，它提供了很好的宏指令功能，并能够支持相当多的目标代码格式，包括 
+bin、a.out、coff、elf、rdf 等。NASM 采用的是人工编写的语法分析器，因而执行速度要比 GAS 快很多，更重要的是它使用的是
+ Intel 汇编语法，可以用来编译用 Intel 语法格式编写的汇编程序：</p><div class="codesection"><pre class="displaycode">[xiaowp@gary code]$ nasm -f elf hello.asm</pre></div><p><strong>2.链接器</strong></p><p>由汇编器产生的目标代码是不能直接在计算机上运行的，它必须经过链接器的处理才能生成可执行代码。链接器通常用来将多个目标代码连接成一个可执行代码，这样可以先将整个程序分成几个模块来单独开发，然后才将它们组合(链接)成一个应用程序。
+Linux 使用 ld 作为标准的链接程序，它同样也包含在 binutils 软件包中。汇编程序在成功通过 GAS 或 NASM 的编译并生成目标代码后，就可以使用 ld 将其链接成可执行程序了：</p><div class="codesection"><pre class="displaycode">[xiaowp@gary code]$ ld -s -o hello hello.o</pre></div><p><strong>3.调试器</strong></p><p>有
+人说程序不是编出来而是调出来的，足见调试在软件开发中的重要作用，在用汇编语言编写程序时尤其如此。Linux 下调试汇编代码既可以用 
+GDB、DDD 这类通用的调试器，也可以使用专门用来调试汇编代码的 ALD(Assembly Language Debugger)。</p><p>从调试的角度来看，使用 GAS 的好处是可以在生成的目标代码中包含符号表(symbol table)，这样就可以使用 GDB 和 DDD 来进行源码级的调试了。要在生成的可执行程序中包含符号表，可以采用下面的方式进行编译和链接：</p><div class="codesection"><pre class="displaycode">[xiaowp@gary code]$ as --gstabs -o hello.o hello.s
+[xiaowp@gary code]$ ld -o hello hello.o</pre></div><p>执行 as 命令时带上参数 --gstabs 可以告诉汇编器在生成的目标代码中加上符号表，同时需要注意的是，在用 ld 命令进行链接时不要加上 -s 参数，否则目标代码中的符号表在链接时将被删去。</p><p>在 GDB 和 DDD 中调试汇编代码和调试 C 语言代码是一样的，你可以通过设置断点来中断程序的运行，查看变量和寄存器的当前值，并可以对代码进行单步跟踪。图1 是在 DDD 中调试汇编代码时的情景：</p><p><img alt="" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/img01.jpg" width="355"><br>
+图1 用 DDD 中调试汇编程序
+      </p><p>汇编程序员通常面对的都是一些比较苛刻的软硬件环境，短小精悍的ALD可能更能符合实际的需要，因此下面主要介绍一下如何用ALD来调试汇编程序。首先在命令行方式下执行ald命令来启动调试器，该命令的参数是将要被调试的可执行程序：</p><div class="codesection"><pre class="displaycode">[xiaowp@gary doc]$ ald hello
+Assembly Language Debugger 0.1.3
+Copyright (C) 2000-2002 Patrick Alken
+hello: ELF Intel 80386 (32 bit), LSB, Executable, Version 1 (current)
+Loading debugging symbols...(15 symbols loaded)
+ald&gt;</pre></div><p>当 ALD 的提示符出现之后，用 disassemble 命令对代码段进行反汇编：</p><div class="codesection"><pre class="displaycode">ald&gt; disassemble -s .text
+Disassembling section .text (0x08048074 - 0x08048096)
+08048074  BA0F000000                 mov edx, 0xf
+08048079  B998900408                 mov ecx, 0x8049098
+0804807E  BB01000000                 mov ebx, 0x1
+08048083  B804000000                 mov eax, 0x4
+08048088  CD80                       int 0x80
+0804808A  BB00000000                 mov ebx, 0x0
+0804808F  B801000000                 mov eax, 0x1
+08048094  CD80                       int 0x80</pre></div><p>上述输出信息的第一列是指令对应的地址码，利用它可以设置在程序执行时的断点：</p><div class="codesection"><pre class="displaycode">ald&gt; break 0x08048088
+Breakpoint 1 set for 0x08048088</pre></div><p>断点设置好后，使用 run 命令开始执行程序。ALD 在遇到断点时将自动暂停程序的运行，同时会显示所有寄存器的当前值：</p><div class="codesection"><pre class="displaycode">ald&gt; run
+Starting program: hello
+Breakpoint 1 encountered at 0x08048088
+eax = 0x00000004 ebx = 0x00000001 ecx = 0x08049098 edx = 0x0000000F
+esp = 0xBFFFF6C0 ebp = 0x00000000 esi = 0x00000000 edi = 0x00000000
+ds  = 0x0000002B es  = 0x0000002B fs  = 0x00000000 gs  = 0x00000000
+ss  = 0x0000002B cs  = 0x00000023 eip = 0x08048088 eflags = 0x00000246
+Flags: PF ZF IF
+08048088  CD80                       int 0x80</pre></div><p>如果需要对汇编代码进行单步调试，可以使用 next 命令：</p><div class="codesection"><pre class="displaycode">ald&gt; next
+Hello, world!
+eax = 0x0000000F ebx = 0x00000000 ecx = 0x08049098 edx = 0x0000000F
+esp = 0xBFFFF6C0 ebp = 0x00000000 esi = 0x00000000 edi = 0x00000000
+ds  = 0x0000002B es  = 0x0000002B fs  = 0x00000000 gs  = 0x00000000
+ss  = 0x0000002B cs  = 0x00000023 eip = 0x0804808F eflags = 0x00000346
+Flags: PF ZF TF IF
+0804808F  B801000000                 mov eax, 0x1</pre></div><p>若想获得 ALD 支持的所有调试命令的详细列表，可以使用 help 命令：</p><div class="codesection"><pre class="displaycode">ald&gt; help
+Commands may be abbreviated.
+If a blank command is entered, the last command is repeated.
+Type `help &lt;command&gt;' for more specific information on &lt;command&gt;.
+General commands
+attach         clear          continue       detach         disassemble
+enter          examine        file           help           load
+next           quit           register       run            set
+step           unload         window         write
+Breakpoint related commands
+break          delete         disable        enable         ignore
+lbreak         tbreak</pre></div><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N101C8">五、系统调用</h2><p>即
+便是最简单的汇编程序，也难免要用到诸如输入、输出以及退出等操作，而要进行这些操作则需要调用操作系统所提供的服务，也就是系统调用。除非你的程序只完
+成加减乘除等数学运算，否则将很难避免使用系统调用，事实上除了系统调用不同之外，各种操作系统的汇编编程往往都是很类似的。</p><p>在 Linux 平台下有两种方式来使用系统调用：利用封装后的 C 库（libc）或者通过汇编直接调用。其中通过汇编语言来直接调用系统调用，是最高效地使用 Linux 内核服务的方法，因为最终生成的程序不需要与任何库进行链接，而是直接和内核通信。</p><p>和
+ DOS 一样，Linux 下的系统调用也是通过中断（int 0x80）来实现的。在执行 int 80 指令时，寄存器 eax 
+中存放的是系统调用的功能号，而传给系统调用的参数则必须按顺序放到寄存器 ebx，ecx，edx，esi，edi 
+中，当系统调用完成之后，返回值可以在寄存器 eax 中获得。</p><p>所有的系统调用功能号都可以在文件 
+/usr/include/bits/syscall.h 中找到，为了便于使用，它们是用 SYS_&lt;name&gt; 这样的宏来定义的，如 
+SYS_write、SYS_exit 等。例如，经常用到的 write 函数是如下定义的：</p><div class="codesection"><pre class="displaycode">ssize_t write(int fd, const void *buf, size_t count);</pre></div><p>该
+函数的功能最终是通过 SYS_write 这一系统调用来实现的。根据上面的约定，参数 fb、buf 和 count 分别存在寄存器 
+ebx、ecx 和 edx 中，而系统调用号 SYS_write 则放在寄存器 eax 中，当 int 0x80 
+指令执行完毕后，返回值可以从寄存器 eax 中获得。</p><p>或许你已经发现，在进行系统调用时至多只有 5 个寄存器能够用来保存参数，难道所有系统调用的参数个数都不超过 5 吗？当然不是，例如 mmap 函数就有 6 个参数，这些参数最后都需要传递给系统调用 SYS_mmap：</p><div class="codesection"><pre class="displaycode">void  *  mmap(void *start, size_t length, int prot , int flags, int fd, off_t offset);</pre></div><p>当
+一个系统调用所需的参数个数大于 5 时，执行int 0x80 指令时仍需将系统调用功能号保存在寄存器 eax 
+中，所不同的只是全部参数应该依次放在一块连续的内存区域里，同时在寄存器 ebx 
+中保存指向该内存区域的指针。系统调用完成之后，返回值仍将保存在寄存器 eax 中。</p><p>由于只是需要一块连续的内存区域来保存系统调用的参
+数，因此完全可以像普通的函数调用一样使用栈(stack)来传递系统调用所需的参数。但要注意一点，Linux 采用的是 C 
+语言的调用模式，这就意味着所有参数必须以相反的顺序进栈，即最后一个参数先入栈，而第一个参数则最后入栈。如果采用栈来传递系统调用所需的参数，在执行
+int 0x80 指令时还应该将栈指针的当前值复制到寄存器 ebx中。</p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N101E5">六、命令行参数</h2><p>在
+ Linux 操作系统中，当一个可执行程序通过命令行启动时，其所需的参数将被保存到栈中：首先是 argc，然后是指向各个命令行参数的指针数组 
+argv，最后是指向环境变量的指针数据 
+envp。在编写汇编语言程序时，很多时候需要对这些参数进行处理，下面的代码示范了如何在汇编代码中进行命令行参数的处理：</p><p>例3. 处理命令行参数</p><div class="codesection"><pre class="displaycode"># args.s
+.text
+.globl _start
+        
+_start:
+        popl	%ecx		# argc
+vnext:
+        popl	%ecx		# argv
+        test 	%ecx, %ecx      # 空指针表明结束
+        jz	exit
+        movl	%ecx, %ebx
+        xorl	%edx, %edx
+strlen:
+        movb	(%ebx), %al
+        inc	%edx
+        inc	%ebx
+        test	%al, %al
+        jnz	strlen
+        movb	$10, -1(%ebx)
+        movl	$4, %eax        # 系统调用号(sys_write) 
+        movl	$1, %ebx        # 文件描述符(stdout) 
+        int	$0x80
+        jmp	vnext
+exit:
+        movl	$1,%eax         # 系统调用号(sys_exit) 
+        xorl	%ebx, %ebx      # 退出代码
+        int 	$0x80
+		
+        ret</pre></div><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N101F2">七、GCC 内联汇编</h2><p>用
+汇编编写的程序虽然运行速度快，但开发速度非常慢，效率也很低。如果只是想对关键代码段进行优化，或许更好的办法是将汇编指令嵌入到 C 
+语言程序中，从而充分利用高级语言和汇编语言各自的特点。但一般来讲，在 C 
+代码中嵌入汇编语句要比"纯粹"的汇编语言代码复杂得多，因为需要解决如何分配寄存器，以及如何与C代码中的变量相结合等问题。</p><p>GCC 提供了很好的内联汇编支持，最基本的格式是：</p><div class="codesection"><pre class="displaycode">__asm__("asm statements");</pre></div><p>例如：</p><div class="codesection"><pre class="displaycode">__asm__("nop");</pre></div><p>如果需要同时执行多条汇编语句，则应该用"\\n\\t"将各个语句分隔开，例如：</p><div class="codesection"><pre class="displaycode">__asm__( "pushl %%eax \\n\\t"
+         "movl $0, %%eax \\n\\t"
+         "popl %eax");</pre></div><p>通常嵌入到 C 代码中的汇编语句很难做到与其它部分没有任何关系，因此更多时候需要用到完整的内联汇编格式：</p><div class="codesection"><pre class="displaycode">__asm__("asm statements" : outputs : inputs : registers-modified);</pre></div><p>插入到 C 代码中的汇编语句是以":"分隔的四个部分，其中第一部分就是汇编代码本身，通常称为指令部，其格式和在汇编语言中使用的格式基本相同。指令部分是必须的，而其它部分则可以根据实际情况而省略。</p><p>在将汇编语句嵌入到C代码中时，操作数如何与C代码中的变量相结合是个很大的问题。GCC采用如下方法来解决这个问题：程序员提供具体的指令，而对寄存器的使用则只需给出"样板"和约束条件就可以了，具体如何将寄存器与变量结合起来完全由GCC和GAS来负责。</p><p>在
+GCC内联汇编语句的指令部中，加上前缀'%'的数字(如%0，%1)表示的就是需要使用寄存器的"样板"操作数。指令部中使用了几个样板操作数，就表明
+有几个变量需要与寄存器相结合，这样GCC和GAS在编译和汇编时会根据后面给定的约束条件进行恰当的处理。由于样板操作数也使用'%'作为前缀，因此在
+涉及到具体的寄存器时，寄存器名前面应该加上两个'%'，以免产生混淆。</p><p>紧跟在指令部后面的是输出部，是规定输出变量如何与样板操作数进行
+结合的条件，每个条件称为一个"约束"，必要时可以包含多个约束，相互之间用逗号分隔开就可以了。每个输出约束都以'='号开始，然后紧跟一个对操作数类
+型进行说明的字后，最后是如何与变量相结合的约束。凡是与输出部中说明的操作数相结合的寄存器或操作数本身，在执行完嵌入的汇编代码后均不保留执行之前的
+内容，这是GCC在调度寄存器时所使用的依据。</p><p>输出部后面是输入部，输入约束的格式和输出约束相似，但不带'='号。如果一个输入约束要求
+使用寄存器，则GCC在预处理时就会为之分配一个寄存器，并插入必要的指令将操作数装入该寄存器。与输入部中说明的操作数结合的寄存器或操作数本身，在执
+行完嵌入的汇编代码后也不保留执行之前的内容。</p><p>有时在进行某些操作时，除了要用到进行数据输入和输出的寄存器外，还要使用多个寄存器来保存中间计算结果，这样就难免会破坏原有寄存器的内容。在GCC内联汇编格式中的最后一个部分中，可以对将产生副作用的寄存器进行说明，以便GCC能够采用相应的措施。</p><p>下面是一个内联汇编的简单例子：</p><p>例4.内联汇编</p><div class="codesection"><pre class="displaycode">/* inline.c */
+int main()
+{
+    int a = 10, b = 0;
+    __asm__ __volatile__("movl %1, %%eax;\\n\\r"
+                         "movl %%eax, %0;"
+                         :"=r"(b)      /* 输出 */    
+                         :"r"(a)       /* 输入 */
+                         :"%eax");     /* 不受影响的寄存器 */
+    
+    printf("Result: %d, %d\\n", a, b);
+}</pre></div><p>上面的程序完成将变量a的值赋予变量b，有几点需要说明：</p><ul class="ibm-bullet-list"><li>	变量b是输出操作数，通过%0来引用，而变量a是输入操作数，通过%1来引用。
+</li><li>	输入操作数和输出操作数都使用r进行约束，表示将变量a和变量b存储在寄存器中。输入约束和输出约束的不同点在于输出约束多一个约束修饰符'='。
+</li><li>	在内联汇编语句中使用寄存器eax时，寄存器名前应该加两个'%'，即%%eax。内联汇编中使用%0、%1等来标识变量，任何只带一个'%'的标识符都看成是操作数，而不是寄存器。
+</li><li>	内联汇编语句的最后一个部分告诉GCC它将改变寄存器eax中的值，GCC在处理时不应使用该寄存器来存储任何其它的值。
+</li><li>由于变量b被指定成输出操作数，当内联汇编语句执行完毕后，它所保存的值将被更新。
+</li></ul><p>在内联汇编中用到的操作数从输出部的第一个约束开始编号，序号从0开始，每个约束记数一次，指令部要引用这些操作数时，只需在
+序号前加上'%'作为前缀就可以了。需要注意的是，内联汇编语句的指令部在引用一个操作数时总是将其作为32位的长字使用，但实际情况可能需要的是字或字
+节，因此应该在约束中指明正确的限定符：</p><table class="ibm-data-table" border="1" cellpadding="2" cellspacing="0"><thead xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><th align="center" bgcolor="#D9D9D9" width="200">限定符</th><th align="center" bgcolor="#D9D9D9" width="200">意义</th></tr></thead><tbody xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><tr><td>
+"m"、"v"、"o"</td><td width="200">
+内存单元</td></tr><tr><td>
+"r"</td><td width="200">
+任何寄存器</td></tr><tr><td>
+"q"</td><td width="200">
+寄存器eax、ebx、ecx、edx之一</td></tr><tr><td>
+"i"、"h"</td><td width="200">
+直接操作数</td></tr><tr><td>
+"E"和"F"</td><td width="200">
+浮点数</td></tr><tr><td>
+"g"</td><td width="200">
+任意</td></tr><tr><td>
+"a"、"b"、"c"、"d"</td><td width="200">
+分别表示寄存器eax、ebx、ecx和edx</td></tr><tr><td>
+"S"和"D"</td><td width="200">
+寄存器esi、edi</td></tr><tr><td>
+"I"</td><td width="200">
+常数（0至31）</td></tr></tbody></table><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N1027D">八、小结</h2><p>Linux
+操作系统是用C语言编写的，汇编只在必要的时候才被人们想到，但它却是减少代码尺寸和优化代码性能的一种非常重要的手段，特别是在与硬件直接交互的时候，
+汇编可以说是最佳的选择。Linux提供了非常优秀的工具来支持汇编程序的开发，使用GCC的内联汇编能够充分地发挥C语言和汇编语言各自的优点。</p><!--CMA ID: 22150--><!--Site ID: 10--><!--XSLT stylesheet used to transform this file: dw-document-html-7.0.xsl-->
+
+
+</div>
+</div>
+<!-- 1_1_COLUMN_END -->
+
+<!-- SPLIT_COLUMNS_BEGIN -->
+<div class="ibm-columns">
+
+<!-- 6_4_COLUMN_BEGIN -->
+<div class="ibm-col-6-4">
+
+<h2 id="resources" class="ibm-rule">参考资料 </h2><ol><li>在网站
+          <a href="http://linuxassembly.org/">http://linuxassembly.org</a>上可以找到大量的Linux汇编资源。
+        </li><li>软件包binutils提供了as和ld等实用工具，其相关信息可以在网站
+          <a href="http://sources.redhat.com/binutils/">http://sources.redhat.com/binutils/</a>上找到。
+        </li><li>NASM是Intel格式的汇编器，其相关信息可以在网站
+          <a href="http://nasm.sourceforge.net/">http://nasm.sourceforge.net</a>上找到。
+        </li><li>ALD是一个短小精悍的汇编调试器，其相关信息可以在网站
+          <a href="http://dunx1.irt.drexel.edu/%7Epsa22/ald.html">http://dunx1.irt.drexel.edu/~psa22/ald.html</a>上找到。
+        </li><li>intel2gas是一个能够将Intel汇编格式转换成AT&amp;T汇编格式的小工具，其相关信息可以在网站
+          <a href="http://www.niksula.cs.hut.fi/%7Emtiihone/intel2gas/">http://www.niksula.cs.hut.fi/~mtiihone/intel2gas/</a>上找到。
+        </li><li>IBM developerWorks上有一篇介绍GCC内联汇编的文章(
+          <a href="http://www.ibm.com/developerworks/cn/linux/sdk/assemble/inline/index.html">http://www.ibm.com/developerworks/cn/linux/sdk/assemble/inline/index.shtml</a>)。
+        </li><li>本文代码下载：
+          <a href="http://www.ibm.com/developerworks/cn/linux/l-assembly/code.zip">代码</a>。
+        </li></ol>
+
+<!-- INLINE_COMMENTS_BEGIN -->
+<h2 id="icomments" class="ibm-alternate-rule ibm-no-print">条评论</h2>
+    
+<div class="ibm-no-print" id="dw-icomments-container">	
+	<div id="threadShow"><img style="display: none;" id="imgPlHdr" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/animated-progress-38x38c.gif" alt=""><div id="cmtTog" style=""><div class="ibm-container ibm-alternate-two dw-commentbox dw-noborder"><div class="ibm-container-body dw-commentbox dw-noborder"><p id="signInSect">请 <a onclick="var e=arguments[0] || window.event; dwsi.siInst &amp;&amp; dwsi.siInst.showSignIn(); if (e.stopPropagation){ e.stopPropagation();} else { e.cancelBubble = true; } e.preventDefault &amp;&amp; e.preventDefault(); return false;" href="#">登录</a> 或 <a href="http://www.ibm.com/developerworks/dwwi/jsp/ssoregister.jsp?d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-assembly%2F%23icomments&amp;lang=cn&amp;a=dwmav">注册</a>  后发表评论。</p><p id="cmtHead"><label for="newCmt"><strong>添加评论:</strong></label></p><p>注意：评论中不支持 HTML 语法</p><div id="infoCmt"></div><form focus="name" enctype="multipart/form-data" method="post" action="" name="form" class="ibm-column-form ibm-styled-form"><p class="6-4-textarea"><textarea rows="5" name="newCmt" id="newCmt" class="dw-inoperable" disabled="disabled"></textarea><br></p><span class="ibm-input-group"><input value="1" name="comment_notification" id="comment_notification" disabled="disabled" type="checkbox"><label id="notifyText" class="ibm-form-note dw-btn-cancel-sec" for="comment_notification">有新评论时提醒我</label></span><span class="ibm-form-note dw-btn-cancel-sec notifySection" id="maxCharsCount">剩余 <span id="charCount">1000</span> 字符</span><p class="ibm-buttons-row"><input value="发布" name="postCmt" id="postCmt" class="ibm-btn-sec ibm-btn-small ibm-disabled" disabled="disabled" type="button"></p></form></div></div><div class="ibm-alternate-rule"><hr></div><div id="topControl" class="ibm-container ibm-alternate-two dw-comment-totals" style=""><div class="ibm-container-body"><form id="selectComments" method="get" action=""><p>&nbsp;<span class="dw-comment-totals-label"><strong>共有评论 (<span id="numCmts">6</span>)</strong></span><span class="dw-how-many-comments-label" style="" id="dropdownCmts"><label for="howManyComments"><strong>显示：</strong></label>&nbsp;<select name="comments" id="howManyComments" class="dw-how-many-comments"><option selected="selected" value="recent">最新评论 </option><option value="all">所有评论</option></select><input class="ibm-btn-go" name="ibm-go" value="Go" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/short-btn.gif" alt="Go" type="image"><br></span></p></form></div></div><div id="cmtSect"><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>你好我在安装ald（assembly language debugger）时出现了一些错误，我在网上没有找到解决办法想请你帮我看看是否可以解决：<br>我首先下载了ald.tar，然后<br>1.解压:tar -xcvf ald.tar<br>2.configure<br>3.make<br>在执行make时出现了以下错误：<br>Making all in doc<br>make[1]: Entering directory '/home/ald-0.1.7/doc'<br>make[1]: Nothing to be done for 'all'.<br>make[1]: Leaving directory '/home/ald-0.1.7/doc'<br>Making all in libString<br>make[1]: Entering directory '/home/ald-0.1.7/libString'<br>Making all in source<br>make[2]: Entering directory '/home/ald-0.1.7/libString/source'<br>make[2]: Nothing to be done for 'all'.<br>make[2]: Leaving directory '/home/ald-0.1.7/libString/source'<br>make[2]: Entering directory '/home/ald-0.1.7/libString'<br>make[2]: Nothing to be done for 'all-am'.<br>make[2]: Leaving directory '/home/ald-0.1.7/libString'<br>make[1]: Leaving directory '/home/ald</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">由 <strong><a href="https://www.ibm.com/developerworks/community/profiles/user/youyouYang">youyouYang</a></strong>  于 2014年12月20日发布 </p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="http://www.ibm.com/developerworks/community/report?lang=zh&amp;referingURL=http://www.ibm.com/developerworks/cn/linux/l-assembly/&amp;mymessage=%E8%AF%84%E8%AE%BA%EF%BC%9A%20%E4%BD%A0%E5%A5%BD%E6%88%91%E5%9C%A8%E5%AE%89%E8%A3%85ald%EF%BC%88assembly%20language%20debugger%EF%BC%89%E6%97%B6%E5%87%BA%E7%8E%B0%E4%BA%86%E4%B8%80%E4%BA%9B%E9%94%99%E8%AF%AF%EF%BC%8C%E6%88%91%E5%9C%A8%E7%BD%91%E4%B8%8A%E6%B2%A1%E6%9C%89%E6%89%BE%E5%88%B0%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%E6%83%B3%E8%AF%B7%E4%BD%A0%E5%B8%AE%E6%88%91%E7%9C%8B%E7%9C%8B%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E8%A7%A3%E5%86%B3%EF%BC%9A%E6%88%91%E9%A6%96%E5%85%88%E4%B8%8B%E8%BD%BD%E4%BA%86ald.tar%EF%BC%8C%E7%84%B6%E5%90%8E1.%E8%A7%A3%E5%8E%8B%3Atar%20-xcvf%20ald.tar2.configure3.make%E5%9C%A8%E6%89%A7%E8%A1%8Cmake%E6%97%B6%E5%87%BA%E7%8E%B0%E4%BA%86%E4%BB%A5%E4%B8%8B%E9%94%99%E8%AF%AF%EF%BC%9AMaking%20all%20in%20docmake%5B1%5D%3A%20Entering%20directory%20%27%2Fhome%2Fald-0.1.7%2Fdoc%27make%5B1%5D%3A%20Nothing%20to%20be%20done%20for%20%27all%27.make%5B1%5D%3A%20Leaving%20directory%20%27%2Fhome%2Fald-0.1.7%2Fdoc%27Making%20all%20in%20libStringmake%5B1%5D%3A%20Entering%20directory%20%27%2Fhome%2Fald-0.1.7%2FlibString%27Making%20all%20in%20sourcemake%5B2%5D%3A%20Entering%20directory%20%27%2Fhome%2Fald-0.1.7%2FlibString%2Fsource%27make%5B2%5D%3A%20Nothing%20to%20be%20done%20for%20%27all%27.make%5B2%5D%3A%20Leaving%20directory%20%27%2Fhome%2Fald-0.1.7%2FlibString%2Fsource%27make%5B2%5D%3A%20Entering%20directory%20%27%2Fhome%2Fald-0.1.7%2FlibString%27make%5B2%5D%3A%20Nothing%20to%20be%20done%20for%20%27all-am%27.make%5B2%5D%3A%20Leaving%20directory%20%27%2Fhome%2Fald-0.1.7%2FlibString%27make%5B1%5D%3A%20Leaving%20directory%20%27%2Fhome%2Fald%0D%E7%94%B1%20youyouYang%20%20%E4%BA%8E%202014%E5%B9%B412%E6%9C%8820%E6%97%A5%E5%8F%91%E5%B8%83%20%0D%0D--%E5%9C%A8%E4%B8%8B%E6%96%B9%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA--" target="_self">报告滥用</a></p><div class="dw-clear-both"></div></div></div></div></div><div class="ibm-rule"><hr></div><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>例4.内联汇编,应该是“受影响的寄存器”</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">由 <strong><a href="https://www.ibm.com/developerworks/community/profiles/user/hustlijian">hustlijian</a></strong>  于 2014年05月16日发布 </p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="http://www.ibm.com/developerworks/community/report?lang=zh&amp;referingURL=http://www.ibm.com/developerworks/cn/linux/l-assembly/&amp;mymessage=%E8%AF%84%E8%AE%BA%EF%BC%9A%20%E4%BE%8B4.%E5%86%85%E8%81%94%E6%B1%87%E7%BC%96%2C%E5%BA%94%E8%AF%A5%E6%98%AF%E2%80%9C%E5%8F%97%E5%BD%B1%E5%93%8D%E7%9A%84%E5%AF%84%E5%AD%98%E5%99%A8%E2%80%9D%0D%E7%94%B1%20hustlijian%20%20%E4%BA%8E%202014%E5%B9%B405%E6%9C%8816%E6%97%A5%E5%8F%91%E5%B8%83%20%0D%0D--%E5%9C%A8%E4%B8%8B%E6%96%B9%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA--" target="_self">报告滥用</a></p><div class="dw-clear-both"></div></div></div></div></div><div class="ibm-rule"><hr></div><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>有没有专门介绍 at&amp;t 语法的文章？</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">由 <strong><a href="https://www.ibm.com/developerworks/community/profiles/user/Meditation">Meditation</a></strong>  于 2013年01月19日发布 </p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="http://www.ibm.com/developerworks/community/report?lang=zh&amp;referingURL=http://www.ibm.com/developerworks/cn/linux/l-assembly/&amp;mymessage=%E8%AF%84%E8%AE%BA%EF%BC%9A%20%E6%9C%89%E6%B2%A1%E6%9C%89%E4%B8%93%E9%97%A8%E4%BB%8B%E7%BB%8D%20at%26%2338%3Bt%20%E8%AF%AD%E6%B3%95%E7%9A%84%E6%96%87%E7%AB%A0%EF%BC%9F%0D%E7%94%B1%20Meditation%20%20%E4%BA%8E%202013%E5%B9%B401%E6%9C%8819%E6%97%A5%E5%8F%91%E5%B8%83%20%0D%0D--%E5%9C%A8%E4%B8%8B%E6%96%B9%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA--" target="_self">报告滥用</a></p><div class="dw-clear-both"></div></div></div></div></div><div class="ibm-rule"><hr></div><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>很重要</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">由 <strong><a href="https://www.ibm.com/developerworks/community/profiles/user/bg2bkk">bg2bkk</a></strong>  于 2012年07月20日发布 </p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="http://www.ibm.com/developerworks/community/report?lang=zh&amp;referingURL=http://www.ibm.com/developerworks/cn/linux/l-assembly/&amp;mymessage=%E8%AF%84%E8%AE%BA%EF%BC%9A%20%E5%BE%88%E9%87%8D%E8%A6%81%0D%E7%94%B1%20bg2bkk%20%20%E4%BA%8E%202012%E5%B9%B407%E6%9C%8820%E6%97%A5%E5%8F%91%E5%B8%83%20%0D%0D--%E5%9C%A8%E4%B8%8B%E6%96%B9%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA--" target="_self">报告滥用</a></p><div class="dw-clear-both"></div></div></div></div></div><div class="ibm-rule"><hr></div><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>想学习Linux汇编，有两本入门书籍。机械工业出版社《汇编语言程序设计》、E文《一步一步学习Linux汇编语言程序设计》</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">由 <strong><a href="https://www.ibm.com/developerworks/community/profiles/user/3XQ8_23232_2132">3XQ8_23232_2132</a></strong>  于 2011年06月24日发布 </p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="http://www.ibm.com/developerworks/community/report?lang=zh&amp;referingURL=http://www.ibm.com/developerworks/cn/linux/l-assembly/&amp;mymessage=%E8%AF%84%E8%AE%BA%EF%BC%9A%20%E6%83%B3%E5%AD%A6%E4%B9%A0Linux%E6%B1%87%E7%BC%96%EF%BC%8C%E6%9C%89%E4%B8%A4%E6%9C%AC%E5%85%A5%E9%97%A8%E4%B9%A6%E7%B1%8D%E3%80%82%E6%9C%BA%E6%A2%B0%E5%B7%A5%E4%B8%9A%E5%87%BA%E7%89%88%E7%A4%BE%E3%80%8A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E3%80%8B%E3%80%81E%E6%96%87%E3%80%8A%E4%B8%80%E6%AD%A5%E4%B8%80%E6%AD%A5%E5%AD%A6%E4%B9%A0Linux%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E3%80%8B%0D%E7%94%B1%203XQ8_23232_2132%20%20%E4%BA%8E%202011%E5%B9%B406%E6%9C%8824%E6%97%A5%E5%8F%91%E5%B8%83%20%0D%0D--%E5%9C%A8%E4%B8%8B%E6%96%B9%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA--" target="_self">报告滥用</a></p><div class="dw-clear-both"></div></div></div></div></div></div></div><div id="bottomControl" class="ibm-container ibm-alternate-two dw-comment-totals" style="display:none"><div class="ibm-container-body"><form id="selectComments2" method="get" action=""><p>&nbsp;<span class="dw-comment-totals-label"><strong>共有评论 (<span id="numCmts2">6</span>)</strong></span><span class="dw-how-many-comments-label" style="" id="dropdownCmts2"><label for="howManyComments2"><strong>显示：</strong></label>&nbsp;<select name="comments" id="howManyComments2" class="dw-how-many-comments"><option selected="selected" value="recent">最新评论 </option><option value="all">所有评论</option></select><input class="ibm-btn-go" name="ibm-go" value="Go" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/short-btn.gif" alt="Go" type="image"><br></span></p></form></div></div></div>
+</div>
+<!-- Sign in OVERLAY STARTS HERE -->
+    
+<!-- Sign in OVERLAY STARTS HERE -->
+<div class="ibm-common-overlay" id="signin_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="dwsi.siInst.clearForm();">关闭 [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+
+ <div class="ibm-title">
+<h2>developerWorks: 登录</h2>
+<div id="ibm-overlay-error-signin" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">标有星（<span class="ibm-required">*</span>）号的字段是必填字段。</p> 
+<form class="ibm-column-form" id="sFormId" action="" method="post" name="sForm" onsubmit="return false;">
+<p><label for="ibmid">IBM ID:<span class="ibm-required">*</span></label><span>
+    <input name="ibm-id" id="ibmid" size="25" class="required" onkeypress="dwsi.siInst.handleEP(event,this.form);" type="text">
+    <br><a onclick="window.location='/developerworks/dwwi/DWAuthRouter?m=reg&amp;lang=zh_CN&amp;d='+encodeURIComponent(location.protocol + '//' + location.hostname + location.pathname + '#icomments'); return false;" href="#" class="ibm-forward-link">需要一个 IBM ID？</a> <br>
+    <a class="ibm-forward-link" href="http://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=zh_CN">忘记 IBM ID？</a> 
+</span>
+</p> 
+<p><label for="password">密码：<span class="ibm-required">*</span></label><span>
+    <input name="password" id="password" size="25" value="" class="required" onkeypress="dwsi.siInst.handleEP(event,this.form);" type="password">
+    <br><a class="ibm-forward-link" href="#" onclick="(function ()
+        {window.location='https://www.ibm.com/account/profile?page=forgot&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(dwsi.siInst.getAuthUrl())+'%3Fm%3Dloginpage%26lang%3Dzh_CN%26d%3D'+encodeURIComponent(location.href);})();">忘记密码？</a>
+    <br><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=chpw&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(location.href);})();">更改您的密码</a></span></p> 
+<p class="dw-perm-box">
+	<span><input id="perm" name="perm_name" type="checkbox"><label for="perm"> 保持登录。</label></span>
+</p>
+<p>单击提交则表示您同意developerWorks 的条款和条件。 <a href="http://www.ibm.com/developerworks/community/terms?lang=zh">查看条款和条件</a>。</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="提交" onclick="dwsi.siInst.signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+<input value="取消" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="dwsi.siInst.clearForm();ibmweb.overlay.hide('signin_overlay');return false;" type="button"></p>
+</div>
+</form>
+ <div class="ibm-overlay-rule"><hr></div> 
+
+<p>在您首次登录 developerWorks 时，会为您创建一份个人概要。<strong>您的个人概要中的信息（您的姓名、国家/地区，以及公司名称）是公开显示的，而且会随着您发布的任何内容一起显示，除非您选择隐藏您的公司名称。</strong>您可以随时更新您的 IBM 帐户。</p>
+<div><p class="dw-c-overlay-secure">所有提交的信息确保安全。</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Display name OVERLAY STARTS HERE -->
+<div class="ibm-common-overlay" id="displayname_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="dwsi.siInst.clearForm();">关闭 [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title">
+<h2>选择您的昵称</h2><br><br>
+<div id="ibm-overlay-error-dname" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">当您初次登录到 developerWorks 时，将会为您创建一份概要信息，您需要指定一个昵称。您的昵称将和您在 developerWorks 发布的内容显示在一起。</p><p><strong>昵称长度在 3 至 31 个字符之间</strong>。 
+    您的昵称在 developerWorks 社区中必须是唯一的，并且出于隐私保护的原因，不能是您的电子邮件地址。</p>
+<p class="ibm-overlay-intro">标有星（<span class="ibm-required">*</span>）号的字段是必填字段。</p> 
+<form id="dFormId" method="post" action="" name="dForm" onsubmit="return false;" class="ibm-column-form">
+<p><label for="displayname">昵称：<span class="ibm-required">*</span></label><span>
+    <input name="displayname" id="displayname" size="25" onkeypress="dwsi.siInst.handleEP(event,this.form);" type="text"></span>
+    <span class="ibm-form-note">(昵称长度在 3 至 31 个字符之间)</span>
+</p>
+<p>单击<strong>提交</strong>则表示您同意developerWorks 的条款和条件。 <a href="http://www.ibm.com/developerworks/community/terms?lang=zh">查看条款和条件</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="提交" onclick="dwsi.siInst.signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+<input value="取消" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="dwsi.siInst.clearForm();ibmweb.overlay.hide('displayname_overlay');return false;" type="button"></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr></div>
+<div><p class="dw-c-overlay-secure">所有提交的信息确保安全。</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+
+
+<!-- INLINE_COMMENTS_END -->
+
+</div>
+<!-- 6_4_COLUMN_END -->
+
+<!-- 6_2_COLUMN_BEGIN -->
+<div class="ibm-col-6-2">
+
+<!-- Next_Steps -->
+<!-- Dig_Deeper -->
+
+
+<!-- Promotion_Module -->
+    
+<!-- PROMOTION_MODULE_START -->
+<div class="ibm-alternate-rule"><hr></div>
+<ul class="ibm-portrait-module-list">
+<li><a role="presentation" tabindex="-1" class="" href="http://www.ibm.com/developerworks/cn/puresystems/"><img src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/sm-f-cl-puresystems70.jpg" alt="" height="60" width="60"></a>
+<h3><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/puresystems/">IBM PureSystems</a></h3>
+<p>IBM PureSystems™ 系列解决方案是一个专家集成系统</p></li>
+<li><a role="presentation" tabindex="-1" class="" href="http://www.ibm.com/developerworks/cn/views/global/libraryview.jsp?type_by=Knowledge+paths"><img src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/sm-f-knowledgepath50.jpg" alt="" height="60" width="60"></a>
+<h3><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/views/global/libraryview.jsp?type_by=Knowledge+paths">developerWorks 学习路线图</a></h3>
+<p>通过学习路线图系统掌握软件开发技能</p></li>
+<li><a role="presentation" tabindex="-1" class="" href="http://www.ibm.com/developerworks/cn/downloads/"><img src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/sm-f-evaluationsoftware60.png" alt="" height="60" width="60"></a>
+<h3><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/downloads/">软件下载资源中心</a></h3>
+<p>软件下载、试用版及云计算</p></li>
+</ul>
+<!-- PROMOTION_MODULE_END -->
+
+</div>
+<!-- 6_2_COLUMN_END -->
+
+</div>
+<!-- SPLIT_COLUMNS_END -->
+
+<!-- BOTTOM_BACK_TO_TOP -->
+<div class="ibm-columns">
+<div class="ibm-col-1-1">
+	<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p>
+</div>
+</div>
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><div class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</div><div class="metavalue">SITE_ID=10</div><div class="metavalue">Zone=Linux</div><div class="metavalue">ArticleID=22150</div><div class="metavalue">ArticleTitle=Linux 汇编语言开发指南</div><div class="metavalue">publish-date=07032003</div><script language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href.replace(/</g,  '%3C')+'</div>');</script><div class="metavalue">url=http://www.ibm.com/developerworks/cn/linux/l-assembly/</div><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</div>
+<!-- END_IBM_CONTENT_MAIN -->
+
+</div>
+<!-- END_IBM_CONTENT_BODY -->
+
+</div>
+<!-- END_IBM_CONTENT -->
+
+</div></div>
+<!-- LEADSPACE_END -->
+
+
+<!-- END_IBM_PCON -->
+<!-- FOOTER_BEGIN -->
+<div aria-label="页脚" id="ibm-footer"><!-- IBM footer container; disabled --></div>
+
+<div id="ibm-footer-module-dwwrapper" role="contentinfo" aria-label="developerWorks Footer">
+
+<div id="ibm-footer-module-dw">
+	<div class="dw-footer-columns">
+		<div class="dw-footer-col-6-1 dw-footer-col-6-1-cn">
+			<ul>
+				<li><a href="https://www.ibm.com/developerworks/secure/feedback.jsp?domain=dwchina" tabindex="0">帮助</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/author/" tabindex="0">联系编辑</a></li>
+				<li><a href="https://www.ibm.com/developerworks/secure/myideas2.jsp?domain=dwchina&amp;start=true" tabindex="0">提交内容</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/rss/" tabindex="0">订阅源</a></li>
+			</ul>
+        </div>
+		<div class="dw-footer-col-6-2">
+			<ul>
+				<li><a href="http://www.ibm.com/vrm/newsletter/10104?S_TACT=105AGX52&amp;S_CMP=dwcntop" tabindex="0">在线浏览每周时事通讯</a></li>
+				<li><a class="dwcn-sina-link" href="http://weibo.com/ibmdw/" target="_blank" tabindex="0">新浪微博</a></li>
+				<li><a href="https://www.ibm.com/developerworks/community/report?lang=zh" tabindex="0">报告滥用</a></li>
+				<li><a href="https://www.ibm.com/developerworks/community/terms?lang=zh" tabindex="0">使用条款</a></li>
+				<li><a href="https://www.ibm.com/developerworks/cn/community/terms/thirdparty/" tabindex="0">第三方提示</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-3">
+			<ul>
+				<li><a href="http://www.ibm.com/privacy/cn/zh/" tabindex="0">隐私条约</a></li>
+				<li><a href="http://www.ibm.com/ibm/accessibility/cn/" tabindex="0">浏览辅助</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/academic/" tabindex="0">IBM 教育学院教育培养计划</a></li><li><a href="http://www.ibm.com/developerworks/cn/gep/">IBM 创业企业全球扶持计划</a></li><li><a href="http://www.ibm.com/partnerworld/isv/">ISV 资源 (英语)</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-4"> 
+			<ul>
+				<li><a href="http://www.ibm.com/developerworks/cn/newsletter/" tabindex="0">dW 中国每周时事通讯</a></li>
+			</ul>
+			
+		</div>
+		<div class="dw-footer-col-6-5">
+			<ul>
+				<li class="dw-footer-lang-head">选择语言：</li>
+				<li><a href="http://www.ibm.com/developerworks/" tabindex="0">English</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/" tabindex="0" lang="zh">中文</a></li>
+				<li><a href="http://www.ibm.com/developerworks/jp/" tabindex="0" lang="ja">日本語</a></li>
+				<li><a href="http://www.ibm.com/developerworks/ru/" tabindex="0" lang="ru">Русский</a></li>
+				<li><a href="http://www.ibm.com/developerworks/br/" tabindex="0" lang="pt">Português (Brasil)</a></li>
+				<li><a href="http://www.ibm.com/developerworks/ssa/" tabindex="0" lang="es">Español</a></li>
+				<li><a href="http://www.ibm.com/developerworks/vn/" tabindex="0" lang="vi">Việt</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-6">
+			<img alt="IBM®" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/dwn-ibm-logo-v17.png" height="46" width="223">
+			<img class="dw-preload" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/ibm_sprite_social_blue_ON.png" alt="" height="1" width="1">
+		</div>
+	</div>
+</div>
+
+</div><!-- FOOTER_END -->
+
+<!-- END_IBM-TOP -->
+</div>
+
+<!-- SCRIPTS_INCLUDE_BEGIN -->
+<script type="text/javascript" src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/dw-comments.js">//</script>
+<script type="text/javascript" language="JavaScript">
+	dojo.ready(function(){
+		rBHash = typeof rBHash == "undefined" ? {} : rBHash;
+		rBHash['viperLang'] = 'zh';
+		rBHash['urlLang'] = 'cn';
+		rBHash['dwwi2Lang'] = 'zh_CN';
+		rBHash['appCode'] = 'dwmav';
+		rBHash['signoutUrl'] = (location.host.toLowerCase() === "www.ibm.com" || location.host.toLowerCase() === "developer.ibm.com") ? 'http://www.ibm.com/developerworks/cn/' : ''; 
+		dwsi.siInst = new dwweb.dynnav.dwsi();
+		dwsi.siInst.initSI();		
+
+		// construct the comment widget
+dwc.cmts = '条评论';
+dwc.signInPreText = '请';
+dwc.signIn = '登录';
+dwc.or = '或';
+dwc.register = '注册';
+dwc.signInPostText = '';
+dwc.leaveCmt = '后发表评论。';
+dwc.view = '查看';
+dwc.totalCmts = '共有评论';
+dwc.postYourCmt = '添加您的评论';
+dwc.show = '显示：';
+dwc.recentCmts = '最新评论';
+dwc.allCmts = '所有评论';
+dwc.tooLongCmt = '您的评论超过了 1000 字符限制';
+dwc.numCharsLeft = '剩余 <span id="charCount">{1}</span> 字符';
+dwc.reportAbuse = '报告滥用';
+dwc.notifyMsg = '有新评论时提醒我';
+dwc.htmlWarning = '注意：评论中不支持 HTML 语法'; 
+dwc.cmt = '评论：';
+dwc.addCmts = '添加评论';
+dwc.addCmt = '添加评论';
+dwc.doNotErase = '--在下方添加评论--'; 
+dwc.viewOrAddCmts = '查看或添加评论';
+dwc.reportInapprCont = '举报不良信息';
+dwc.reportInapprContLink = 'http://www.ibm.com/developerworks/forums/forum.jspa?forumID=1834';
+dwc.postingCmt = '正在发布评论……';
+dwc.noCmt = '快来添加第一条评论';
+dwc.netwkErr = '在检索评论时出错，请稍后刷新。';
+dwc.addACmt = '添加评论';
+dwc.instructCmt = '标有星号（<span class="ibm-required">*</span>）的是必填项目。';
+dwc.btnPost = '发布';
+dwc.btnPostAnon = '匿名发布';
+dwc.btnClrCmt = '清除评论';
+dwc.btnCancel = '取消';
+dwc.showRecent = '显示最新的 {1} 条评论'; // {1} is the count to be substituted
+dwc.showNext = '显示后 {1} 条评论'; // {1} is the count to be substituted
+dwc.showAllCmts = '显示所有评论';
+dwc.enterCmt = '请输入评论内容。';
+dwc.loginErr = '暂时无法验证您的登录状态，请稍后再试。';
+dwc.postErr = '暂时无法发布您的评论，请稍后再试。';
+dwc.postBy = '由 <strong>{1}</strong>  于 {2} '; // {1} is the author to be substituted; {2} is the date
+dwc.siteId = 10;
+dwc.lang = 'zh_CN';
+dwc.viperLang = 'zh';
+//dwc.abuseHref =  null;
+dwc.maxChars = 1000;
+dwc.cmtTxt =  '评论：';
+dwc.cmtsTxt =  '评论：';  
+		dwc && new dwc.comments('threadShow','95%',5,'nCmts','icomments');
+		});
+</script>
+
+
+
+<!-- BEGIN: Use this section to set page specific variables for the Unica Page Tag -->
+<script language="JavaScript">var NTPT_PGEXTRA="ibmSkillLevel=1&ibmCmaId=22150&ibmContentAreas=linux";</script>
+<!--END --><!-- SCRIPTS_INCLUDE_END -->
+
+<div id="ibm-metrics">
+<script src="Linux%20%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97_files/stats.js" type="text/javascript">//</script>
+</div>
+
+
+
+</body></html>

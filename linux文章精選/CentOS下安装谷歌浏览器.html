@@ -1,0 +1,444 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk">
+<title>CentOS下安装谷歌浏览器</title>
+<meta name="keywords" content="CentOS,安装,谷歌,浏览器,虽然,Centos,自带,">
+<meta name="description" content="">
+<link href="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/dedecms.css" rel="stylesheet" media="screen" type="text/css">
+<script src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/j.js" language="javascript" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+<!--
+function CheckLogin(){
+	  var taget_obj = document.getElementById('_ajax_feedback');
+	  myajax = new DedeAjax(taget_obj,false,false,'','','');
+	  myajax.SendGet2("/member/ajax_feedback.php");
+	  DedeXHTTP = null;
+}
+function postBadGood(ftype,fid)
+{
+	var taget_obj = document.getElementById(ftype+fid);
+	var saveid = GetCookie('badgoodid');
+	if(saveid != null)
+	{
+		var saveids = saveid.split(',');
+		var hasid = false;
+		saveid = '';
+		j = 1;
+		for(i=saveids.length-1;i>=0;i--)
+		{
+			if(saveids[i]==fid && hasid) continue;
+			else {
+				if(saveids[i]==fid && !hasid) hasid = true;
+				saveid += (saveid=='' ? saveids[i] : ','+saveids[i]);
+				j++;
+				if(j==10 && hasid) break;
+				if(j==9 && !hasid) break;
+			}
+		}
+		if(hasid) { alert('您刚才已表决过了喔！'); return false;}
+		else saveid += ','+fid;
+		SetCookie('badgoodid',saveid,1);
+	}
+	else
+	{
+		SetCookie('badgoodid',fid,1);
+	}
+	myajax = new DedeAjax(taget_obj,false,false,'','','');
+	myajax.SendGet2("/plus/feedback.php?aid="+fid+"&action="+ftype+"&fid="+fid);
+}
+function postDigg(ftype,aid)
+{
+	var taget_obj = document.getElementById('newdigg');
+	var saveid = GetCookie('diggid');
+	if(saveid != null)
+	{
+		var saveids = saveid.split(',');
+		var hasid = false;
+		saveid = '';
+		j = 1;
+		for(i=saveids.length-1;i>=0;i--)
+		{
+			if(saveids[i]==aid && hasid) continue;
+			else {
+				if(saveids[i]==aid && !hasid) hasid = true;
+				saveid += (saveid=='' ? saveids[i] : ','+saveids[i]);
+				j++;
+				if(j==20 && hasid) break;
+				if(j==19 && !hasid) break;
+			}
+		}
+		if(hasid) { alert("您已经顶过该帖，请不要重复顶帖 ！"); return; }
+		else saveid += ','+aid;
+		SetCookie('diggid',saveid,1);
+	}
+	else
+	{
+		SetCookie('diggid',aid,1);
+	}
+	myajax = new DedeAjax(taget_obj,false,false,'','','');
+	var url = "/plus/digg_ajax.php?action="+ftype+"&id="+aid;
+	myajax.SendGet2(url);
+}
+function getDigg(aid)
+{
+	var taget_obj = document.getElementById('newdigg');
+	myajax = new DedeAjax(taget_obj,false,false,'','','');
+	myajax.SendGet2("/plus/digg_ajax.php?id="+aid);
+	DedeXHTTP = null;
+}
+-->
+</script>
+<link href="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/floatingPanel.css" type="text/css" rel="stylesheet"></head>
+<body class="articleview"><div style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;" id="BAIDU_DUP_fp_wrapper"><iframe style="width: 0px; height: 0px; visibility: hidden; display: none;" src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/o.html" id="BAIDU_DUP_fp_iframe"></iframe></div>
+<div class="header">
+ 	<div class="top w960 center">
+       <div class="title">
+         <h1> <a href="http://www.centoscn.com/"></a> </h1>
+       </div>
+       <div class="banner">
+ <!-- top顶部 --> 
+<script type="text/javascript">
+    /*468*60 创建于 2014-08-07*/
+    var cpro_id = "u1649295";
+</script>
+<script src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/c.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u1649295_0"><iframe id="cproIframe_u1649295" src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/acom.html" marginwidth="0" marginheight="0" allowtransparency="true" frameborder="0" height="60" scrolling="no" width="468" align="center,center"></iframe></div><script charset="utf-8" src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/acom.js"></script>
+</div>
+       <div class="rlink">
+         <ul>
+          <a title="CentOS7.0.140" href="http://www.centoscn.com/CentosSoft/iso/2014/0708/3266.html"><img src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/donate.png"></a>
+         </ul>
+       </div>
+ 	</div><!-- //top -->
+ 	<!-- //菜单 -->
+ 	<div class="module blue mT10 wrapper w963">
+   	<div class="top" id="mytop">
+     	<div class="t_l"></div>
+     	<div class="t_r"></div>
+     	<!-- //如果不使用currentstyle，可以在channel标签加入 cacheid='channeltoplist' 属性提升性能 -->
+     <div id="navMenu">
+     	<ul>
+       	<li><a href="http://www.centoscn.com/">首页</a></li>
+       	
+       	<li><a href="http://www.centoscn.com/CentOS/" rel="dropmenu1">CentOS入门</a></li>
+       	
+       	<li><a href="http://www.centoscn.com/CentosSoft/" rel="dropmenu6">CentOS下载</a></li>
+       	<li class="hover"><a href="http://www.centoscn.com/image-text/" rel="dropmenu8">CentOS教程</a></li>
+       	<li><a href="http://www.centoscn.com/CentosServer/" rel="dropmenu7">CentOS服务器</a></li>
+       	
+       	<li><a href="http://www.centoscn.com/shell/">shell编程</a></li>
+       	
+       	<li><a href="http://www.centoscn.com/CentosSecurity/" rel="dropmenu9">安全防御</a></li>
+       	
+       	<li><a href="http://www.centoscn.com/CentosBug/" rel="dropmenu3">故障解决</a></li>
+       	
+       	<li><a href="http://www.centoscn.com/yunwei/" rel="dropmenu16">运维管理</a></li>
+       	
+       	<li><a href="http://www.cncentos.com/">中文论坛</a></li>
+       	
+     	</ul>
+     </div>	
+      <!-- sonMenu 子栏目 开始-->
+     <link href="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/tabs.css" type="text/css" rel="stylesheet">
+ 
+ 
+ 
+ 
+ 
+     <div class="sonMenu">
+ 		<ul>
+ 		  <li><a>快速通道:</a><a style="color: #FF0000;"> </a> 
+                          </li><li><a target="_blank" href="http://www.ibeifeng.com/online101.html">北风视频教学网</a></li>
+                         <li><a href="http://www.centoscn.com/yunwei/news/2012/1227/131.html">开源镜像站大全</a></li>
+                             <li><a target="_blank" href="http://l.51yip.com/">Linux命令在线查询</a></li>
+                             <li><a target="_blank" href="http://vbird.dic.ksu.edu.tw/">鸟哥linux私房菜</a></li>
+ 		  <li><a>CentOS交流群：110427400</a></li>
+                         <li><a target="_blank" href="http://www.centoscn.com/donation.html">赞助CentOS中文网</a></li>
+ 		</ul>
+ 		<!-- sonMenu 子栏目 结束-->    <!-- //search -->
+</div>
+ 
+     <div class="threead"><a target="_blank" title="cents" href="http://www.enkj.com/encloud/"><img src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/955-64.gif"></a>
+
+ 	        </div>		 	
+ 	
+ 	</div></div><script type="text/javascript">
+/*960*90*/
+var cpro_id = "u1486013";
+</script>
+<script src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/c.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u1486013_0"><iframe id="cproIframe_u1486013" src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/acom_002.html" marginwidth="0" marginheight="0" allowtransparency="true" frameborder="0" height="90" scrolling="no" width="960" align="center,center"></iframe></div><script charset="utf-8" src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/acom_004.js"></script>
+<a target="_blank" title="beifeng" href="http://www.ibeifeng.com/mobile.html"><img src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/Linux955-60.gif"></a>
+
+<!-- //header -->
+ 
+ <div style="margin-top:2px;padding-top:0px;border:solid 1px #9FD1F6;width:958px;" class="header">
+ <div style="margin-top:0px;padding-top:0px;" class="module blue mT10 wrapper w963">
+   <div style="margin-top:0px;padding-top:0px;" class="search">
+       <form action="/plus/search.php" name="formsearch">
+         <div class="form">
+           <h4>搜索</h4>
+            <input name="kwtype" value="0" type="hidden">
+            <input name="keyword" class="search-keyword" id="search-keyword" type="text">
+            <select name="searchtype" class="search-option" id="search-option">
+                <option value="titlekeyword" selected="selected">智能模糊搜索</option>
+                <option value="title">仅搜索标题</option>
+            </select>
+           <button type="submit" class="search-submit">搜索</button>
+         </div>
+         </form>
+       <div class="tags">
+         <h4>热门标签</h4>
+         <ul>
+           
+         </ul>
+         </div>
+         </div>
+     </div>
+     </div><!-- //search -->
+ </div>
+<!-- /header -->
+
+
+<!-- /channel-nav -->
+
+<div class="w960 center clear mt1">
+	<div class="pleft">
+		<div class="place">
+			<strong>当前位置:</strong> <a href="http://www.centoscn.com/"></a> &gt; <a href="http://www.centoscn.com/image-text/">CentOS教程</a> &gt; <a href="http://www.centoscn.com/image-text/install/">软件安装教程</a> &gt; 
+		</div><!-- /place -->
+		<div class="viewbox">
+			<div class="title">
+				<h2>CentOS下安装谷歌浏览器</h2>
+			</div><!-- /title -->
+			<div class="info">
+				<small>时间:</small>2014-08-15 18:07<small>来源:</small>blog.csdn.net  <small>作者:</small>Duanxx <a href="http://www.centoscn.com/plus/erraddsave.php?aid=3497&amp;title=CentOS%CF%C2%B0%B2%D7%B0%B9%C8%B8%E8%E4%AF%C0%C0%C6%F7" target="_blank">举报</a>   <small>点击:</small><script src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/count.html" type="text/javascript" language="javascript"></script>605次</div><!-- /info -->
+
+            	
+			<div class="content"><span style="FLOAT: left">
+<script type="text/javascript">
+    /*300*250*/
+    var cpro_id = "u1486069";
+</script>
+<script src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/c.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u1486069_0"><iframe id="cproIframe_u1486069" src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/acom_003.html" marginwidth="0" marginheight="0" allowtransparency="true" frameborder="0" height="250" scrolling="no" width="300" align="center,center"></iframe></div><script charset="utf-8" src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/acom_003.js"></script>
+</span>
+<p>
+	&nbsp;虽然Centos自带了火狐浏览器，也还算好用，但还是比较喜欢谷歌浏览器。</p>
+<p>
+	
+1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手动安装谷歌浏览器实在是耗费体力，网上有一个
+自动安装脚本，可以直接帮助完成谷歌浏览器的安装，其下载地址：http://chrome.richardlloyd.org.uk
+/install_chrome.sh</p>
+<p>
+	2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用命令“cd 
+~/Downloads”，进入下载目录，在目录：“&nbsp;~/Downloads” 
+中就可以看到下载好的install_chrome.sh脚本。</p>
+<p>
+	3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用命令“gedit install_chrome.sh”,打开install_chrome.sh文件，使用find命令，找到该文件</p>
+<p>
+	中chrome_csv=http://omahaproxy.appspot.com/all?os=linux&amp;channel=$csv_type</p>
+<p>
+	4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;将&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http://omahaproxy.appspot.com&nbsp;改为</p>
+<p>
+	
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;https://dl.google.com
+/linux/direct/google-chrome-stable_current_x86_64.rpm。</p>
+<p>
+	5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用命令“chmod 777 install_chrome.sh”为install_chrome.sh添加可执行权限</p>
+<p>
+	<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 关于chmod做如下简单的说明：</p>
+<p>
+	-rw-------&nbsp;&nbsp;(600)&nbsp;只有所有者才有读和写的权限&nbsp;<br>
+	-rw-r--r--&nbsp;&nbsp; (644)&nbsp;只有所有者才有读和写的权限，组群和其他人只有读的权限&nbsp;<br>
+	-rwx------&nbsp;&nbsp; (700)&nbsp;只有所有者才有读，写，执行的权限&nbsp;<br>
+	-rwxr-xr-x&nbsp;&nbsp; (755)&nbsp;只有所有者才有读，写，执行的权限，组群和其他人只有读和执行的权限&nbsp;<br>
+	-rwx--x--x&nbsp;&nbsp; (711)&nbsp;只有所有者才有读，写，执行的权限，组群和其他人只有执行的权限&nbsp;<br>
+	-rw-rw-rw-&nbsp;&nbsp; (666)&nbsp;每个人都有读写的权限&nbsp;<br>
+	-rwxrwxrwx&nbsp;&nbsp; (777)&nbsp;每个人都有读写和执行的权限</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>
+	6.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;使用命令“sudo ./install_chrome.sh”就可以自动安装谷歌浏览器了</p>
+<p>
+	&nbsp;</p>
+<p>
+	7.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在Applications-&gt;Internet中就可以看到Google浏览器了，在第一次使用时，会提示是否设置为默认浏览器，这里我设置的是。</p>
+<p>
+	&nbsp;</p>
+<p>
+	
+8.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里有一点需要说明，谷歌浏览器在“/etc
+/yum.preo.d”目录下会生成一个yum源，但这个源一点都不好用，我个人还是建议使用163的yum源，参见《Duanxx的Centos学
+习：配置163 yum源》，而且我因为没有删除Google的yum源，而导致很长一段时间总是报出一个Google浏览器yum源无法加载的错误。</p>
+
+			<table width="100%">
+				
+			</table>
+			</div><!-- /content --><div class="dede_pages">
+				<ul class="pagelist">
+          
+				</ul>
+			</div><!-- /pages -->
+			
+			<!-- //顶踩 -->
+			<div class="newdigg" id="newdigg">
+	<script type="text/javascript">
+/*640*60*/
+var cpro_id = "u1490624";
+</script>
+<script src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/c.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u1490624_0"><iframe id="cproIframe_u1490624" src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/acom_004.html" marginwidth="0" marginheight="0" allowtransparency="true" frameborder="0" height="60" scrolling="no" width="640" align="center,center"></iframe></div><script charset="utf-8" src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/acom_005.js"></script>			<!-- //顶踩部份的源码结束 -->
+			
+			<div class="boxoff">				<strong>------分隔线----------------------------</strong>
+			</div>
+			<div class="handle"></div>
+				<div class="context">
+					<ul>
+						<li>上一篇：<a href="http://www.centoscn.com/image-text/install/2014/0815/3496.html">CentOS下安装Opencv2.4.9</a> </li>
+						<li>下一篇：<a href="http://www.centoscn.com/image-text/install/2014/0815/3498.html">CentOS下安装谷歌浏览器</a> </li>
+					</ul>
+				</div><!-- /context -->
+				<div class="actbox">
+					<ul>
+						<li id="act-fav"><a href="http://www.centoscn.com/plus/stow.php?aid=3497" target="_blank">收藏</a></li>
+						<li id="act-err"><a href="http://www.centoscn.com/plus/erraddsave.php?aid=3497&amp;title=CentOS%CF%C2%B0%B2%D7%B0%B9%C8%B8%E8%E4%AF%C0%C0%C6%F7" target="_blank">举报</a></li>
+						<li id="act-pus"><a href="http://www.centoscn.com/plus/recommend.php?aid=3497" target="_blank">推荐</a></li>
+						<li id="act-pnt"><a href="#" onclick="window.print();">打印</a></li>
+					</ul>
+				</div><!-- /actbox -->
+			</div><!-- /handle -->
+		</div><!-- /viewbox -->
+
+<!-- //AJAX评论区 -->
+<!-- //主模板必须要引入/include/dedeajax2.js -->
+<a name="postform"></a>
+<div class="mt1">
+		<dl class="tbox">
+			<dt>
+				<strong>发表评论</strong>
+				<span class="more"></span>
+			</dt>
+			<dd>
+				<div class="dede_comment_post">
+          <form action="#" method="post" name="feedback">
+          <input name="dopost" value="send" type="hidden">
+          <input name="comtype" value="comments" type="hidden">
+          <input name="aid" value="3497" type="hidden">
+          <input name="fid" id="feedbackfid" value="0" type="hidden">
+          <div class="dcmp-title">
+						<small>为了和诣的生活，我关闭了评论页面，请大家到群里交流吧：110427400</small>
+					
+				
+			</div></form></div></dd>
+		</dl>
+	</div><!-- //评论表单区结束 -->
+
+
+
+</div><!-- //左边内容结束 -->
+
+<!-- //右边内容开始 -->
+<div class="pright">
+ 		
+
+<div class="commend mt1"><dl class="tbox light">
+				<dt class="light"><strong>栏目分类</strong></dt>
+				<dd class="light">
+					<ul class="c1 ico2">
+             <ul>
+                    
+                    <li><a href="http://www.centoscn.com/image-text/install/" target="_blank">软件安装教程<span></span></a></li>
+                     
+                    <li><a href="http://www.centoscn.com/image-text/config/" target="_blank">软件使用配置<span></span></a></li>
+                     
+                    <li><a href="http://www.centoscn.com/image-text/setup/" target="_blank">系统安装使用<span></span></a></li>
+                     </ul>					</ul>
+				</dd>
+			</dl>
+		</div><!-- /commend -->
+
+		<div class="commend mt1"><dl class="tbox light">
+				<dt class="light"><strong>本月热点</strong></dt>
+				<dd class="light">
+					<ul class="c1 ico2">
+             <li><a href="http://www.centoscn.com/image-text/install/2013/0729/753.html">CentOS 6.4 yum安装chrome</a></li>
+<li><a href="http://www.centoscn.com/image-text/install/2014/0224/2457.html">Centos6.5下安装Nagios4.02+Cent</a></li>
+<li><a href="http://www.centoscn.com/image-text/install/2013/0817/1319.html">centos中文字体安装教程</a></li>
+<li><a href="http://www.centoscn.com/image-text/install/2014/0429/2894.html">CentOS6.5安装Chromium谷歌浏览</a></li>
+<li><a href="http://www.centoscn.com/image-text/install/2013/0817/1318.html">centos下安装sublime text2</a></li>
+<li><a href="http://www.centoscn.com/image-text/install/2014/0318/2612.html">centOS 6.4下安装中文输入法</a></li>
+<li><a href="http://www.centoscn.com/image-text/install/2013/0907/1566.html">CentOS6.4搭建pptpd（VPN)服务</a></li>
+<li><a href="http://www.centoscn.com/image-text/install/2013/1024/1973.html">centos安装QQ2012</a></li>
+<li><a href="http://www.centoscn.com/image-text/install/2014/0125/2402.html">centos 6.4 安装VPN服务器pptpd</a></li>
+<li><a href="http://www.centoscn.com/image-text/install/2014/0504/2905.html">CentOS6.5安装VNC</a></li>
+
+					</ul>
+				</dd>
+			</dl>
+		</div><!-- /commend -->
+
+		<div class="hot mt1">
+			<dl class="tbox light">
+				<dt class="light"><strong>推荐内容</strong></dt>
+				<dd class="light">
+					<ul class="d4">
+           <li><a href="http://www.centoscn.com/image-text/install/2014/0609/3112.html">Centos6.3下编译安装htop</a>
+            	<p>...</p>
+            </li>
+<li><a href="http://www.centoscn.com/image-text/install/2014/0414/2781.html">CentOS编译安装MariaDB 及系统初始化</a>
+            	<p>...</p>
+            </li>
+<li><a href="http://www.centoscn.com/image-text/install/2014/0318/2612.html">centOS 6.4下安装中文输入法</a>
+            	<p>...</p>
+            </li>
+<li><a href="http://www.centoscn.com/image-text/install/2014/0119/2378.html">CentOS6.4安装使用mysql</a>
+            	<p>...</p>
+            </li>
+<li><a href="http://www.centoscn.com/image-text/install/2013/1111/2094.html">国外VPS主机上搭建vpn及wordpress</a>
+            	<p>...</p>
+            </li>
+
+					</ul>
+				</dd>
+			</dl>
+		</div></div></div>
+<!-- //二级子类下拉菜单，考虑SEO原因放置于底部  -->
+
+<!-- //底部模板 -->
+
+<div id="cproIframe2002holder" style="padding: 0px; display: block; visibility: visible; border: medium none; background: none repeat scroll 0% 0% transparent; float: none; overflow: hidden; position: fixed; z-index: 2147483646; width: 130px; height: 360px; right: 55px; top: 150px;"><div style="position: absolute; top: 275px; left: 0px; cursor: pointer; width: 130px; height: 28px; z-index: 100; opacity: 0; background-color: rgb(153, 153, 153);" id="cproIframe2002CloseBtnWrap"></div><div style="position: absolute; width: 130px; height: 20px; top: 280px; left: 0px; cursor: pointer; background-color: rgb(153, 153, 153); color: rgb(255, 255, 255); font-size: 12px; font-family: 微软雅黑; text-align: center; line-height: 20px;" id="cproIframe2002CloseBtn">关闭</div><div style="width: 130px; height: 360px; overflow: hidden;"><div style="display:none">-</div><iframe id="cproIframe2002" src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/acom_005.html" marginwidth="0" marginheight="0" allowtransparency="true" frameborder="0" height="360" scrolling="no" width="130" align="center,center"></iframe></div></div><div id="cproIframe2001holder" style="padding: 0px; display: block; visibility: visible; border: medium none; background: none repeat scroll 0% 0% transparent; float: none; overflow: hidden; position: fixed; z-index: 2147483646; width: 130px; height: 360px; left: 55px; top: 150px;"><div style="position: absolute; top: 275px; left: 0px; cursor: pointer; width: 130px; height: 28px; z-index: 100; opacity: 0; background-color: rgb(153, 153, 153);" id="cproIframe2001CloseBtnWrap"></div><div style="position: absolute; width: 130px; height: 20px; top: 280px; left: 0px; cursor: pointer; background-color: rgb(153, 153, 153); color: rgb(255, 255, 255); font-size: 12px; font-family: 微软雅黑; text-align: center; line-height: 20px;" id="cproIframe2001CloseBtn">关闭</div><div style="width: 130px; height: 360px; overflow: hidden;"><div style="display:none">-</div><iframe id="cproIframe2001" src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/acom_006.html" marginwidth="0" marginheight="0" allowtransparency="true" frameborder="0" height="360" scrolling="no" width="130" align="center,center"></iframe></div></div><div class="footer w960 center mt1 clear">
+
+<a target="_blank" href="http://www.centoscn.com/image-text/install/2014/0815/about.html">关于我们</a> -
+
+<a target="_blank" href="http://www.centoscn.com/image-text/install/2014/0815/about.html">联系我们</a> -
+
+<a target="_blank" href="http://www.centoscn.com/image-text/install/2014/0815/about.html">广告服务</a> -<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F65a70808534a9fe419a0a120e9bef073' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/h.js" type="text/javascript"></script>
+
+<a target="_blank" href="http://www.centoscn.com/image-text/install/2014/0815/about.html">免责申明</a> -
+
+<a target="_blank" href="http://www.centoscn.com/image-text/install/2014/0815/about.html">版权申明</a> -
+
+<a target="_blank" href="http://www.centoscn.com/image-text/install/2014/0815/about.html">TAG标签</a> -
+
+<a target="_blank" href="http://www.centoscn.com/image-text/install/2014/0815/about.html">网站地图</a> -
+
+<a href="#top">返回顶部</a> <p></p>
+
+<!-- /powered -->
+
+	<p class="copyright">
+
+		Copyright 2012-2013(CentOS中文网) CentOScn.Com <a target="_blank" href="http://www.miibeian.gov.cn/">粤ICP备13006404号</a> Powered by DedeCMS 1.0 
+
+  </p>
+
+ 
+<script type="text/javascript">
+/*120*270*/
+var cpro_id = "u1486028";
+</script>
+<script src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/f.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u1486028_0"></div><script charset="utf-8" src="CentOS%E4%B8%8B%E5%AE%89%E8%A3%85%E8%B0%B7%E6%AD%8C%E6%B5%8F%E8%A7%88%E5%99%A8_files/acom_002.js"></script></div>
+
+<!-- /footer -->
+<div style="bottom: auto; left: 755px; right: auto; top: 395px; display: none;" class="translator-theme-default" id="translator-floating-panel"><div title="點選開始翻譯" id="translator-floating-panel-button"></div></div></body></html>

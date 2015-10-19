@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- saved from url=(0167)file:///G:/linux%E4%B8%8B%E5%AE%89%E8%A3%85smplayer%E8%BD%AF%E4%BB%B6%E5%8C%85%20-%20My%20Blog's%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ad.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>CSDN Ad</title>
+    <style type="text/css">
+        body { margin:0px; padding:0px;}
+    </style>
+     <script src="file:///G:/linux%E4%B8%8B%E5%AE%89%E8%A3%85smplayer%E8%BD%AF%E4%BB%B6%E5%8C%85%20-%20My%20Blog's%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/jquery.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="div1"><style type="text/css">
+ul { margin:0px; padding:0 4px 0 0; }
+ul, x:-moz-any-link, x:default { width:90%; }
+ul li { padding:3px 0px;}
+a { font-size:12px; text-decoration:none; color:#006699; }
+a:hover { color:#000; }
+</style>
+
+<ul>
+
+<li><a href="http://blog.csdn.net/tangcheng_ok/article/details/38542123" target="_blank">* 给刚入职开发者的几句心里话</a></li>
+
+<li><a href="http://blog.csdn.net/wangyuling1234567890/article/details/38565239" target="_blank">* 一些有意思的面试题（持续更新）</a></li>
+
+<li><a href="http://blog.csdn.net/dawanganban/article/details/38556211" target="_blank">* 一段代码的疑问（1）——unsigned与signed</a></li>
+
+<li><a href="http://blog.csdn.net/shulianghan/article/details/38420197" target="_blank">* Android 图表绘制 achartengine 示例解析</a></li>
+
+<li><a href="http://blog.csdn.net/suipingsp/article/details/38556871" target="_blank">* 技术走向管理一些思考（2）-建立管理思维</a></li>
+
+<li><a href="http://blog.csdn.net/itpeng523/article/details/38564635" target="_blank">* cocos2d-x ios游戏开发初认识(五) CCsprite精灵类</a></li>
+</ul></div>
+<script type="text/javascript">
+    window.onload = function () {
+        if (document.domain != 'blog.csdn.net') {
+            document.domain = "csdn.net";
+        }
+        //这种给广告区域赋值的方式，对于有些JS广告不能完美的显示
+        //top.document.getElementById('ad_commend').innerHTML = document.getElementById('div1').innerHTML;
+
+        var h = document.body.offsetHeight + 2;
+        setTimeout(function () {
+            if (h > 800) h = document.getElementById('div1').offsetHeight + 4;
+            try { top.document.getElementById('ad_frm_2').style.height = h + 'px'; }
+            catch (err) { }
+        }, 100);
+    };
+    $(function() {
+        $("#div1 a").click(function() {
+            top._gaq.push(['_trackEvent', 'function', 'onclick', 'blog_articles_tuijianwenzhang']);
+        });
+    });
+</script>
+
+
+</body></html>

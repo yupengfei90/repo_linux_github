@@ -1,0 +1,1149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>    
+    <script src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/tracking.js" charset="utf-8"></script>  
+
+    <script type="text/javascript">
+        var protocol = window.location.protocol;
+        document.write('<script type="text/javascript" src="' + protocol + '//csdnimg.cn/pubfooter/js/repoAddr2.js?v=' + Math.random() + '"></' + 'script>');
+    </script><script type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/repoAddr2.js"></script>
+
+
+    <script id="allmobilize" charset="utf-8" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/allmobilize.js"></script><style type="text/css"></style>
+ <meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" media="handheld" href="#">
+
+    <title>GDB十分钟教程 - liigo's blog
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="GDB十分钟教程作者: liigo原文链接:&nbsp;http://blog.csdn.net/liigo/archive/2006/01/17/582231.aspx日期: 2006年1月16日本文写给主要工作在Windows操作系统下而又需要开发一些跨平台软件的程序员朋友，以及程序爱好者。GDB是一个由GNU开源组织发布的、UNIX/LINUX操作系统下的、基于命令行的、功能强大的程序调试">
+    <script src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/jquery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ad.js"></script>
+        <!--new top-->
+       
+        <link rel="stylesheet" href="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/index.css">
+        <!--new top-->
+
+    <link rel="Stylesheet" type="text/css" href="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/style.css">
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://blog.csdn.net/liigo/rss/list">
+    <link rel="shortcut icon" href="http://csdnimg.cn/public/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/default.css">
+ 
+
+
+<script src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/share.js"></script><link href="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/job_reco.css" type="text/css" rel="stylesheet"><script src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/main_002.js" charset="utf-8" type="text/javascript"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><link type="text/css" rel="stylesheet" href="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/bdsstyle.css"><script async="" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/sm.js" charset="utf-8"></script><link rel="stylesheet" type="text/css" href="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/style_002.css"><link href="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/style_003.css" rel="stylesheet" type="text/css"><script src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/logger.js"></script><link href="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/share_style0_16.css" rel="stylesheet"></head>
+<body><iframe style="display: none;" frameborder="0"></iframe><div style="display: none;" id="MathJax_Message"></div>
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/html.js" type="text/javascript"></script><div class="csdn-toolbar csdn-toolbar-skin-black ">        <div class="container row center-block ">          <div class="col-md-3 pull-left logo clearfix"><a href="http://www.csdn.net/?ref=toolbar" title="CSDN首页" target="_blank" class="icon"></a><a title="频道首页" href="http://blog.csdn.net/?ref=toolbar_logo" target="_blank" class="img blog-icon"></a></div>          <div class="pull-right login-wrap unlogin">            <ul class="btns">              <li class="loginlink"><a href="https://passport.csdn.net/account/login?ref=toolbar" target="_top">登录&nbsp;</a>|<a target="_top" href="https://passport.csdn.net/account/register?ref=toolbar">&nbsp;注册</a></li>              <li class="search">                <div class="icon on-search-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <form action="http://so.csdn.net/search" method="get" target="_blank">                      <input value="toolbar" name="ref" accesskey="2" type="hidden">                      <div class="border">                        <input placeholder="搜索" name="q" accesskey="2" type="text"><span class="icon-enter-sm"></span>                      </div>                    </form>                  </div>                </div>              </li>              <li class="favor">                <div class="icon on-favor-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div style="display:none;" class="favor-success"><span class="msg">收藏成功</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <div style="display:none;" class="favor-failed"><span class="icon-danger-lg"></span><span class="msg">收藏失败，请重新收藏</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <form role="form" class="form-horizontal favor-form">                      <div class="form-group">                        <div class="clearfix">                          <label for="input-title" class="col-sm-2 control-label">标题</label>                          <div class="col-sm-10">                            <input value="GDB十分钟教程 - liigo's blog - 博客频道 - CSDN.NET" id="inputTitle" placeholder="" class="title form-control" type="text">                          </div>                        </div>                        <div class="alert alert-danger"><strong></strong>标题不能为空</div>                      </div>                      <div class="form-group">                        <label for="input-url" class="col-sm-2 control-label">网址</label>                        <div class="col-sm-10">                          <input value="http://blog.csdn.net/liigo/article/details/582231" id="input-url" placeholder="" class="url form-control" type="text">                        </div>                      </div>                      <div class="form-group">                        <label for="input-tag" class="col-sm-2 tag control-label">标签</label>                        <div class="col-sm-10">                          <input id="input-tag" class="form-control tag" type="text">                        </div>                      </div>                      <div class="form-group">                        <label for="input-description" class="description col-sm-2 control-label">摘要</label>                        <div class="col-sm-10">                          <textarea id="input-description" class="form-control description"></textarea>                        </div>                      </div>                      <div class="form-group">                        <div class="col-sm-offset-2 col-sm-10 ft">                          <div class="col-sm-4 pull-left">                            <div class="checkbox">                              <label>                                <input name="share" checked="checked" class="share" type="checkbox">公开                              </label>                            </div>                          </div>                          <div class="col-sm-8 pull-right favor-btns">                            <button type="button" class="cancel btn btn-default">取消</button>                            <button type="submit" class="submit btn btn-primary">收藏</button>                          </div>                        </div>                      </div>                    </form>                  </div>                </div>              </li>              <li class="notify">                <div style="display:none" class="number"></div>                <div style="display:none" class="icon-hasnotes-sm"></div>                <div id="header_notice_num"></div>                <div class="icon on-notify-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div id="note1" class="csdn_note">                      <div class="box"></div>                    <iframe src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/a.html" allowtransparency="true" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent" frameborder="0"></iframe></div>                  </div>                </div>              </li>              <li class="ugc">                <div class="icon on-ugc-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <dl>                      <dt><a href="http://geek.csdn.net/news/expert?ref=toolbar" target="_blank" class="p-news clearfix"><em class="icon"></em><span>分享资讯</span></a></dt>                      <dt><a href="http://share.csdn.net/slides/new?ref=toolbar" target="_blank" class="p-doc clearfix"><em class="icon"></em><span>传PPT/文档</span></a></dt>                      <dt><a href="http://bbs.csdn.net/topics/new?ref=toolbar" target="_blank" class="p-ask clearfix"><em class="icon"></em><span>提问题</span></a></dt>                      <dt><a href="http://write.blog.csdn.net/postedit?ref=toolbar" target="_blank" class="p-blog clearfix"><em class="icon"></em><span>写博客</span></a></dt>                      <dt><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-src clearfix"><em class="icon"></em><span>传资源</span></a></dt>                      <dt><a href="https://code.csdn.net/projects/new?ref=toolbar" target="_blank" class="c-obj clearfix"><em class="icon"></em><span>创建项目</span></a></dt>                      <dt><a href="https://code.csdn.net/snippets/new?ref=toolbar" target="_blank" class="c-code clearfix"><em class="icon"></em><span>创建代码片</span></a></dt>                    </dl>                  </div>                </div>              </li>              <li class="profile">                <div class="icon on-profile-icon"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/100x100.jpg" class="curr-icon-img">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div class="bd">                      <dl class="clearfix">                        <dt class="pull-left img"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="avatar"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/100x100.jpg"></a></dt>                        <dd class="info" style="border: none;"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="nickname"></a><a class="set-nick" href="https://passport.csdn.net/account/profile">设置昵称<span class="write-icon"></span></a><span class="dec"><a class="fill-dec" href="http://my.csdn.net/" target="_blank">编辑自我介绍，让更多人了解你<span class="write-icon"></span></a></span></dd>                      </dl>                    </div>                    <div class="ft clearfix"><a target="_blank" href="http://my.csdn.net/my/account/changepwd?ref=toolbar" class="pull-left"><span class="icon-cog"></span>帐号设置</a><a href="https://passport.csdn.net/account/logout?ref=toolbar" target="_top" class="pull-left" style="margin-left:132px; width:18px; height:27px; white-space:nowrap; overflow:hidden;"><span class="icon-signout"></span><span class="out">退出</span></a></div>                  </div>                </div>              </li>              <li class="apps">                <div id="chasnew123" class="hasnew"></div>                <div id="cappsarea123" class="icon on-apps-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>社区</h5>                      </dt>                      <dd> <a href="http://blog.csdn.net/?ref=toolbar" target="_blank">博客</a></dd>                      <dd> <a href="http://bbs.csdn.net/?ref=toolbar" target="_blank">论坛</a></dd>                      <dd> <a href="http://download.csdn.net/?ref=toolbar" target="_blank">下载</a></dd>                      <dd><a href="http://ask.csdn.net/?ref=toolbar" target="_blank">技术问答</a></dd>                      <dd><a href="http://geek.csdn.net/?ref=toolbar" target="_blank">极客头条</a></dd>                      <dd> <a href="http://hero.csdn.net/?ref=toolbar" target="_blank">英雄会</a></dd>                    </dl>                  </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>服务</h5>                      </dt>                      <dd> <a href="http://job.csdn.net/?ref=toolbar" target="_blank">招聘<img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/new.gif" style="margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="http://edu.csdn.net/?ref=toolbar" target="_blank">学院<img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/new.gif" style="margin-top: -26px; width: 23px;"></a></dd>                      <dd> <a href="https://code.csdn.net/?ref=toolbar" target="_blank">CODE</a></dd>                      <dd> <a href="http://huiyi.csdn.net/?ref=toolbar" target="_blank">活动</a></dd>                      <dd> <a href="http://www.csto.com/?ref=toolbar" target="_blank">CSTO</a></dd>                      <dd> <a href="http://mall.csdn.net/?ref=toolbar" target="_blank">C币兑换<img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/new.gif" style="margin-top: -26px; width: 23px;"></a></dd>                    </dl>                  </div>                  <div class="detail last">                    <dl>                      <dt>                        <h5>俱乐部</h5>                      </dt>                      <dd> <a href="http://cto.csdn.net/?ref=toolbar" target="_blank">CTO俱乐部</a></dd>                      <dd> <a href="http://student.csdn.net/?ref=toolbar" target="_blank">高校俱乐部</a></dd>                    </dl>                  </div>                </div>              </div>            </li>            </ul>          </div>        </div>    </div>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/liigo">liigo's blog</a></h2>
+            <h3>当我沉默着的时候，我觉得充实；我将开口，同时感到空虚……</h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+            
+                <li id="btnContents"><a href="http://blog.csdn.net/liigo?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/liigo?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/liigo/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ico_rss.gif">订阅</span></a></li>                
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "liigo";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/liigo";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod="popu_3"> 
+
+
+<a target="_blank" href="http://blog.csdn.net/csdnproduct/article/details/43561659">
+<font color="blue">博客Markdown编辑器上线啦</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a target="_blank" href="http://blog.csdn.net/blogdevteam/article/details/42918959">
+<font color="red">那些年我们追过的Wrox精品红皮计算机图书
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<a target="_blank" href="http://edu.csdn.net/lecturer/lecturer_detail?lecturer_id=95">
+<font color="blue">PMBOK第五版精讲视频教程
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a target="_blank" href="http://edu.csdn.net/course/detail/443">
+<font color="red">火星人敏捷开发1001问
+</font></a>
+
+
+</div>                        </div>
+                        
+
+  
+<link href="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/comment1.css" type="text/css" rel="stylesheet">
+<link href="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/style1.css" type="text/css" rel="stylesheet">
+<script language="JavaScript" type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/jquery_002.js"></script>
+<script type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/main.js"></script>
+
+
+<link rel="stylesheet" href="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/markdown_views.css">
+
+<script type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/MathJax.js"></script>
+
+
+
+
+
+
+
+
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="http://blog.csdn.net/liigo/article/details/582231">
+        GDB十分钟教程
+        </a></span>
+    </h1>
+</div>
+
+    <div class="article_manage">
+        <span class="link_categories">
+        分类：
+            <a href="http://blog.csdn.net/liigo/article/category/124948" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">其它</a> 
+        </span>
+    <span class="link_postdate">2006-01-17 18:28</span>
+    <span class="link_view" title="阅读次数">44073人阅读</span>
+    <span class="link_comments" title="评论次数"><a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(25)</span>
+    <span class="link_collect"><a href="javascript:void(0);" onclick="javascript:_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shoucang']);collectArticle('GDB十分钟教程','582231');return false;" title="收藏">收藏</a></span>
+    <span class="link_report"><a href="#report" onclick="javascript:_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_jubao']);report(582231,2);return false;" title="举报">举报</a></span>
+    
+</div>
+<div class="tag2box"><a href="http://www.csdn.net/tag/%e6%b1%87%e7%bc%96" target="_blank" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">汇编</a><a href="http://www.csdn.net/tag/%e7%a8%8b%e5%ba%8f%e8%b0%83%e8%af%95%e5%b7%a5%e5%85%b7" target="_blank" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">程序调试工具</a><a href="http://www.csdn.net/tag/file" target="_blank" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">file</a><a href="http://www.csdn.net/tag/%e7%bc%96%e8%af%91%e5%99%a8" target="_blank" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">编译器</a><a href="http://www.csdn.net/tag/delete" target="_blank" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">delete</a><a href="http://www.csdn.net/tag/gcc" target="_blank" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">gcc</a></div>
+
+  
+    
+<div id="article_content" class="article_content">
+<p><font size="6">GDB十分钟教程</font></p>
+<p><font face="Courier New"><font size="2">作者: liigo<br>原文链接:&nbsp;</font><a href="http://blog.csdn.net/liigo/archive/2006/01/17/582231.aspx"><font size="2">http://blog.csdn.net/liigo/archive/2006/01/17/582231.aspx</font></a><br><font size="2">日期: 2006年1月16日</font></font></p>
+<p><font face="Courier New" size="2">本文写给主要工作在Windows操作系统下而又需要开发一些跨平台软件的程序员朋友，以及程序爱好者。</font></p>
+<p><font face="Courier New" size="2">GDB是一个由GNU开源组织发布的、UNIX/LINUX操作系统下的、基于命令行的、功能强大的程序调试工具。</font></p>
+<p><font face="Courier New" size="2">GDB中的命令固然很多，但我们只需掌握其中十个左右的命令，就大致可以完成日常的基本的程序调试工作。</font></p>
+<table border="1" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td bgcolor="#d4d0c8" width="138"><strong><font face="Courier New" size="2">&nbsp;命令</font></strong></td>
+            <td bgcolor="#d4d0c8" width="500"><strong><font face="Courier New" size="2">&nbsp;解释</font></strong></td>
+            <td bgcolor="#d4d0c8" nowrap="nowrap"><strong><font face="Courier New" size="2">&nbsp;示例</font></strong></td>
+        </tr>
+        <tr>
+            <td width="138"><font face="Courier New" size="2">file &lt;文件名&gt;</font></td>
+            <td><font face="Courier New" size="2">加载被调试的可执行程序文件。<br>因为一般都在被调试程序所在目录下执行GDB，因而文本名不需要带路径。</font></td>
+            <td width="220"><font face="Courier New" size="2">(gdb) file gdb-sample</font></td>
+        </tr>
+        <tr>
+            <td width="138"><font face="Courier New" size="2">r</font></td>
+            <td><font face="Courier New" size="2">Run的简写，运行被调试的程序。<br>如果此前没有下过断点，则执行完整个程序；如果有断点，则程序暂停在第一个可用断点处。</font></td>
+            <td width="180"><font face="Courier New" size="2">(gdb) r</font></td>
+        </tr>
+        <tr>
+            <td width="138"><font face="Courier New" size="2">c</font></td>
+            <td><font face="Courier New" size="2">Continue的简写，继续执行被调试程序，直至下一个断点或程序结束。</font></td>
+            <td width="180"><font face="Courier New" size="2">(gdb) c</font></td>
+        </tr>
+        <tr>
+            <td width="138"><font face="Courier New" size="2">b &lt;行号&gt;<br>b &lt;函数名称&gt;<br>b *&lt;函数名称&gt;<br>b *&lt;代码地址&gt; </font>
+            <p><font face="Courier New" size="2">d [编号]</font></p>
+            </td>
+            <td><font face="Courier New" size="2">b: Breakpoint的简写，设置断点。两可以使用“行号”“函数名称”“执行地址”等方式指定断点位置。<br>其中在函数名称前面加“*”符号表示将断点设置在“由编译器生成的prolog代码处”。如果不了解汇编，可以不予理会此用法。 </font>
+            <p><font face="Courier New" size="2">d: Delete breakpoint的简写，删除指定编号的某个断点，或删除所有断点。断点编号从1开始递增。</font></p>
+            </td>
+            <td width="180"><font face="Courier New" size="2">(gdb) b 8<br>(gdb) b main<br>(gdb) b *main<br>(gdb) b *0x804835c </font>
+            <p><font face="Courier New" size="2">(gdb) d</font></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="138"><font face="Courier New" size="2">s, n</font></td>
+            <td><font face="Courier New" size="2">s: 执行一行源程序代码，如果此行代码中有函数调用，则进入该函数；<br>n: 执行一行源程序代码，此行代码中的函数调用也一并执行。 </font>
+            <p><font face="Courier New" size="2">s 相当于其它调试器中的“Step Into (单步跟踪进入)”；<br>n 相当于其它调试器中的“Step Over (单步跟踪)”。</font></p>
+            <p><font face="Courier New" size="2">这两个命令必须在有源代码调试信息的情况下才可以使用（GCC编译时使用“-g”参数）。</font></p>
+            </td>
+            <td width="180"><font face="Courier New" size="2">(gdb) s<br>(gdb) n</font></td>
+        </tr>
+        <tr>
+            <td width="138"><font face="Courier New" size="2">si, ni</font></td>
+            <td><font face="Courier New" size="2">si命令类似于s命令，ni命令类似于n命令。所不同的是，这两个命令（si/ni）所针对的是汇编指令，而s/n针对的是源代码。</font></td>
+            <td width="180"><font face="Courier New" size="2">(gdb) si<br>(gdb) ni</font></td>
+        </tr>
+        <tr>
+            <td width="138"><font face="Courier New" size="2">p &lt;变量名称&gt;</font></td>
+            <td><font face="Courier New" size="2">Print的简写，显示指定变量（临时变量或全局变量）的值。</font></td>
+            <td width="180"><font face="Courier New" size="2">(gdb) p i<br>(gdb) p nGlobalVar</font></td>
+        </tr>
+        <tr>
+            <td nowrap="nowrap" width="155"><font face="Courier New" size="2">display ... </font>
+            <p><font face="Courier New" size="2">undisplay &lt;编号&gt;</font></p>
+            </td>
+            <td><font face="Courier New" size="2">display，设置程序中断后欲显示的数据及其格式。<br>例如，如果希望每次程序中断后可以看到即将被执行的下一条汇编指令，可以使用命令<br>“display /i $pc”<br>其中 $pc 代表当前汇编指令，/i 表示以十六进行显示。当需要关心汇编代码时，此命令相当有用。 </font>
+            <p><font face="Courier New" size="2">undispaly，取消先前的display设置，编号从1开始递增。</font></p>
+            </td>
+            <td width="180"><font face="Courier New" size="2">(gdb) display /i $pc </font>
+            <p><font face="Courier New" size="2">(gdb) undisplay 1</font></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="138"><font face="Courier New" size="2">i</font></td>
+            <td><font face="Courier New" size="2">Info的简写，用于显示各类信息，详情请查阅“help i”。</font></td>
+            <td width="180"><font face="Courier New" size="2">(gdb) i r</font></td>
+        </tr>
+        <tr>
+            <td width="138"><font face="Courier New" size="2">q</font></td>
+            <td><font face="Courier New" size="2">Quit的简写，退出GDB调试环境。</font></td>
+            <td width="180"><font face="Courier New" size="2">(gdb) q</font></td>
+        </tr>
+        <tr>
+            <td width="138"><font face="Courier New" size="2">help [命令名称]</font></td>
+            <td><font face="Courier New" size="2">GDB帮助命令，提供对GDB名种命令的解释说明。<br>如果指定了“命令名称”参数，则显示该命令的详细说明；如果没有指定参数，则分类显示所有GDB命令，供用户进一步浏览和查询。</font></td>
+            <td width="180"><font face="Courier New" size="2">(gdb) help display</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">　</font></p>
+<p><font face="Courier New" size="2">废话不多说，下面开始实践。</font></p>
+<p><font face="Courier New" size="2">先给出一个示例用的小程序，C语言代码，简单的不能再简单了：</font></p>
+<table summary="" bgcolor="#eeeeee" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td align="left" bgcolor="#cccccc" nowrap="nowrap" valign="top" width="38">
+            <p><font face="Courier New" size="2">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33</font></p>
+            </td>
+            <td align="left" nowrap="nowrap" valign="top">
+            <p><font color="#008000"><font face="Courier New" size="2">//此程序仅作为“GDB十分钟教程”的示例代码, by liigo<br>//Email: </font><a href="mailto:liigo@sina.com"><font face="Courier New" size="2">liigo@sina.com</font></a><br><font face="Courier New" size="2">//blog: </font><a target="_blank" href="http://blog.csdn.net/liigo"><font face="Courier New" size="2">http://blog.csdn.net/liigo</font></a><br><font face="Courier New" size="2">//WebSite: </font><a target="_blank" href="http://www.liigo.com/"><font face="Courier New" size="2">www.liigo.com</font></a></font><font color="#0000ff"><font face="Courier New" size="2"> <br><br></font><font face="Courier New" size="2">#include </font></font><font size="2"><font face="Courier New"><font color="#000080">&lt;</font>stdio<font color="#000080">.</font>h<font color="#000080">&gt;</font></font></font><font color="#0000ff"><br><br><font face="Courier New" size="2">int</font></font><font size="2"><font face="Courier New"><font color="#000080"> </font>nGlobalVar<font color="#000080"> = </font><font color="#800000">0</font><font color="#000080">;</font></font></font><font color="#0000ff"><br><br><font face="Courier New" size="2">int</font></font><font size="2"><font face="Courier New"><font color="#000080"> </font>tempFunction<font color="#000080">(</font><font color="#0000ff">int</font><font color="#000080"> </font>a<font color="#000080">, </font><font color="#0000ff">int</font><font color="#000080"> </font>b</font></font><font size="2"><font face="Courier New"><font color="#000080">)<br>{<br></font>&nbsp;&nbsp;&nbsp; <font color="#880000">printf</font><font color="#000080">(</font><font color="#008080">"tempFunction is called, a = %d, b = %d /n"</font><font color="#000080">, </font>a<font color="#000080">, </font>b</font></font><font size="2"><font face="Courier New"><font color="#000080">);<br></font>&nbsp;&nbsp;&nbsp; <font color="#0000ff">return</font><font color="#000080"> (</font>a<font color="#000080"> + </font>b</font></font><font color="#000080" face="Courier New" size="2">);<br>}</font><font color="#0000ff"><br><br><font face="Courier New" size="2">int</font></font><font size="2"><font face="Courier New"><font color="#000080"> </font>main</font></font><font size="2"><font face="Courier New"><font color="#000080">()<br>{<br></font>&nbsp;&nbsp;&nbsp; <font color="#0000ff">int</font><font color="#000080"> </font>n</font></font><font size="2"><font face="Courier New"><font color="#000080">;<br></font>&nbsp;&nbsp;&nbsp; n<font color="#000080"> = </font><font color="#800000">1</font></font></font><font size="2"><font face="Courier New"><font color="#000080">;<br></font>&nbsp;&nbsp;&nbsp; n</font></font><font size="2"><font face="Courier New"><font color="#000080">++;<br></font>&nbsp;&nbsp;&nbsp; n</font></font><font size="2"><font face="Courier New"><font color="#000080">--;<br><br></font>&nbsp;&nbsp;&nbsp; nGlobalVar<font color="#000080"> += </font><font color="#800000">100</font></font></font><font size="2"><font face="Courier New"><font color="#000080">;<br></font>&nbsp;&nbsp;&nbsp; nGlobalVar<font color="#000080"> -= </font><font color="#800000">12</font></font></font><font size="2"><font face="Courier New"><font color="#000080">;<br><br></font>&nbsp;&nbsp;&nbsp; <font color="#880000">printf</font><font color="#000080">(</font><font color="#008080">"n = %d, nGlobalVar = %d /n"</font><font color="#000080">, </font>n<font color="#000080">, </font>nGlobalVar</font></font><font size="2"><font face="Courier New"><font color="#000080">);<br><br></font>&nbsp;&nbsp;&nbsp; n<font color="#000080"> = </font>tempFunction<font color="#000080">(</font><font color="#800000">1</font><font color="#000080">, </font><font color="#800000">2</font></font></font><font size="2"><font face="Courier New"><font color="#000080">);<br></font>&nbsp;&nbsp;&nbsp; <font color="#880000">printf</font><font color="#000080">(</font><font color="#008080">"n = %d"</font><font color="#000080">, </font>n</font></font><font size="2"><font face="Courier New"><font color="#000080">);<br><br></font>&nbsp;&nbsp;&nbsp; <font color="#0000ff">return</font><font color="#000080"> </font><font color="#800000">0</font></font></font><font color="#000080" face="Courier New" size="2">;<br>}<br></font></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">请将此代码复制出来并保存到文件 gdb-sample.c 中，然后切换到此文件所在目录，用GCC编译之：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">gcc gdb-sample.c -o gdb-sample -g</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">在上面的命令行中，使用 -o 参数指定了编译生成的可执行文件名为 
+gdb-sample，使用参数 -g 表示将源代码信息编译到可执行文件中。如果不使用参数 
+-g，会给后面的GDB调试造成不便。当然，如果我们没有程序的源代码，自然也无从使用 -g 参数，调试/跟踪时也只能是汇编代码级别的调试/跟踪。</font></p>
+<p><font face="Courier New" size="2">下面“gdb”命令启动GDB，将首先显示GDB说明，不管它：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">GNU gdb Red Hat Linux (5.3post-0.20021129.18rh)<br>Copyright 2003 Free Software Foundation, Inc.<br>GDB is free software, covered by the GNU General Public License, and you are<br>welcome to change it and/or distribute copies of it under certain conditions.<br>Type "show copying" to see the conditions.<br>There is absolutely no warranty for GDB. Type "show warranty" for details.<br>This GDB was configured as "i386-redhat-linux-gnu".<br>(gdb)&nbsp;</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">上面最后一行“(gdb) ”为GDB内部命令引导符，等待用户输入GDB命令。</font></p>
+<p><font face="Courier New" size="2">下面使用“file”命令载入被调试程序 gdb-sample（这里的 gdb-sample 即前面 GCC 编译输出的可执行文件）：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) file gdb-sample<br>Reading symbols from gdb-sample...done.</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">上面最后一行提示已经加载成功。</font></p>
+<p><font face="Courier New" size="2">下面使用“r”命令执行（Run）被调试文件，因为尚未设置任何断点，将直接执行到程序结束：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) r<br>Starting program: /home/liigo/temp/test_jmp/test_jmp/gdb-sample<br>n = 1, nGlobalVar = 88<br>tempFunction is called, a = 1, b = 2<br>n = 3<br>Program exited normally.</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">下面使用“b”命令在 main 函数开头设置一个断点（Breakpoint）：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) b main<br>Breakpoint 1 at 0x804835c: file gdb-sample.c, line 19.</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">上面最后一行提示已经成功设置断点，并给出了该断点信息：在源文件 
+gdb-sample.c 第19行处设置断点；这是本程序的第一个断点（序号为1）；断点处的代码地址为 
+0x804835c（此值可能仅在本次调试过程中有效）。回过头去看源代码，第19行中的代码为“n = 1”，恰好是 main 
+函数中的第一个可执行语句（前面的“int n;”为变量定义语句，并非可执行语句）。</font></p>
+<p><font face="Courier New" size="2">再次使用“r”命令执行（Run）被调试程序：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) r<br>Starting program: /home/liigo/temp/gdb-sample<br><br>Breakpoint 1, main () at gdb-sample.c:19<br>19 n = 1;</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">程序中断在gdb-sample.c第19行处，即main函数是第一个可执行语句处。</font></p>
+<p><font face="Courier New" size="2">上面最后一行信息为：下一条将要执行的源代码为“n = 1;”，它是源代码文件gdb-sample.c中的第19行。</font></p>
+<p><font face="Courier New" size="2">下面使用“s”命令（Step）执行下一行代码（即第19行“n = 1;”）：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) s<br>20 n++;</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">上面的信息表示已经执行完“n = 1;”，并显示下一条要执行的代码为第20行的“n++;”。</font></p>
+<p><font face="Courier New" size="2">既然已经执行了“n = 1;”，即给变量 n 赋值为 1，那我们用“p”命令（Print）看一下变量 n 的值是不是 1 ：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) p n<br>$1 = 1</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">果然是 1。（$1大致是表示这是第一次使用“p”命令——再次执行“p n”将显示“$2 = 1”——此信息应该没有什么用处。）</font></p>
+<p><font face="Courier New" size="2">下面我们分别在第26行、tempFunction 函数开头各设置一个断点（分别使用命令“b 26”“b tempFunction”）：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) b 26<br>Breakpoint 2 at 0x804837b: file gdb-sample.c, line 26.<br>(gdb) b tempFunction<br>Breakpoint 3 at 0x804832e: file gdb-sample.c, line 12.</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">使用“c”命令继续（Continue）执行被调试程序，程序将中断在第二
+个断点（26行），此时全局变量 nGlobalVar 的值应该是 
+88；再一次执行“c”命令，程序将中断于第三个断点（12行，tempFunction 函数开头处），此时tempFunction 函数的两个参数
+ a、b 的值应分别是 1 和 2：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) c<br>Continuing.<br><br>Breakpoint 2, main () at gdb-sample.c:26<br>26 printf("n = %d, nGlobalVar = %d /n", n, nGlobalVar);<br>(gdb) p nGlobalVar<br>$2 = 88<br>(gdb) c<br>Continuing.<br>n = 1, nGlobalVar = 88<br><br>Breakpoint 3, tempFunction (a=1, b=2) at gdb-sample.c:12<br>12 printf("tempFunction is called, a = %d, b = %d /n", a, b);<br>(gdb) p a<br>$3 = 1<br>(gdb) p b<br>$4 = 2</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">上面反馈的信息一切都在我们预料之中，哈哈~~~</font></p>
+<p><font face="Courier New" size="2">再一次执行“c”命令（Continue），因为后面再也没有其它断点，程序将一直执行到结束：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) c<br>Continuing.<br>tempFunction is called, a = 1, b = 2<br>n = 3<br>Program exited normally.</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">　</font></p>
+<p><font face="Courier New" size="2">有时候需要看到编译器生成的汇编代码，以进行汇编级的调试或跟踪，又该如何操作呢？</font></p>
+<p><font face="Courier New" size="2">这就要用到display命令“display /i $pc”了（此命令前面已有详细解释）：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) display /i $pc<br>(gdb)&nbsp;</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">此后程序再中断时，就可以显示出汇编代码了：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) r<br>Starting program: /home/liigo/temp/test_jmp/test_jmp/gdb-sample<br><br>Breakpoint 1, main () at gdb-sample.c:19<br>19 n = 1;<br>1: x/i $pc 0x804835c &lt;main+16&gt;: movl $0x1,0xfffffffc(%ebp)</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">看到了汇编代码，“n = 1;”对应的汇编代码是“movl $0x1,0xfffffffc(%ebp)”。</font></p>
+<p><font face="Courier New" size="2">并且以后程序每次中断都将显示下一条汇编指定（“si”命令用于执行一条汇编代码——区别于“s”执行一行C代码）：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) si<br>20 n++;<br>1: x/i $pc 0x8048363 &lt;main+23&gt;: lea 0xfffffffc(%ebp),%eax<br>(gdb) si<br>0x08048366 20 n++;<br>1: x/i $pc 0x8048366 &lt;main+26&gt;: incl (%eax)<br>(gdb) si<br>21 n--;<br>1: x/i $pc 0x8048368 &lt;main+28&gt;: lea 0xfffffffc(%ebp),%eax<br>(gdb) si<br>0x0804836b 21 n--;<br>1: x/i $pc 0x804836b &lt;main+31&gt;: decl (%eax)<br>(gdb) si<br>23 nGlobalVar += 100;<br>1: x/i $pc 0x804836d &lt;main+33&gt;: addl $0x64,0x80494fc</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">　</font></p>
+<p><font face="Courier New" size="2">接下来我们试一下命令“b *&lt;函数名称&gt;”。</font></p>
+<p><font face="Courier New" size="2">为了更简明，有必要先删除目前所有断点（使用“d”命令——Delete breakpoint）：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) d<br>Delete all breakpoints? (y or n) y<br>(gdb)</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">当被询问是否删除所有断点时，输入“y”并按回车键即可。</font></p>
+<p><font face="Courier New" size="2">下面使用命令“b *main”在 main 函数的 prolog 代码处设置断点（prolog、epilog，分别表示编译器在每个函数的开头和结尾自行插入的代码）：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) b *main<br>Breakpoint 4 at 0x804834c: file gdb-sample.c, line 17.<br>(gdb) r<br>The program being debugged has been started already.<br>Start it from the beginning? (y or n) y<br>Starting program: /home/liigo/temp/test_jmp/test_jmp/gdb-sample<br><br>Breakpoint 4, main () at gdb-sample.c:17<br>17 {<br>1: x/i $pc 0x804834c &lt;main&gt;: push %ebp<br>(gdb) si<br>0x0804834d 17 {<br>1: x/i $pc 0x804834d &lt;main+1&gt;: mov %esp,%ebp<br>(gdb) si<br>0x0804834f in main () at gdb-sample.c:17<br>17 {<br>1: x/i $pc 0x804834f &lt;main+3&gt;: sub $0x8,%esp<br>(gdb) si<br>0x08048352 17 {<br>1: x/i $pc 0x8048352 &lt;main+6&gt;: and $0xfffffff0,%esp<br>(gdb) si<br>0x08048355 17 {<br>1: x/i $pc 0x8048355 &lt;main+9&gt;: mov $0x0,%eax<br>(gdb) si<br>0x0804835a 17 {<br>1: x/i $pc 0x804835a &lt;main+14&gt;: sub %eax,%esp<br>(gdb) si<br>19 n = 1;<br>1: x/i $pc 0x804835c &lt;main+16&gt;: movl $0x1,0xfffffffc(%ebp)</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">此时可以使用“i r”命令显示寄存器中的当前值———“i r”即“Infomation Register”：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) i r<br>eax 0xbffff6a4 -1073744220<br>ecx 0x42015554 1107383636<br>edx 0x40016bc8 1073834952<br>ebx 0x42130a14 1108544020<br>esp 0xbffff6a0 0xbffff6a0<br>ebp 0xbffff6a8 0xbffff6a8<br>esi 0x40015360 1073828704<br>edi 0x80483f0 134513648<br>eip 0x8048366 0x8048366<br>eflags 0x386 902<br>cs 0x23 35<br>ss 0x2b 43<br>ds 0x2b 43<br>es 0x2b 43<br>fs 0x0 0<br>gs 0x33 51</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">当然也可以显示任意一个指定的寄存器值：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) i r eax<br>eax 0xbffff6a4 -1073744220</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">　</font></p>
+<p><font face="Courier New" size="2">最后一个要介绍的命令是“q”，退出（Quit）GDB调试环境：</font></p>
+<table bgcolor="#000000" border="0" cellpadding="2" cellspacing="0" width="100%">
+    <tbody>
+        <tr>
+            <td width="100%"><font color="#ffffff" face="Courier New" size="2">(gdb) q<br>The program is running. Exit anyway? (y or n) y</font></td>
+        </tr>
+    </tbody>
+</table>
+<p><font face="Courier New" size="2">&nbsp;</font></p>
+<p><font face="Courier New" size="2">版权所有：liigo.com</font></p>
+<p><font face="Courier New" size="2">转载请事先征得作者liigo同意。</font></p>
+<p><a href="mailto:liigo@sina.com"><font face="Courier New" size="2">liigo@sina.com</font></a><br><a href="http://www.liigo.com/"><font face="Courier New" size="2">www.liigo.com</font></a><br><a href="http://blog.csdn.net/liigo/"><font face="Courier New" size="2">http://blog.csdn.net/liigo/</font></a><br><font face="Courier New" size="2">QQ: 175199125</font></p>
+<p><font face="Courier New" size="2">&nbsp;</font></p></div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+<div data-bd-bind="1424211320812" class="bdsharebuttonbox bdshare-button-style0-16" style="float: right;">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间" style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博" style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博" style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网" style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信" style="background-position:0 -1612px !important"></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+<!--192.168.100.36-->
+<ul class="article_next_prev">
+            <li class="prev_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/liigo/article/details/580028';">上一篇</span><a href="http://blog.csdn.net/liigo/article/details/580028" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">我知道AWT/Swing不受欢迎的根本原因了：外观不够漂亮！附图</a></li>
+            <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/liigo/article/details/610572';">下一篇</span><a href="http://blog.csdn.net/liigo/article/details/610572" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">《包青天》中的《鸳鸯蝴蝶梦》单元，剧中有一个很漂亮的女子叫“离垢”</a></li>
+</ul>
+
+<!-- Baidu Button BEGIN -->
+<script src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/bds_s_v2.js" type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434"></script>
+
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+
+</div>
+      <dl class="blog-associat-tag">
+        <dt>主题推荐</dt>
+        <dd>
+                <a href="http://www.csdn.net/tag/%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F" target="_blank" class="blog-tage-red">全局变量</a> 
+                <a href="http://www.csdn.net/tag/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F" target="_blank" class="blog-tage-red">操作系统</a> 
+                <a href="http://www.csdn.net/tag/%E7%BC%96%E8%AF%91%E5%99%A8" target="_blank" class="blog-tage-red">编译器</a> 
+                <a href="http://www.csdn.net/tag/%E7%A8%8B%E5%BA%8F%E5%91%98" target="_blank" class="blog-tage-red">程序员</a> 
+                <a href="http://www.csdn.net/tag/%E8%B7%A8%E5%B9%B3%E5%8F%B0" target="_blank" class="blog-tage-red">跨平台</a> 
+        </dd>
+    </dl> 
+
+
+<dl class="blog-ass-articl tracking-ad" data-mod="popu_36" id="res-relatived"> 
+     <dt><span>猜你在找</span></dt>    
+<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/caomiao2006/article/details/4814927" title="string的size和length" strategy="CFRecommendAlgorithm">string的size和length</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/chuanj1985/article/details/6873830" title="vim显示行号语法高亮自动缩进的设置" strategy="CFRecommendAlgorithm">vim显示行号语法高亮自动缩进的设置</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/WQLYQY/article/details/9195625" title="GDB 查看死锁" strategy="CFRecommendAlgorithm">GDB 查看死锁</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/htttw/article/details/7521053" title="libpcap使用" strategy="CFRecommendAlgorithm">libpcap使用</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/andycpp/article/details/8861549" title="割绳子的作者你如此歧视无视鄙视中国人这是何苦呢" strategy="CFRecommendAlgorithm">割绳子的作者你如此歧视无视鄙视中国人这是何苦呢</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/youxin2012/article/details/8684797" title="cs硕士妹子找工作经历阿里人搜等互联网" strategy="CFRecommendAlgorithm">cs硕士妹子找工作经历阿里人搜等互联网</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/voluptas/article/details/6339855" title="见过最好的git入门教程" strategy="CFRecommendAlgorithm">见过最好的git入门教程</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/blue4689/article/details/6599592" title="moto &amp; google笔试题目-STLC++面试题" strategy="CFRecommendAlgorithm">moto &amp; google笔试题目-STLC++面试题</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a target="_blank" href="http://blog.csdn.net/a1252433913/article/details/7893348" title="C语言对xml文件的读写操作" strategy="CFRecommendAlgorithm">C语言对xml文件的读写操作</a></dd></dl>
+<div id="job_blog_reco"><dl class="blog-ass-articl tracking-ad" data-mod="popu_72"><dt><span>准备好了么？&nbsp;<label class="po_blg_detail_tiao">跳</label><label class="po_blg_detail_ba">吧</label><label class="po_blg_detail_th">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;！</label></span><a href="http://job.csdn.net/" target="_blank" class="po_blg_more">更多职位尽在&nbsp;<label class="po_blg_detail_csdn">CSDN JOB</label></a></dt><dd class="po_blg_dd"><div class="po_blg_po"><a href="http://job.csdn.net/Job/Index?jobID=82556" title="c++高级开发工程师" strategy="LatestRecommend" target="_blank">c++高级开发工程师</a></div><div class="po_blg_company"><a href="http://pr.csdn.net/enterprise/ent_home?orgid=211651" title="北京世联互动网络有限公司" target="_blank">北京世联互动网络有限公司</a></div><label class="po_blg_separator">|</label><div class="po_blg_salary"><a href="http://job.csdn.net/Job/Index?jobID=82556" target="_blank">6-18K/月</a></div><a class="po_blg_iwant" href="http://job.csdn.net/Job/Index?jobID=82556" target="_blank">我要跳槽</a></dd><dd class="po_blg_dd"><div class="po_blg_po"><a href="http://job.csdn.net/Job/Index?jobID=82555" title="网络推广" strategy="LatestRecommend" target="_blank">网络推广</a></div><div class="po_blg_company"><a href="http://pr.csdn.net/enterprise/ent_home?orgid=435055" title="华智网络" target="_blank">华智网络</a></div><label class="po_blg_separator">|</label><div class="po_blg_salary"><a href="http://job.csdn.net/Job/Index?jobID=82555" target="_blank">6-10K/月</a></div><a class="po_blg_iwant" href="http://job.csdn.net/Job/Index?jobID=82555" target="_blank">我要跳槽</a></dd><dd class="po_blg_dd"><div class="po_blg_po"><a href="http://job.csdn.net/Job/Index?jobID=82554" title="java高级开发工程师" strategy="LatestRecommend" target="_blank">java高级开发工程师</a></div><div class="po_blg_company"><a href="http://pr.csdn.net/enterprise/ent_home?orgid=211651" title="北京世联互动网络有限公司" target="_blank">北京世联互动网络有限公司</a></div><label class="po_blg_separator">|</label><div class="po_blg_salary"><a href="http://job.csdn.net/Job/Index?jobID=82554" target="_blank">6-18K/月</a></div><a class="po_blg_iwant" href="http://job.csdn.net/Job/Index?jobID=82554" target="_blank">我要跳槽</a></dd><dd class="po_blg_dd"><div class="po_blg_po"><a href="http://job.csdn.net/Job/Index?jobID=82553" title="ios高级开发工程师" strategy="LatestRecommend" target="_blank">ios高级开发工程师</a></div><div class="po_blg_company"><a href="http://pr.csdn.net/enterprise/ent_home?orgid=211651" title="北京世联互动网络有限公司" target="_blank">北京世联互动网络有限公司</a></div><label class="po_blg_separator">|</label><div class="po_blg_salary"><a href="http://job.csdn.net/Job/Index?jobID=82553" target="_blank">6-18K/月</a></div><a class="po_blg_iwant" href="http://job.csdn.net/Job/Index?jobID=82553" target="_blank">我要跳槽</a></dd></dl></div>
+
+<script type="text/javascript">
+    var searchtitletags = 'GDB十分钟教程' + ',' + '全局变量,操作系统,编译器,程序员,跨平台';
+    searchService({
+        index: 'blog',
+        query: searchtitletags,
+        from: 10,
+        size: 10,
+        appendTo: '#res-relatived',
+        url: 'recommend',
+        his: 2,
+        client: "blog_cf_enhance",
+        tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+    });
+
+ </script>   
+
+
+
+    <div id="ad_cen">
+   
+          <script type="text/javascript">
+              new Ad(4, 'ad_cen');
+          </script>
+    <iframe src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ad.html" style="border-width: 0px; overflow: hidden; width: 746px; height: 90px;" scrolling="no" id="ad_frm_0" frameborder="0"></iframe></div>
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list"><dl class="comment_item comment_topic" id="comment_item_4660583"><dt class="comment_head" floor="21">21楼 <span class="user"><a class="username" href="http://blog.csdn.net/shengyang998" target="_blank">shengyang998</a> <span class="ptime">2014-12-31 16:22发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="4660583" username="shengyang998"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/shengyang998" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_shengyang998.gif" height="40" width="40"></a></dd><dd class="comment_body">谢谢博主哦！</dd></dl><dl class="comment_item comment_topic" id="comment_item_4498265"><dt class="comment_head" floor="20">20楼 <span class="user"><a class="username" href="http://blog.csdn.net/u013351484" target="_blank">Never_Forgive</a> <span class="ptime">2014-11-08 17:16发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="4498265" username="u013351484"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/u013351484" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_u013351484.jpg" height="40" width="40"></a></dd><dd class="comment_body">写得太详细了！真诚请求转载，楼主~可以么。。。</dd></dl><dl class="comment_item comment_topic" id="comment_item_4468417"><dt class="comment_head" floor="19">19楼 <span class="user"><a class="username" href="http://blog.csdn.net/woshikalz" target="_blank">ysh_ysh</a> <span class="ptime">2014-10-31 16:49发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="4468417" username="woshikalz"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/woshikalz" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_woshikalz.jpg" height="40" width="40"></a></dd><dd class="comment_body">你好，看到你的这篇文章很不错，想转载保存，可以吗？</dd><dl class="comment_item comment_reply" id="comment_item_4480517"><dt class="comment_head" floor="19">Re: <span class="user"><a class="username" href="http://blog.csdn.net/liigo" target="_blank">liigo</a> <span class="ptime">2014-11-03 17:21发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="4480517" username="liigo"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/liigo" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_liigo.jpg" height="40" width="40"></a></dd><dd class="comment_body">回复woshikalz：欢迎转载，注明本文原始链接即可。</dd></dl></dl><dl class="comment_item comment_topic" id="comment_item_4314089"><dt class="comment_head" floor="18">18楼 <span class="user"><a class="username" href="http://blog.csdn.net/taoshengyijiu20008" target="_blank">taoshengyijiu20008</a> <span class="ptime">2014-09-23 09:22发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="4314089" username="taoshengyijiu20008"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/taoshengyijiu20008" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_taoshengyijiu20008.jpg" height="40" width="40"></a></dd><dd class="comment_body">xie de taihaole</dd></dl><dl class="comment_item comment_topic" id="comment_item_3745937"><dt class="comment_head" floor="17">17楼 <span class="user"><a class="username" href="http://blog.csdn.net/lnas01" target="_blank">Open_Mind</a> <span class="ptime">2014-04-16 15:43发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="3745937" username="lnas01"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/lnas01" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_lnas01.jpg" height="40" width="40"></a></dd><dd class="comment_body">好文，谢谢。</dd></dl><dl class="comment_item comment_topic" id="comment_item_3120721"><dt class="comment_head" floor="16">16楼 <span class="user"><a class="username" href="http://blog.csdn.net/wuyunpengleo" target="_blank">wuyunpengleo</a> <span class="ptime">2013-11-08 19:47发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="3120721" username="wuyunpengleo"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/wuyunpengleo" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_wuyunpengleo.gif" height="40" width="40"></a></dd><dd class="comment_body">赞一个</dd></dl><dl class="comment_item comment_topic" id="comment_item_2855807"><dt class="comment_head" floor="15">15楼 <span class="user"><a class="username" href="http://blog.csdn.net/lvjing2" target="_blank">lvjing2</a> <span class="ptime">2013-08-24 23:50发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2855807" username="lvjing2"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/lvjing2" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_lvjing2.jpg" height="40" width="40"></a></dd><dd class="comment_body">非常感谢，这么一看之后马上就知道怎么进行初步的debug了。</dd></dl><dl class="comment_item comment_topic" id="comment_item_2851845"><dt class="comment_head" floor="14">14楼 <span class="user"><a class="username" href="http://blog.csdn.net/weiqubo" target="_blank">大雪压</a> <span class="ptime">2013-08-23 12:25发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2851845" username="weiqubo"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/weiqubo" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_weiqubo.jpg" height="40" width="40"></a></dd><dd class="comment_body">“/n" 应该是”\n“，拷贝导致的错误？</dd><dl class="comment_item comment_reply" id="comment_item_2872285"><dt class="comment_head" floor="14">Re: <span class="user"><a class="username" href="http://blog.csdn.net/liigo" target="_blank">liigo</a> <span class="ptime">2013-08-29 20:27发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2872285" username="liigo"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/liigo" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_liigo.jpg" height="40" width="40"></a></dd><dd class="comment_body">回复weiqubo：是提交CSDN博客时系统自动转换导致的。这种行为是很变态的，CSDN作为程序员的社区，犯这么严重的错误，难以置信。我多年前就已经严厉抨击过此事。</dd><dl class="comment_item comment_reply" id="comment_item_2873429"><dt class="comment_head" floor="1">Re: <span class="user"><a class="username" href="http://blog.csdn.net/weiqubo" target="_blank">大雪压</a> <span class="ptime">2013-08-29 23:51发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2873429" username="weiqubo"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/weiqubo" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_weiqubo.jpg" height="40" width="40"></a></dd><dd class="comment_body">回复liigo：原来如此啊，难怪经常遇到人家贴的代码编译不过的小错误。<br><br>csdn还有bug，比如文档分类上下顺序调整的时候。</dd></dl></dl></dl><dl class="comment_item comment_topic" id="comment_item_2605858"><dt class="comment_head" floor="13">13楼 <span class="user"><a class="username" href="http://blog.csdn.net/m_hook" target="_blank">m_hook</a> <span class="ptime">2013-04-24 18:16发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2605858" username="m_hook"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/m_hook" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_m_hook.jpg" height="40" width="40"></a></dd><dd class="comment_body">非常感谢（此处省略10000字）。对我非常有帮助。</dd></dl><dl class="comment_item comment_topic" id="comment_item_2562880"><dt class="comment_head" floor="12">12楼 <span class="user"><a class="username" href="http://blog.csdn.net/zycfeixiang" target="_blank">zycfeixiang</a> <span class="ptime">2013-03-22 10:02发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2562880" username="zycfeixiang"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/zycfeixiang" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_zycfeixiang.jpg" height="40" width="40"></a></dd><dd class="comment_body">太感谢了,非常详细</dd></dl><dl class="comment_item comment_topic" id="comment_item_2549063"><dt class="comment_head" floor="11">11楼 <span class="user"><a class="username" href="http://blog.csdn.net/loudyten" target="_blank">loudyten</a> <span class="ptime">2013-03-09 19:28发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2549063" username="loudyten"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/loudyten" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_loudyten.jpg" height="40" width="40"></a></dd><dd class="comment_body">受教了,楼主厉害，学习膜拜当中</dd></dl><dl class="comment_item comment_topic" id="comment_item_2524260"><dt class="comment_head" floor="10">10楼 <span class="user"><a class="username" href="http://blog.csdn.net/a459109544" target="_blank">a459109544</a> <span class="ptime">2013-02-01 16:21发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2524260" username="a459109544"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/a459109544" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_a459109544.jpg" height="40" width="40"></a></dd><dd class="comment_body">请问可以调试java吗？</dd></dl><dl class="comment_item comment_topic" id="comment_item_2509249"><dt class="comment_head" floor="9">9楼 <span class="user"><a class="username" href="http://blog.csdn.net/HunDanXiaoLang" target="_blank">HunDanXiaoLang</a> <span class="ptime">2013-01-18 22:52发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2509249" username="HunDanXiaoLang"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/HunDanXiaoLang" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_hundanxiaolang.gif" height="40" width="40"></a></dd><dd class="comment_body">刚找到你的博客就来说声谢谢了</dd></dl><dl class="comment_item comment_topic" id="comment_item_2509248"><dt class="comment_head" floor="8">8楼 <span class="user"><a class="username" href="http://blog.csdn.net/HunDanXiaoLang" target="_blank">HunDanXiaoLang</a> <span class="ptime">2013-01-18 22:51发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2509248" username="HunDanXiaoLang"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/HunDanXiaoLang" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_hundanxiaolang.gif" height="40" width="40"></a></dd><dd class="comment_body">感谢liigo老师编写的易语言零起点教程</dd></dl><dl class="comment_item comment_topic" id="comment_item_2454938"><dt class="comment_head" floor="7">7楼 <span class="user"><a class="username" href="http://blog.csdn.net/shanhe1986" target="_blank">shanhe1986</a> <span class="ptime">2012-12-04 11:04发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2454938" username="shanhe1986"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/shanhe1986" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_shanhe1986.gif" height="40" width="40"></a></dd><dd class="comment_body">原唱赞一下，很详细，感谢分享</dd></dl><dl class="comment_item comment_topic" id="comment_item_2299554"><dt class="comment_head" floor="6">6楼 <span class="user"><a class="username" href="http://blog.csdn.net/bing00xing" target="_blank">星00恋</a> <span class="ptime">2012-07-25 14:24发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2299554" username="bing00xing"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/bing00xing" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_bing00xing.jpg" height="40" width="40"></a></dd><dd class="comment_body">不错，适合初学的我</dd></dl><dl class="comment_item comment_topic" id="comment_item_2281707"><dt class="comment_head" floor="5">5楼 <span class="user"><a class="username" href="http://blog.csdn.net/ziyuanxiazai123" target="_blank">逐梦行者</a> <span class="ptime">2012-07-12 21:35发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="2281707" username="ziyuanxiazai123"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/ziyuanxiazai123" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_ziyuanxiazai123.jpg" height="40" width="40"></a></dd><dd class="comment_body">可能版本问题，在ubuntu11下测试时，例子程序中的换行符"/n",换成了"\n"才能正常换行。</dd></dl><dl class="comment_item comment_topic" id="comment_item_1988126"><dt class="comment_head" floor="4">4楼 <span class="user"><a class="username" href="http://blog.csdn.net/mathgeophysics" target="_blank">GeoAnt</a> <span class="ptime">2011-10-17 00:31发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="1988126" username="mathgeophysics"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/mathgeophysics" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_mathgeophysics.jpg" height="40" width="40"></a></dd><dd class="comment_body">好</dd></dl><dl class="comment_item comment_topic" id="comment_item_1612397"><dt class="comment_head" floor="3">3楼 <span class="user"><a class="username" href="http://blog.csdn.net/hzlhzy" target="_blank">hzlhzy</a> <span class="ptime">2011-03-13 01:50发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="1612397" username="hzlhzy"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/hzlhzy" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_hzlhzy.gif" height="40" width="40"></a></dd><dd class="comment_body">姗姗来迟，挺不错，学习中</dd></dl><dl class="comment_item comment_topic" id="comment_item_457675"><dt class="comment_head" floor="2">2楼 <span class="user"><a class="username" href="http://blog.csdn.net/xiaoxu" target="_blank">xiaoxu</a> <span class="ptime">2006-06-26 15:55发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="457675" username="xiaoxu"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/xiaoxu" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_xiaoxu.gif" height="40" width="40"></a></dd><dd class="comment_body">写得太棒了，
+&lt;br&gt;我就喜欢这种用实例来讲解内容的文章了.</dd></dl><dl class="comment_item comment_topic" id="comment_item_413312"><dt class="comment_head" floor="1">1楼 <span class="user"><a class="username" href="http://blog.csdn.net/farproc" target="_blank">farproc</a> <span class="ptime">2006-01-17 19:29发表</span>  <a href="#reply" class="cmt_btn reply" title="回复">[回复]</a> <span class="comment_manage" style="display:none;" commentid="413312" username="farproc"> <a href="#quote" class="cmt_btn quote" title="引用">[引用]</a> <a href="#report" class="cmt_btn report" title="举报">[举报]</a></span></span></dt><dd class="comment_userface"><a href="http://blog.csdn.net/farproc" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/3_farproc.gif" height="40" width="40"></a></dd><dd class="comment_body">不错,收藏了.</dd></dl><div class="clear"></div></div>
+    <div style="display: none;" id="comment_bar">
+    </div>
+    <div id="comment_form"><div class="guest_link">您还没有登录,请<a href="javascript:void(0);" onclick="javascript:loginbox();">[登录]</a>或<a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Fliigo%2Farticle%2Fdetails%2F582231">[注册]</a></div></div>
+
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '582231';
+    var commentscount = 25;
+    var islock = false
+</script>
+<script type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/comment.js"></script>
+    <div id="ad_bot">
+    <iframe src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ad_002.html" style="border-width: 0px; overflow: hidden; width: 746px; height: 0px;" scrolling="no" id="ad_frm_1" frameborder="0"></iframe></div>
+    <script type="text/javascript">
+    new Ad(5, 'ad_bot');
+    </script>
+<div id="report_dialog">
+</div>
+
+<div id="d-top" style="bottom:60px;">
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop" style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])">         
+         <img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);
+        
+        /*
+        if($("#comment_content").length>0)
+        {
+            $("#quick-reply").show();
+
+            $("#quick-reply").click(function(){
+                setEditorFocus();
+            });
+        }       
+     
+        var d_top = $('#d-top-a');
+
+        document.onscroll = function ()
+        {
+            var scrTop = (document.body.scrollTop || document.documentElement.scrollTop);
+            if (scrTop > 500)
+            {
+                d_top.show();
+            } else
+            {
+                d_top.hide();
+            }
+        }
+        $('#d-top-a').click(function ()
+        {
+            scrollTo(0, 0);
+            this.blur();
+            return false;
+        });
+        */
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+<div class="tag_list">
+    <h5>
+        <a href="http://www.csdn.net/tag/" target="_blank">核心技术类目</a></h5>
+    <div class="classify">
+<a title="全部主题" href="http://www.csdn.net/tag" target="_blank" onclick="LogClickCount(this,336);">全部主题</a>
+<a title="Hadoop" href="http://g.csdn.net/5272865" target="_blank" onclick="LogClickCount(this,336);">Hadoop</a>
+<a title="AWS" href="http://g.csdn.net/5272866" target="_blank" onclick="LogClickCount(this,336);">AWS</a>
+<a title="移动游戏" href="http://g.csdn.net/5272870" target="_blank" onclick="LogClickCount(this,336);">移动游戏</a>
+<a title="Java" href="http://g.csdn.net/5272871" target="_blank" onclick="LogClickCount(this,336);">Java</a>
+<a title="Android" href="http://g.csdn.net/5272872" target="_blank" onclick="LogClickCount(this,336);">Android</a>
+<a title="iOS" href="http://g.csdn.net/5272873" target="_blank" onclick="LogClickCount(this,336);">iOS</a>
+<a title="Swift" href="http://g.csdn.net/5272868" target="_blank" onclick="LogClickCount(this,336);">Swift</a>
+<a title="智能硬件" href="http://g.csdn.net/5272869" target="_blank" onclick="LogClickCount(this,336);">智能硬件</a>
+<a title="Docker" href="http://g.csdn.net/5272867" target="_blank" onclick="LogClickCount(this,336);">Docker</a>
+<a title="OpenStack" href="http://g.csdn.net/5272925" target="_blank" onclick="LogClickCount(this,336);">OpenStack</a>
+<a title="VPN" href="http://www.csdn.net/tag/vpn" target="_blank" onclick="LogClickCount(this,336);">VPN</a>
+<a title="Spark" href="http://g.csdn.net/5272924" target="_blank" onclick="LogClickCount(this,336);">Spark</a>
+<a title="ERP" href="http://www.csdn.net/tag/erp" target="_blank" onclick="LogClickCount(this,336);">ERP</a>
+<a title="IE10" href="http://www.csdn.net/tag/ie10" target="_blank" onclick="LogClickCount(this,336);">IE10</a>
+<a title="Eclipse" href="http://www.csdn.net/tag/eclipse" target="_blank" onclick="LogClickCount(this,336);">Eclipse</a>
+<a title="CRM" href="http://www.csdn.net/tag/crm" target="_blank" onclick="LogClickCount(this,336);">CRM</a>
+<a title="JavaScript" href="http://www.csdn.net/tag/javascript" target="_blank" onclick="LogClickCount(this,336);">JavaScript</a>
+<a title="数据库" href="http://www.csdn.net/tag/%E6%95%B0%E6%8D%AE%E5%BA%93" target="_blank" onclick="LogClickCount(this,336);">数据库</a>
+<a title="Ubuntu" href="http://www.csdn.net/tag/ubuntu" target="_blank" onclick="LogClickCount(this,336);">Ubuntu</a>
+<a title="NFC" href="http://www.csdn.net/tag/nfc" target="_blank" onclick="LogClickCount(this,336);">NFC</a>
+<a title="WAP" href="http://www.csdn.net/tag/wap" target="_blank" onclick="LogClickCount(this,336);">WAP</a>
+<a title="jQuery" href="http://www.csdn.net/tag/jquery" target="_blank" onclick="LogClickCount(this,336);">jQuery</a>
+<a title="BI" href="http://www.csdn.net/tag/bi" target="_blank" onclick="LogClickCount(this,336);">BI</a>
+<a title="HTML5" href="http://www.csdn.net/tag/html5" target="_blank" onclick="LogClickCount(this,336);">HTML5</a>
+<a title="Spring" href="http://www.csdn.net/tag/spring" target="_blank" onclick="LogClickCount(this,336);">Spring</a>
+<a title="Apache" href="http://www.csdn.net/tag/apache" target="_blank" onclick="LogClickCount(this,336);">Apache</a>
+<a title=".NET" href="http://www.csdn.net/tag/.net" target="_blank" onclick="LogClickCount(this,336);">.NET</a>
+<a title="API" href="http://www.csdn.net/tag/api" target="_blank" onclick="LogClickCount(this,336);">API</a>
+<a title="HTML" href="http://www.csdn.net/tag/html" target="_blank" onclick="LogClickCount(this,336);">HTML</a>
+<a title="SDK" href="http://www.csdn.net/tag/sdk" target="_blank" onclick="LogClickCount(this,336);">SDK</a>
+<a title="IIS" href="http://www.csdn.net/tag/iis" target="_blank" onclick="LogClickCount(this,336);">IIS</a>
+<a title="Fedora" href="http://www.csdn.net/tag/fedora" target="_blank" onclick="LogClickCount(this,336);">Fedora</a>
+<a title="XML" href="http://www.csdn.net/tag/xml" target="_blank" onclick="LogClickCount(this,336);">XML</a>
+<a title="LBS" href="http://www.csdn.net/tag/lbs" target="_blank" onclick="LogClickCount(this,336);">LBS</a>
+<a title="Unity" href="http://www.csdn.net/tag/unity" target="_blank" onclick="LogClickCount(this,336);">Unity</a>
+<a title="Splashtop" href="http://www.csdn.net/tag/splashtop" target="_blank" onclick="LogClickCount(this,336);">Splashtop</a>
+<a title="UML" href="http://www.csdn.net/tag/uml" target="_blank" onclick="LogClickCount(this,336);">UML</a>
+<a title="components" href="http://www.csdn.net/tag/components" target="_blank" onclick="LogClickCount(this,336);">components</a>
+<a title="Windows Mobile" href="http://www.csdn.net/tag/windowsmobile" target="_blank" onclick="LogClickCount(this,336);">Windows Mobile</a>
+<a title="Rails" href="http://www.csdn.net/tag/rails" target="_blank" onclick="LogClickCount(this,336);">Rails</a>
+<a title="QEMU" href="http://www.csdn.net/tag/qemu" target="_blank" onclick="LogClickCount(this,336);">QEMU</a>
+<a title="KDE" href="http://www.csdn.net/tag/kde" target="_blank" onclick="LogClickCount(this,336);">KDE</a>
+<a title="Cassandra" href="http://www.csdn.net/tag/cassandra" target="_blank" onclick="LogClickCount(this,336);">Cassandra</a>
+<a title="CloudStack" href="http://www.csdn.net/tag/cloudstack" target="_blank" onclick="LogClickCount(this,336);">CloudStack</a>
+<a title="FTC" href="http://www.csdn.net/tag/ftc" target="_blank" onclick="LogClickCount(this,336);">FTC</a>
+<a title="coremail" href="http://www.csdn.net/tag/coremail" target="_blank" onclick="LogClickCount(this,336);">coremail</a>
+<a title="OPhone " href="http://www.csdn.net/tag/ophone" target="_blank" onclick="LogClickCount(this,336);">OPhone </a>
+<a title="CouchBase" href="http://www.csdn.net/tag/couchbase" target="_blank" onclick="LogClickCount(this,336);">CouchBase</a>
+<a title="云计算" href="http://www.csdn.net/tag/%E4%BA%91%E8%AE%A1%E7%AE%97" target="_blank" onclick="LogClickCount(this,336);">云计算</a>
+<a title="iOS6" href="http://www.csdn.net/tag/iOS6" target="_blank" onclick="LogClickCount(this,336);">iOS6</a>
+<a title="Rackspace " href="http://www.csdn.net/tag/rackspace" target="_blank" onclick="LogClickCount(this,336);">Rackspace </a>
+<a title="Web App" href="http://www.csdn.net/tag/webapp" target="_blank" onclick="LogClickCount(this,336);">Web App</a>
+<a title="SpringSide" href="http://www.csdn.net/tag/springside" target="_blank" onclick="LogClickCount(this,336);">SpringSide</a>
+<a title="Maemo" href="http://www.csdn.net/tag/maemo" target="_blank" onclick="LogClickCount(this,336);">Maemo</a>
+<a title="Compuware" href="http://www.csdn.net/tag/compuware" target="_blank" onclick="LogClickCount(this,336);">Compuware</a>
+<a title="大数据" href="http://www.csdn.net/tag/%E5%A4%A7%E6%95%B0%E6%8D%AE" target="_blank" onclick="LogClickCount(this,336);">大数据</a>
+<a title="aptech" href="http://www.csdn.net/tag/aptech" target="_blank" onclick="LogClickCount(this,336);">aptech</a>
+<a title="Perl" href="http://www.csdn.net/tag/perl" target="_blank" onclick="LogClickCount(this,336);">Perl</a>
+<a title="Tornado" href="http://www.csdn.net/tag/tornado" target="_blank" onclick="LogClickCount(this,336);">Tornado</a>
+<a title="Ruby" href="http://www.csdn.net/tag/ruby" target="_blank" onclick="LogClickCount(this,336);">Ruby</a>
+<a title="Hibernate" href="http://www.csdn.net/hibernate" target="_blank" onclick="LogClickCount(this,336);">Hibernate</a>
+<a title="ThinkPHP" href="http://www.csdn.net/tag/thinkphp" target="_blank" onclick="LogClickCount(this,336);">ThinkPHP</a>
+<a title="HBase" href="http://www.csdn.net/tag/hbase" target="_blank" onclick="LogClickCount(this,336);">HBase</a>
+<a title="Pure" href="http://www.csdn.net/tag/pure" target="_blank" onclick="LogClickCount(this,336);">Pure</a>
+<a title="Solr" href="http://www.csdn.net/tag/solr" target="_blank" onclick="LogClickCount(this,336);">Solr</a>
+<a title="Angular" href="http://www.csdn.net/tag/angular" target="_blank" onclick="LogClickCount(this,336);">Angular</a>
+<a title="Cloud Foundry" href="http://www.csdn.net/tag/cloudfoundry" target="_blank" onclick="LogClickCount(this,336);">Cloud Foundry</a>
+<a title="Redis" href="http://www.csdn.net/tag/redis" target="_blank" onclick="LogClickCount(this,336);">Redis</a>
+<a title="Scala" href="http://www.csdn.net/tag/scala" target="_blank" onclick="LogClickCount(this,336);">Scala</a>
+<a title="Django" href="http://www.csdn.net/tag/django" target="_blank" onclick="LogClickCount(this,336);">Django</a>
+<a title="Bootstrap" href="http://www.csdn.net/tag/bootstrap" target="_blank" onclick="LogClickCount(this,336);">Bootstrap</a>
+    </div>
+</div>
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });
+        },200);  
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }    
+
+</script>
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+            <div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/liigo" target="_blank">
+    <img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/1_liigo.jpg" title="访问我的空间" style="max-width:90%">
+    </a>
+    <br>
+    <span><a href="http://my.csdn.net/liigo" class="user_name" target="_blank">liigo</a></span>
+</div>
+<div class="interact">
+<a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_guanzhu'])"></a>
+
+ <a href="javascript:void(0);" class="letter" title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=liigo','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                       <div class="ico_expert" title="CSDN认证专家" style="width:54px;height:60px;background:url('http://csdnimg.cn/jifen/images/xunzhang/xunzhang/bokezhuanjiamiddle.png') no-repeat"></div>
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>819183次</span></li>
+    <li>积分：<span>11499</span> </li>    
+    <li>等级： <span style="position:relative;display:inline-block;z-index:1">
+            <img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/blog7.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：11499 </div>
+        </span>  </li>
+    <li>排名：<span>第416名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>254篇</span></li>
+    <li>转载：<span>12篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>1480条</span></li>
+</ul>
+</ul>
+</div>
+
+
+
+
+<div id="custom_column_957080" class="panel">
+<ul class="panel_head"><span>关于</span></ul>
+<ul class="panel_body">
+
+<p>当我沉默着的时候，我觉得充实；我将开口，同时感到空虚……</p>
+<p></p>
+<p>相对于篮球，我更喜欢足球；相对于象棋，我更喜欢围棋；相对于C ，我更喜欢Java；相对于易语言，我更喜欢EF；……</p>
+<p>庄晓立（liigo），男，山东省梁山县人，毕业于山东理工大学，现生活在大连，供职于易语言软件公司，从事技术研究和产品研发。</p>
+<p><a rel="author" href="https://plus.google.com/105597640837742873343/">+Liigo Zhuang</a> At Google plus</p>
+
+</ul>
+</div>
+
+<div id="custom_column_9071311" class="panel">
+<ul class="panel_head"><span>分类导航</span></ul>
+<ul class="panel_body">
+
+<p>本博客绝大多数文章均为Liigo原创，转载请注明出处。</p>
+<ul>
+<li><a href="http://blog.csdn.net/liigo/article/category/124945">易语言系列70余篇</a> </li><li><a href="http://blog.csdn.net/liigo/article/category/180056">C/C++系列50余篇</a></li><li><a href="http://blog.csdn.net/liigo/article/category/375625">“易语言.飞扬”系列20余篇</a></li><li><a href="http://blog.csdn.net/liigo/article/category/375640">EF WEB FastCGI 10余篇</a></li><li><a href="http://blog.csdn.net/liigo/article/category/445859">“易写易库”系列10余篇</a></li><li><a href="http://blog.csdn.net/liigo/article/category/592703">“重复发明轮子”系列近10篇</a></li><li><a href="http://blog.csdn.net/liigo/article/category/441642">开放源代码系列近30篇</a></li><li><a href="http://blog.csdn.net/liigo/article/category/560281">尘土界面库源码解析系列</a></li><li><a href="http://blog.csdn.net/liigo/article/category/1139070">parser</a> <a href="http://blog.csdn.net/liigo/article/category/622507">
+linker</a> <a href="http://blog.csdn.net/liigo/article/category/1144787">isapi</a>
+<a href="http://blog.csdn.net/liigo/article/category/375640">fastcgi</a> <a href="http://blog.csdn.net/liigo/article/category/540741">
+m8</a></li><li><a href="http://blog.csdn.net/liigo/article/category/124946">java</a> <a href="http://blog.csdn.net/liigo/article/category/833189">
+android</a> <a href="http://blog.csdn.net/liigo/article/category/376355">delphi</a>
+<a href="http://blog.csdn.net/liigo/article/category/383995">ef</a> <a href="http://blog.csdn.net/liigo/article/category/953863">
+mygui</a></li></ul>
+
+</ul>
+</div><div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" class="blogsearch" title="请输入关键字" type="text"></span>
+        <input id="btnSubmit" value="搜索" title="search in blog" type="button">
+        <input name="q" id="inputQ" type="hidden">
+        <input name="t" value="blog" type="hidden">
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script><div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/582231" title="GDB十分钟教程">GDB十分钟教程</a><span>(44051)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/23699459" title="我为什么放弃Go语言">我为什么放弃Go语言</a><span>(40639)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/638741" title="Microsoft Visual C++ 与 MinGW，附图">Microsoft Visual C++ 与 MinGW，附图</a><span>(24322)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/6153829" title="基本的HTML文本解析器的设计和实现（C/C++源码），图文并茂">基本的HTML文本解析器的设计和实现（C/C++源码），图文并茂</a><span>(24143)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/1472077" title="“易语言.飞扬”十分钟入门教程">“易语言.飞扬”十分钟入门教程</a><span>(22531)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/5295420" title="易语言“非主流”，杀毒软件“躲猫猫”">易语言“非主流”，杀毒软件“躲猫猫”</a><span>(16033)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/395223" title="多家权威机构、几十篇权威证据证明：Java比C++更快。如果反对，请举反证。">多家权威机构、几十篇权威证据证明：Java比C++更快。如果反对，请举反证。</a><span>(10991)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/6326871" title="易语言版{大智慧/分析家/飞狐交易师}DLL插件接口开发模块(beta5)，自定义股票软件公式扩展函数">易语言版{大智慧/分析家/飞狐交易师}DLL插件接口开发模块(beta5)，自定义股票软件公式扩展函数</a><span>(10224)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/4466676" title="遇到C语言相关的两个问题让我心情压抑">遇到C语言相关的两个问题让我心情压抑</a><span>(9422)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/1447351" title="我所期待的易语言2007">我所期待的易语言2007</a><span>(9211)</span>
+</li>
+</ul>
+</div>
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="http://blog.csdn.net/liigo/article/details/23699459#comments">我为什么放弃Go语言</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/FrankHB1989" class="user_name">FrankHB1989</a>:
+有一点不对：C++照样需要纠结创建对象的方法，当然没那么乱七八糟。对于C++（以及其它大部分语言），...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/liigo/article/details/23699459#comments">我为什么放弃Go语言</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/FrankHB1989" class="user_name">FrankHB1989</a>:
+@lingfohn:Google？大牛？Rob Pike之流type干毛用都没搞清楚的外行也好意思过...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/liigo/article/details/23699459#comments">我为什么放弃Go语言</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/cxzzwb" class="user_name">cxzzwb</a>:
+近期我也准备接触下Go，感谢您的这篇文章！！虽然我还不了解Go，但是通过您这篇文章，还是让我可以提前...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/liigo/article/details/42532863#comments">静态编译的EXE重定位项不能多于65536个</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/wwwnxk" class="user_name">wwwnxk</a>:
+哇 发现了大名鼎鼎的Liigo
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/liigo/article/details/665965#comments">在VC6中创建wxWidgets项目[附图]</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/liigo" class="user_name">liigo</a>:
+自恋一下，好文。现在的wxWidgets版本都已经是3.02了。
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/liigo/article/details/665965#comments">我为什么放弃Go语言</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/xiao_cary" class="user_name">Cary_Xiao</a>:
+我近期开始研究GO的。。。就目前情况来说，我觉得还是很不错的。。。
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/liigo/article/details/665965#comments">我为什么放弃Go语言</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/zongcai249" class="user_name">田野_</a>:
+现在go语言已经发展到go 1.4了，变化太大了，经过测试，性能已经远远超过nodejs和php，个...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/liigo/article/details/665965#comments">静态编译的EXE重定位项不能多于65536个</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/bywayboy" class="user_name">bywayboy</a>:
+易语言界真实人才辈出啊。这种情况真的是很少遇到。
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/liigo/article/details/39859699#comments">易语言VS杀毒软件：基情复燃，转受为攻！</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/canmo8" class="user_name">狼齐学习网</a>:
+@qq_24292295:说的真好，说话一样简单、、、那多好
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/liigo/article/details/9149415#comments">tinyweb: C语言 + libuv 开发的最精简的WebServer （附源码）</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/feng2783581" class="user_name">波莱罗舞曲</a>:
+LZ幸苦了，请问，能让tinyWeb支持PHP-FastCGI吗？
+    </p>
+    </li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/23699459" title="我为什么放弃Go语言">我为什么放弃Go语言</a><span>(209)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/5295420" title="易语言“非主流”，杀毒软件“躲猫猫”">易语言“非主流”，杀毒软件“躲猫猫”</a><span>(120)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/6153829" title="基本的HTML文本解析器的设计和实现（C/C++源码），图文并茂">基本的HTML文本解析器的设计和实现（C/C++源码），图文并茂</a><span>(69)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/395223" title="多家权威机构、几十篇权威证据证明：Java比C++更快。如果反对，请举反证。">多家权威机构、几十篇权威证据证明：Java比C++更快。如果反对，请举反证。</a><span>(59)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/6339960" title="简析移动领域内微软(Microsoft)和英特尔(Intel)的市场前景">简析移动领域内微软(Microsoft)和英特尔(Intel)的市场前景</a><span>(55)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/4466676" title="遇到C语言相关的两个问题让我心情压抑">遇到C语言相关的两个问题让我心情压抑</a><span>(47)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/6025720" title="liigo：2010年底平板电脑（MID）横向参数对比，附需求分析">liigo：2010年底平板电脑（MID）横向参数对比，附需求分析</a><span>(34)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/39859699" title="易语言VS杀毒软件：基情复燃，转受为攻！">易语言VS杀毒软件：基情复燃，转受为攻！</a><span>(27)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/7467309" title="修改Go语言(golang)编译器源代码让它支持UTF-8 BOM">修改Go语言(golang)编译器源代码让它支持UTF-8 BOM</a><span>(25)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/liigo/article/details/582231" title="GDB十分钟教程">GDB十分钟教程</a><span>(25)</span>
+</li>
+</ul>
+</div>
+
+
+<div id="custom_column_957079" class="panel">
+<ul class="panel_head"><span>友情链接</span></ul>
+<ul class="panel_body">
+
+<ul>
+<li><a href="http://www.eyuyan.com/" target="_blank">易语言官方网站</a></li><li><a href="http://bbs.eyuyan.com/" target="_blank">易语言官方论坛</a></li><li><a href="http://blog.sina.com.cn/m/luoxinfayan" target="_blank">骆新发言的BLOG</a></li><li><a href="http://blog.csdn.net/uoyevoli/" target="_blank">farproc's blog</a></li><li><a href="http://monkeycz.blogbus.com/" target="_blank">monkeycz's blog</a></li><li><a href="http://blog.csdn.net/efdev/" target="_blank">EF官方博客</a> (<a href="http://blog.csdn.net/efdev/rss.aspx" target="_blank">RSS</a>)</li><li><a href="http://blog.csdn.net/haoel/" target="_blank">陈皓专栏</a> (<a href="http://blog.csdn.net/haoel/Rss.aspx" target="_blank">RSS</a>)</li><li><a href="http://blog.csdn.net/bywayboy/" target="_blank">bywayboy's blog</a> (<a href="http://blog.csdn.net/bywayboy/Rss.aspx" target="_blank">RSS</a>)</li><li><a href="http://hi.baidu.com/jouby/blog" target="_blank">石年遗梦(jouby)</a> (<a href="http://hi.baidu.com/jouby/rss" target="_blank">RSS</a>)</li></ul>
+
+</ul>
+</div>    </div>
+    <div class="clear">
+    </div>
+</div>
+
+            <div class="clear">
+            </div>
+        </div>
+        
+
+<script type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/cnick.js"></script>
+<script type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/newblog.js"></script>
+
+
+<script type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/showblogmedal.js"></script>
+<script type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/JavaScript1.js"></script><link rel="stylesheet" type="text/css" href="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/pub_footer_2014.css"><div class="pub_fo"><div id="pub_footerall" class="pub_footer_new"><dl><dt></dt> <dd class="foot_sub_menu"><a href="http://www.csdn.net/company/about.html" target="_blank">公司简介</a><span>|</span><a href="http://www.csdn.net/company/recruit.html" target="_blank">招贤纳士</a><span>|</span><a href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</a><span>|</span><a href="http://www.csdn.net/company/account.html" target="_blank">银行汇款帐号</a><span>|</span><a href="http://www.csdn.net/company/contact.html" target="_blank">联系方式</a><span>|</span><a href="http://www.csdn.net/company/statement.html" target="_blank">版权声明</a><span>|</span><a href="http://www.csdn.net/company/layer.html" target="_blank">法律顾问</a><span>|</span><a href="mailto:webmaster@csdn.net">问题报告</a><span>|</span><a target="_blank" href="http://www.csdn.net/friendlink.html">合作伙伴</a><span>|</span><a href="http://bbs.csdn.net/forums/Service" target="_blank">论坛反馈</a></dd><dd class="foot_contact"><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=2355263776&amp;site=qq&amp;menu=yes" target="_blank" class="qq">网站客服</a><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=2251809102&amp;site=qq&amp;menu=yes" target="_blank" class="qq">杂志客服</a><a href="http://e.weibo.com/csdnsupport/profile" target="_blank" class="weibo">微博客服</a><a href="mailto:webmaster@csdn.net" class="email" title="联系邮箱">webmaster@csdn.net</a><span class="phone" title="服务热线">400-600-2320</span><span class="interval">|</span><span>北京创新乐知信息技术有限公司 版权所有</span><span class="interval">|</span><span>江苏乐知网络技术有限公司 提供商务支持</span></dd><dd class="foot_copyright"><span>京&nbsp;ICP&nbsp;证&nbsp;070598&nbsp;号</span><span class="interval">|</span><span>Copyright © 1999-2014, CSDN.NET, All Rights Reserved&nbsp;</span><a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/gongshang_logos.gif" alt="GongshangLogo" title=""></a></dd></dl></div></div><div id="note1" class="csdn_note" style="display:none; position:absolute; z-index:9999; width:440px">  <span class="notice_top_arrow"><span class="inner"></span></span>  <div class="box"></div></div><div class="csdn_notice_tip" style="display:none; position:absolute; z-index:9990; width:170px">  <iframe src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/a_002.html" scrolling="no" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent" frameborder="0"></iframe>  <div class="tip_text">您有<strong>0</strong>条新通知</div>  <a href="javascript:void%200" class="close2"></a></div><script id="noticeScript" type="text/javascript" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/notify.js"></script>
+
+    <script type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script><img src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/pv.asc" border="0" height="0" width="0">
+<script type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/counter.js"></script><script type="text/javascript" charset="UTF-8" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/msg.js"></script>
+<script type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ad-blog.js"></script>
+<script type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/count.js"></script><iframe src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/logs.html" frameborder="0" height="0" width="0"></iframe>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a>"
+                    + "<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+    });
+</script>
+
+    </div><input id="aa_g_data_ids" type="hidden">
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/toolbar.js"></script>
+     <!--new top-->
+   
+    <link href="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ask_float_block.css" type="text/css" rel="stylesheet">
+    <script language="JavaScript" type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/wmd.js"></script>
+    <script language="JavaScript" type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/showdown.js"></script>
+    <script language="JavaScript" type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/prettify.js"></script>
+    <script language="JavaScript" type="text/javascript" src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ask_float_block.js"></script>
+
+
+
+<div style="display: block;" id="tag-suggest-pop">
+  <div class="relative">
+    <div class="close"></div>
+    <div class="content"><div><span>更多相关资源：</span><a href="http://www.csdn.net/tag/linux" title="关于 linux 的主题" target="_blank">linux</a><a href="http://www.csdn.net/tag/debug" title="关于 debug 的主题" target="_blank">debug</a><a href="http://www.csdn.net/tag/gdb" title="关于 gdb 的主题" target="_blank">gdb</a></div></div>
+  </div>
+</div><link rel="stylesheet" type="text/css" media="screen" href="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/ask_float_fonts_css-6b30a53970eb5c3a2a045e3df585b475.css"><div data-mod="popu_64" class="tracking-ad" chg-blk="0"><a id="com-ask-float-block" title="提问按钮" style="top:324px"></a><a id="com-quick-reply" title="快速回复" style="top:365px"></a><a id="com-d-top-a" style="top: 406px; display: inline;" title="返回顶部" onclick=""></a> </div><div class="pop_edit ask_second comm_ask_second"><h3>提问</h3><span class="ask_float_span">您的问题将会被发布在“<a class="ask_float_channel" href="http://ask.csdn.net/" target="_blank" style="cursor:pointer">技术问答</a>”频道</span><a href="#" nodetype="close" class="close">×</a><div class="context"><div class="err_div"><span class="err_ico"></span><span class="err_txt">该问题已存在，请勿重复提问</span></div><div class="input_div"><input id="askInputSecond" style="font-size:14px;" placeholder="问题标题" type="text"></div><div class="cm_box"><div class="cm_dialog"></div> <div class="pop_cm cm_add_link"><input placeholder="链接内容" id="af_cm_link_txt" type="text"><input placeholder="链接地址" id="af_cm_link_url" type="text"><input placeholder="链接提示" id="af_cm_link_tit" type="text"><div class="text-right"><span class="btn btn-default btn-sm" id="add_link_btn">插入链接</span> </div> </div><div class="pop_cm cm_add_img"><div class="nav-tabs"><a class="img_tab active" href="#tab_upload">本地上传</a><a class="img_tab" href="#tab_weburl">网络图片</a></div><div class="tab_panel active" id="tab_upload"><div class="set_img"><iframe src="GDB%E5%8D%81%E5%88%86%E9%92%9F%E6%95%99%E7%A8%8B%20-%20liigo%27s%20blog%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/upload.html"></iframe></div></div><div class="tab_panel" id="tab_weburl"><input placeholder="图片地址" id="af_cm_img_url" type="text"><input placeholder="图片说明" id="af_cm_img_alt" type="text"><div class="text-right"><span class="btn btn-default btn-sm" id="add_img_btn">插入图片</span> </div></div> </div></div> <textarea style="display: none;" id="editor_all" rows="8"></textarea><div class="editor-toolbar"><i class="separator">|</i><a title="标题一（Ctrl+Alt+1）" class="icon-headline"></a><a title="标题二（Ctrl+Alt+2）" class="icon-heading"></a><a title="粗体（Ctrl+B）" class="icon-bold"></a><a title="斜体（Ctrl+I）" class="icon-italic"></a><i class="separator">|</i><a title="引用（Ctrl+’）" class="icon-quote-left"></a><a title="插入代码片（Ctrl+,）" class="icon-code"></a><a title="无序列表（Ctrl+L）" class="icon-list-ul"></a><a title="有序列表（Ctrl+Alt+L）" class="icon-list-ol"></a><i class="separator">|</i><a title="添加链接（Ctrl+K）" class="icon-link"></a><a title="添加图片（Ctrl+Alt+I）" class="icon-picture"></a><i class="separator">|</i><a title="撤退（Ctrl+Z）" class="icon-reply"></a><a title="前进（Ctrl+Shift+Z）" class="icon-share-alt"></a><i class="separator">|</i><a title="markdown语法参考" target="_blank" href="http://ask.csdn.net/pages/markdown" class="icon-info"></a><a title="预览" class="icon-preview"></a><i class="separator">|</i></div><div class="CodeMirror cm-s-paper CodeMirror-focused"><div style="overflow: hidden; position: relative; width: 3px; height: 0px;"><textarea tabindex="0" spellcheck="false" autocapitalize="off" autocorrect="off" wrap="off" style="position: absolute; padding: 0px; width: 1px; height: 1em; outline: medium none; font-size: 4px;"></textarea></div><div class="CodeMirror-hscrollbar"><div style="height: 1px;"></div></div><div class="CodeMirror-vscrollbar"><div style="width: 1px;"></div></div><div class="CodeMirror-scrollbar-filler"></div><div class="CodeMirror-gutter-filler"></div><div draggable="true" tabindex="-1" class="CodeMirror-scroll"><div style="min-width: 33px;" class="CodeMirror-sizer"><div style="position: relative;"><div class="CodeMirror-lines"><div style="position: relative; outline: medium none;"><div class="CodeMirror-measure"><pre>&nbsp;<span style="display: inline-block; width: 1px; margin-right: -1px;">&nbsp;</span></pre></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code"></div><div style="" class="CodeMirror-cursor">&nbsp;</div><div style="" class="CodeMirror-cursor CodeMirror-secondarycursor">&nbsp;</div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px;"></div><div style="display: none;" class="CodeMirror-gutters"></div></div></div><div class="editor-statusbar"><span class="lines">0</span><span class="words">0</span><span class="cursor">0:0</span></div><div class="div_tags clearfix"><div id="divSearchTags" class="tags_con"><input type="text"></div><input name="txtSearchTags" type="hidden"></div><div id="ask2_tagRecomm_div" class="drt_tagRecomm tracking-ad" data-mod="popu_73"><span class="drt_tit">推荐标签：</span></div></div><div class="success"><div class="left_area"><input id="chk_cb" type="checkbox"><span class="wyxs">我要悬赏</span><input id="cb_num" class="cb_num" readonly="true"><span class="phib_rii"><span> 币</span></span></div><a href="#" nodetype="cancel" class="cancel">取消</a><a href="#" nodetype="ok" class="ok">发布</a></div></div><div id="common_ask_div_sc" class="searchContainer"><div class="sTitle">可能存在类似的问题：</div><div class="sFooter"><a class="sFirstNewAsk">我想提一个新问题</a></div></div></body></html>

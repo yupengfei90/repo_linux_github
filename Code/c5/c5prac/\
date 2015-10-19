@@ -1,0 +1,11 @@
+#include <stdio.h>
+#define MESSAGE "hello, how are you?"
+int main(void)
+{
+	char string[]="hello world";
+	printf("pointer: %20p\n", string);
+	printf("&pointer: %20p\n", &string);
+	printf("character: %10c\n", *string);
+	printf("string: %10s\n",*string);
+	return 0;
+}

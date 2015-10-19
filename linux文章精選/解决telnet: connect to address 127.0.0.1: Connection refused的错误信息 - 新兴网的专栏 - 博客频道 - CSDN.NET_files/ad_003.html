@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>CSDN Ad</title>
+    <style type="text/css">
+        body { margin:0px; padding:0px;}
+    </style>
+     <script src="%E8%A7%A3%E5%86%B3telnet:%20connect%20to%20address%20127.0.0.1:%20Connection%20refused%E7%9A%84%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%20-%20%E6%96%B0%E5%85%B4%E7%BD%91%E7%9A%84%E4%B8%93%E6%A0%8F%20-%20%E5%8D%9A%E5%AE%A2%E9%A2%91%E9%81%93%20-%20CSDN.NET_files/jquery.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="div1"><style type="text/css">
+ul { margin:0px; padding:0 4px 0 0; }
+ul, x:-moz-any-link, x:default { width:90%; }
+ul li { padding:3px 0px;}
+a { font-size:12px; text-decoration:none; color:#006699; }
+a:hover { color:#000; }
+</style>
+
+<ul>
+
+<li><a href="http://blog.csdn.net/luoshengyang/article/details/46281499" target="_blank">*Android应用程序UI硬件加速渲染的Display List渲染过程分析</a></li>
+
+<li><a href="http://blog.csdn.net/gsky1986/article/details/46499537" target="_blank">*外部排序，杀鸡焉用牛刀？</a></li>
+
+<li><a href="http://blog.csdn.net/nomasp/article/details/46380027" target="_blank">*算法:比较排序之外学习新的线性时间排序</a></li>
+
+
+<li><a href="http://blog.csdn.net/yanbober/article/details/46342361" target="_blank">*Android自定义控件（状态提示图表）</a></li>
+
+
+<li><a href="http://blog.csdn.net/songrotek/article/details/46443965" target="_blank">*iOS开发之可穿戴设备蓝牙4.0 BLE 开发</a></li>
+
+<li><a href="http://blog.csdn.net/dog250/article/details/46462125" target="_blank">*请使劲回答一个关于UNIX/Linux自动扩展stack的问题</a></li>
+</ul></div>
+<script type="text/javascript">
+    window.onload = function () {
+        if (document.domain != 'blog.csdn.net') {
+            document.domain = "csdn.net";
+        }
+        //这种给广告区域赋值的方式，对于有些JS广告不能完美的显示
+        //top.document.getElementById('ad_commend').innerHTML = document.getElementById('div1').innerHTML;
+
+        var h = document.body.offsetHeight + 2;
+        setTimeout(function () {
+            if (h > 800) h = document.getElementById('div1').offsetHeight + 4;
+            try { top.document.getElementById('ad_frm_2').style.height = h + 'px'; }
+            catch (err) { }
+        }, 100);
+    };
+    $(function() {
+        $("#div1 a").click(function() {
+            top._gaq.push(['_trackEvent', 'function', 'onclick', 'blog_articles_tuijianwenzhang']);
+        });
+    });
+</script>
+
+
+</body></html>

@@ -1,0 +1,572 @@
+<html><head>
+<title>字符浏览器Elinks快捷键-红联Linux系统门户</title>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk">
+<meta name="keywords" content="字符浏览器Elinks快捷键">
+<meta name="description" content="红联Linux系统门户为广大linux用户解读：字符浏览器Elinks快捷键 -  - Linux发行版技术 - Ubuntu信息，下面是详情阅读。">
+<link href="http://www.linuxdiyf.com/rss.php" title="RSS" type="application/rss+xml" rel="alternate">
+<style type="text/css">
+<!--
+body,td,th {
+font-size: 12px;
+font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+body {
+margin-left: 0px;
+margin-top: 0px;
+margin-right: 0px;
+margin-bottom: 0px;
+}
+a:link
+{
+color: #22229C;text-decoration: none;
+}
+a:visited
+{
+color: #22229C;text-decoration: none;
+}
+a:hover, a:active
+{
+color: #FF4400;
+}
+textarea,input,object	{ 
+font-size: 12px;
+font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+h1{
+ font-size:20px;
+ margin:0;
+ padding:0;
+}
+h2 {font-size: 12px;font-weight:normal;display : inline}
+select { font-size: 11px;}
+img {border:0;}
+.style1 {color: #FFFFFF}
+.big {font-size: 14px;}
+.name {font-size: 24px; line-height: 34px; font-weight: bold; color:red}
+.title {  font-size: 20px; line-height: 32px; font-weight: bold}
+.message {font-size: 14px;line-height: 24px;}
+.quotetop {width:100%;margin:0px auto 0px auto;font-weight:bold;color:#000000; }
+.quotemain {width:100%;border:1px inset #DDDDDD;padding:5px;margin:0px auto 8px auto;color:#465584;background-color:#FFFFFC; font-family:Courier New; }
+.codetop {width:100%;margin:0px auto 0px auto;font-weight:bold;color:#000000; }
+.codemain {width:100%;border:1px inset #DDDDDD;padding:5px;margin:0px auto 8px auto;color:#465584;background-color:#E9F1F8; font-family:Courier New; }
+td {
+font-size: 12px;
+font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+td {
+font-size: 12px;
+font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+td {
+font-size: 12px;
+font-family: Geneva, Arial, Helvetica, sans-serif;
+}
+.title {  font-size: 20px; line-height: 32px; font-weight: bold}
+.title {  font-size: 20px; line-height: 32px; font-weight: bold}
+.message {font-size: 14px;line-height: 24px;}
+.message {font-size: 14px;line-height: 24px;}
+-->
+</style>
+<script src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/ca-pub-8023555791144639.js" type="text/javascript" async=""></script><script language="JavaScript"> 
+<!--
+function checkAll(str,checked) {
+    var a = document.getElementsByName(str);
+    var n = a.length;
+
+    for (var i = 0; i < n; i++) {
+        a[i].checked = checked;
+    }
+    em_size(str);
+}
+
+function download(str, i, first) {
+    var a = document.getElementsByName(str);
+    var n = a.length;
+
+    for (var i = i; i < n; i++) {
+        if(a[i].checked) {
+            window.location=a[i].value;
+            if (first)
+                timeout = 6000;
+            else
+                timeout = 500;
+            i++;
+            window.setTimeout("download('"+str+"', "+i+", 0)", timeout);
+            break;
+        }
+    }
+
+}
+
+function copy(str) {
+    var a = document.getElementsByName(str);
+    var n = a.length;
+    var ed2kcopy = document.getElementById("ed2kcopy_"+str)
+    ed2kcopy.innerHTML = ""
+    for (var i = 0; i < n; i++) {
+        if(a[i].checked)
+        {
+            ed2kcopy.innerHTML += a[i].value;
+            ed2kcopy.innerHTML += "<br />";
+        }
+    }
+        var rng = document.body.createTextRange();
+        rng.moveToElementText(ed2kcopy)
+        rng.scrollIntoView();
+        rng.select();
+        rng.execCommand("Copy");
+        rng.collapse(false);
+}
+
+function em_size(str) {
+    var a = document.getElementsByName(str);
+    var n = a.length;
+    try {
+        var input_checkall = document.getElementById("checkall_"+str);
+        var size = 0;
+        input_checkall.checked = true ;
+        for (var i=0; i < n; i++) {
+            if (a[i].checked) {
+                var piecesArray = a[i].value.split( "|" );
+                size += piecesArray[3]*1;
+            } else {
+                input_checkall.checked = false;
+            }
+        }
+        test = document.getElementById("size_"+str);
+        test.innerHTML = gen_size(size, 3, 2);
+    } catch (e) {
+
+    }
+}
+
+function gen_size(val, li, sepa ) {
+    sep = Math.pow(10, sepa); //小数点后的位数
+    li = Math.pow(10, li); //开始截断的长度
+    retval  = val;
+    unit    = 'Bytes';
+    if (val >= li*1000000000) {
+        val = Math.round( val / (1099511627776/sep) ) / sep;
+        unit  = 'TB';
+    } else if (val >= li*1000000) {
+        val = Math.round( val / (1073741824/sep) ) / sep;
+        unit  = 'GB';
+    } else if (val >= li*1000) {
+        val = Math.round( val / (1048576/sep) ) / sep;
+        unit  = 'MB';
+    } else if (val >= li) {
+        val = Math.round( val / (1024/sep) ) / sep;
+        unit  = 'KB';
+    }
+    return val + unit;
+}
+//-->
+</script>
+<script type="text/javascript" src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/m.js"></script>
+<script src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/share.js"></script><link href="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/share_style0_24.css" rel="stylesheet"></head>
+
+
+<body><div style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;" id="BAIDU_DUP_fp_wrapper"><iframe style="width: 0px; height: 0px; visibility: hidden; display: none;" src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/o.html" id="BAIDU_DUP_fp_iframe"></iframe></div><div style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;" id="BAIDU_DUP_fp_wrapper"><iframe style="width: 0px; height: 0px; visibility: hidden; display: none;" src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/o_002.html" id="BAIDU_DUP_fp_iframe"></iframe></div>
+
+<div align="center">
+<table height="19" width="960" border="1" bordercolor="#BCD0ED" cellpadding="0" cellspacing="0">
+<tbody><tr>
+<td style="font-size: 12px; font-family: Geneva, Arial, Helvetica, sans-serif" height="19" width="753" bgcolor="#E9F1F8">
+　<b><a href="http://www.linuxdiyf.com/"><font color="#000000">红联linux</font></a></b>　<a href="http://www.linuxdiyf.com/articlelist.php?id=2"><font color="#000000">Linux通用技术</font></a> - 
+<a href="http://www.linuxdiyf.com/articlelist.php?id=47">
+<font color="#000000">Linux发行版技术</font></a> - 
+<a href="http://www.linuxdiyf.com/articlelist.php?id=15">
+<font color="#000000">企业应用</font></a> - 
+<a href="http://www.linuxdiyf.com/articlelist.php?id=12">
+<font color="#000000">实验室</font></a></td>
+<td style="font-size: 12px; font-family: Geneva, Arial, Helvetica, sans-serif" height="19" width="205" bgcolor="#E9F1F8">
+　<a target="_blank" href="http://www.linuxdiyf.com/bbs/"><font color="#000000">Linux论坛</font></a></td>
+</tr>
+</tbody></table>
+<table height="100" width="960" bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0">
+<tbody><tr>
+<td style="font-size: 12px; font-family: Geneva, Arial, Helvetica, sans-serif" width="192" align="center" bgcolor="#FFFFFF">
+<p align="left">
+<a href="http://www.linuxdiyf.com/">
+<img src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/hllinuxlogo.gif" height="66" width="189" border="0"></a></p></td>
+<td style="font-size: 12px; font-family: Geneva, Arial, Helvetica, sans-serif" width="761" align="center" bgcolor="#FFFFFF"><script type="text/javascript">BAIDU_CLB_fillSlot("396765");</script><div id="BAIDU_DUP_wrapper_396765_0"></div><script charset="utf-8" src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/ecom.js"></script><script charset="utf-8" src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/fixed7o.js"></script><p align="right"><a href="http://www.linuxdiyf.com/bbs/thread-405283-1-1.html"><img src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/0f000n0eYm8s4G_HwuiZwf.jpg" border="0"></a></p></td>
+</tr>
+</tbody></table>
+</div>
+
+<table width="960" align="center" border="0" cellpadding="0" cellspacing="0">
+  <tbody><tr>
+    <td height="30" width="70">您的位置：</td>
+    <td nowrap="nowrap"><a href="http://www.linuxdiyf.com/">红联linux</a> &gt;&gt; <a href="http://www.linuxdiyf.com/articlelist.php?id=47">Linux发行版技术</a> &gt;&gt; <h2><a href="http://www.linuxdiyf.com/articlelist.php?id=49">Ubuntu</a></h2> &gt;&gt; 查看内容 －<a target="_blank" href="http://www.linuxdiyf.com/viewarticle.php?id=398798">学Linux必读</a> －<a target="_blank" href="http://www.linuxdiyf.com/viewarticle.php?id=405283">Linux学习教程推荐下载</a> －<b><a href="http://www.linuxdiyf.com/bbs/post.php?action=newthread&amp;fid=45" rel="nofollow">发新话题 (游客可发贴)</a></b></td>
+  </tr>
+</tbody></table>
+
+<table width="960" align="center" border="0" cellpadding="0" cellspacing="0">
+<tbody><tr><td bgcolor="#FFFFFF">
+
+<script language="JavaScript">
+function dozoom(size){
+document.getElementById('zoom').style.fontSize=size+'px'
+}
+</script>
+
+<script type="text/javascript">BAIDU_CLB_fillSlot("396758");</script><div id="BAIDU_DUP_wrapper_396758_0"></div><script charset="utf-8" src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/ecom_002.js"></script><a href="http://js.50bang.org/?formType=7837" target="_blank"><img src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/0f000ZO-9UARBpOiL0-YY0.gif" border="0"></a>
+<table width="960" align="center" border="0" cellpadding="0" cellspacing="0">
+<tbody><tr>
+  <td height="1" valign="top"></td>
+  <td height="1"></td>
+  <td height="1" valign="top" width="1" bgcolor="#648EB2"></td>
+  <td height="1" valign="top" bgcolor="#648EB2"></td>
+  <td height="1" valign="top" width="1" bgcolor="#648EB2"></td>
+</tr>
+<tr>
+<td valign="top">
+
+
+<table width="100%" bgcolor="#648EB2" border="0" cellpadding="0" cellspacing="1">
+<tbody><tr>
+<td bgcolor="#F9F9F9">
+<table width="100%" border="0" cellpadding="4" cellspacing="4">
+
+<tbody><tr><td class="title" align="center"><h1>字符浏览器Elinks快捷键</h1></td></tr>
+<tr><td height="1" align="center" bgcolor="#C0C0C0"></td></tr>
+
+<tr>
+<td align="center">MPiops发布于 
+2008-3-28 | 
+<script language="JavaScript" type="text/JavaScript" src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/function.html"></script>1913次阅读
+&nbsp;&nbsp;字号: <a href="javascript:dozoom(16)">大</a>&nbsp;<a href="javascript:dozoom(14)">中</a>&nbsp;<a href="javascript:dozoom(12)">小</a>&nbsp;&nbsp;(网友评论&nbsp;<font color="red">0</font>&nbsp;条)&nbsp;<a href="http://www.linuxdiyf.com/bbs/viewthread.php?tid=84214" target="_blank" rel="nofollow">我要评论</a>
+</td>
+</tr>
+<tr>
+<td>
+<table style="table-layout: fixed; word-wrap: break-word" width="100%" border="0" cellpadding="2" cellspacing="2">
+<tbody><tr>
+<td class="message" id="zoom">
+<script type="text/javascript">
+    /*linuxarticle*/
+    var cpro_id = "u820965";
+</script>
+<script src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/c.js" type="text/javascript"></script><div id="BAIDU_DUP_wrapper_u820965_0"><iframe id="cproIframe_u820965_1" src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/acom.html" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="true" frameborder="0" height="90" width="728" align="center,center"></iframe></div><script charset="utf-8" src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/acom.js"></script><br>突然有兴趣看看Linux下的字符模式的浏览器，搜了下有好几个，在Ubuntu里“添加/删除”里找到一个，叫Elinks，安装，然后在终端运行elinks，试用了一下，不错，使用方法也挺简单的，支持多标签，支持中文。<br>
+<br>
+按Esc键在帮助菜单找到快捷键，翻译一下，备忘，冒号分割符<br>
+<br>
+主界面键<br>
+z：终止连接<br>
+a：添加到书签<br>
+A：添加连接到书签<br>
+s：书签管理器<br>
+C：缓冲管理器<br>
+K：cookie管理器<br>
+Ctrl-K：读取cookie<br>
+Ctrl-Insert：复制到剪贴板<br>
+=：文档信息<br>
+D：下载管理器<br>
+：：ex模式<br>
+F10：文件菜单<br>
+n：查找下一个<br>
+N：查找上一个<br>
+F：formhist管理器（formhist是啥？）<br>
+f：框架最大化<br>
+Tab：下一框架<br>
+Alt-Tab：前一框架<br>
+g：转到 url<br>
+G：转到当前url<br>
+E：转到当前链接的url<br>
+H：转到主页<br>
+|：报头信息<br>
+h：历史管理器<br>
+Left:后一个历史记录<br>
+u：前一个历史记录<br>
+l：跳到链接<br>
+k：键位设置管理器<br>
+d：下载链接<br>
+r：恢复下载<br>
+Right：下一链接<br>
+Ctrl-Right：重新载入下一链接<br>
+L：链接菜单<br>
+，：lua控制台（lua又是啥？）<br>
+’：跳到标记<br>
+m：设置标记<br>
+F9：菜单<br>
+End：移动到文档结尾<br>
+Home：移动到文档开头<br>
+Down：移动到下一链接<br>
+Up：移动到上一链接<br>
+PageDown：向下翻一页<br>
+PageUp：向前翻一页<br>
+T：在后台打开新标签页<br>
+t：打开新标签页<br>
+o：选项管理器<br>
+q：退出<br>
+Q：不确认退出<br>
+Ctrl-L：重画屏幕<br>
+Ctrl-r：重新载入<br>
+Delete：向下滚动<br>
+{：向左滚动<br>
+}：向右滚动<br>
+Insert：向上滚动<br>
+/：查找<br>
+？：向前查找<br>
+#：查找typeahead（tyeahead又是啥？）<br>
+c：关闭标签页<br>
+e：标签页菜单<br>
+Alt-&lt;：左移标签页<br>
+Alt-&gt;：右移标签页<br>
+&gt;：下一标签页<br>
+&lt;：上议标签页<br>
+*：切换显示图像<br>
+%：切换文档彩色显示<br>
+\：切换html源代码<br>
+.：切换链接前显示数字<br>
+W：切换文本换行<br>
+v：查看图像<br>
+<br>
+编辑时键<br>
+Ctrl-W：自动补全<br>
+Ctrf-F：自动补全文件名<br>
+Ctrl-R：自动模糊补全<br>
+Backspace：退格<br>
+Alt-&lt;：第一个缓冲区<br>
+Escape：取消<br>
+Ctrl-Insert：复制到剪贴板<br>
+Ctrl-X：剪切到剪贴板<br>
+Delete：删除<br>
+Down：光标下移<br>
+End：结尾<br>
+Alt-&gt;：最后一个缓冲区<br>
+Enter：回车<br>
+Home：顶部<br>
+Ctrl-U：删除到行首<br>
+Ctrl-K：删除到行尾<br>
+Left：光标左移<br>
+Tab：下一条目<br>
+F4：外部打开<br>
+Ctrl-V：从剪贴板粘贴<br>
+Alt-Tab：粘贴条目<br>
+Ctrl-L：重画屏幕<br>
+Right：光标右移<br>
+Alt-r：查找切换表达式<br>
+Up：光标上移<br>
+<br>
+菜单键<br>
+Escape：取消<br>
+Delete：删除<br>
+Down：光标下移<br>
+End：结尾<br>
+Enter：回车<br>
+[：展开<br>
+Home：顶部<br>
+Left：光标左移<br>
+Insert：标记条目<br>
+Tab：下一条目<br>
+PageDown：向下翻一页<br>
+PageUp：向前翻一页<br>
+Alt-Tab：上一条目<br>
+Ctlr-L：重画屏幕<br>
+Right：光标右移<br>
+/：查找<br>
+Space：选择，折叠<br>
+Up：光标上移</td>
+</tr>
+             
+</tbody></table>
+</td>
+</tr>
+<tr>
+<td>
+<table style="table-layout: fixed; word-wrap: break-word" width="100%" border="0" cellpadding="2" cellspacing="2">
+<tbody><tr><td><div align="center"><script type="text/javascript"><!--
+google_ad_client = "pub-8023555791144639";
+/* 336x280, 创建于 09-12-16 */
+google_ad_slot = "5017353970";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript" src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/show_ads.js">
+</script><ins id="aswift_0_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;" frameborder="0" height="280" width="336"></iframe></ins></ins></div></td></tr></tbody></table>
+</td>
+</tr>
+<tr>
+<td align="right"><div data-bd-bind="1441539159482" class="bdsharebuttonbox bdshare-button-style0-24"><a href="#" class="bds_more" data-cmd="more"></a><a title="分享到QQ空间" href="#" class="bds_qzone" data-cmd="qzone"></a><a title="分享到新浪微博" href="#" class="bds_tsina" data-cmd="tsina"></a><a title="分享到腾讯微博" href="#" class="bds_tqq" data-cmd="tqq"></a><a title="分享到QQ好友" href="#" class="bds_sqq" data-cmd="sqq"></a><a title="分享到百度新首页" href="#" class="bds_bdhome" data-cmd="bdhome"></a><a title="分享到人人网" href="#" class="bds_renren" data-cmd="renren"></a><a title="分享到百度贴吧" href="#" class="bds_tieba" data-cmd="tieba"></a><a title="分享到微信" href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script></td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<br>
+<a name="reply"></a>
+<div id="BAIDU_DUP_wrapper_u2189472_0"><iframe id="cproIframe_u2189472_2" src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/acom_002.html" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="true" frameborder="0" height="250" width="750" align="center,center"></iframe></div><table width="100%" bgcolor="#648EB2" border="0" cellpadding="0" cellspacing="1">
+<script type="text/javascript">
+var cpro_id="u2189472";
+(window["cproStyleApi"] = window["cproStyleApi"] || {})[cpro_id]={at:"3",rsi0:"750",rsi1:"250",pat:"6",tn:"baiduCustNativeAD",rss1:"#FFFFFF",conBW:"1",adp:"1",ptt:"0",titFF:"%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91",titFS:"14",rss2:"#000000",titSU:"0",ptbg:"90",piw:"0",pih:"0",ptp:"0"}
+</script>
+<script src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/c.js" type="text/javascript"></script><script charset="utf-8" src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/acom_002.js"></script>
+<tbody><tr>
+<td bgcolor="#F9F9F9">
+<table width="100%" border="0" cellpadding="1" cellspacing="1">
+
+<tbody><tr>
+<td height="20" bgcolor="#BCD0ED">&nbsp;我要评论</td>
+</tr>
+
+<tr>
+<td>
+<table style="table-layout: fixed; word-wrap: break-word" width="100%" align="right" border="0" cellpadding="4" cellspacing="4">
+<form name="form1" method="post" action="http://www.linuxdiyf.com/function.php?action=reply" rel="nofollow"></form>
+<tbody><tr>
+<td>发表评论，与各位同人交流。回复请点击下方的我要评论按钮(游客可回复)，要发表贴子请点击 <b><a href="http://www.linuxdiyf.com/bbs/post.php?action=newthread&amp;fid=45" rel="nofollow">发新话题 (游客可发贴)</a></b></td>
+</tr>
+<tr>
+<td>
+<input name="tid" id="tid" value="84214" type="hidden">
+<input name="fid" id="fid" value="49" type="hidden">
+<input name="replysubmit" id="replysubmit" value="我要评论" type="submit"></td>
+</tr>
+
+</tbody></table>
+</td>
+</tr>
+
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+
+<td width="1%"></td>
+
+<td valign="top" width="1" bgcolor="#648EB2"></td>
+<td valign="top" width="20%" bgcolor="#EEEEEE">
+<table width="100%" border="0" cellpadding="4" cellspacing="0">
+<tbody><tr><td bgcolor="#BCD0ED">&nbsp;热点主题</td>
+</tr>
+<tr><td height="1" bgcolor="#999999"></td></tr>
+<tr><td height="5"></td></tr>
+<tr><td>
+<table style="table-layout: fixed; word-wrap: break-word" width="100%" border="0" cellpadding="2" cellspacing="2">
+<tbody><tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=84561" target="_blank">ubuntu 下wine 迅雷5的安装</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=84538" target="_blank">ubuntu如何提升用户权限</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=84921" target="_blank">ubuntu下arm-linux-gcc的安</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=84703" target="_blank">论坛紧急计划！！！！</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=84481" target="_blank">在ubuntu下安装ns2-allino</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=84389" target="_blank">ubuntu光盘升级方法</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=85124" target="_blank">在Ubuntu启动时执行脚本(命</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=85034" target="_blank">双系统情况下完全卸载Ubuntu</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=84524" target="_blank">ubuntu 8.04 中文包安装及</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=84613" target="_blank">让我们的ubuntu板块更加的</a></td>
+</tr>
+</tbody></table>
+</td></tr>
+<tr><td height="5"></td></tr>
+</tbody></table>
+
+<table width="100%" border="0" cellpadding="4" cellspacing="0">
+<tbody><tr><td bgcolor="#BCD0ED">&nbsp;最新主题</td>
+</tr>
+<tr><td height="1" bgcolor="#999999"></td></tr>
+<tr><td height="5"></td></tr>
+<tr><td>
+<table style="table-layout: fixed; word-wrap: break-word" width="100%" border="0" cellpadding="2" cellspacing="2">
+<tbody><tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=85209" target="_blank">用虚拟机装ubantu的心得</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=85206" target="_blank">第二届 Ubuntu Live 大会将</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=85191" target="_blank">如何上网啊</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=85188" target="_blank">用W3M终端下上网指南</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=85187" target="_blank">重装XP无法进入UBUNTU显示</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=85172" target="_blank">ubuntu下不能make menucon</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=85156" target="_blank">呼欲大家都来使用Ubuntu</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=85133" target="_blank">Ubuntu7.10 根分区扩容</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=85132" target="_blank">ubuntu 安装wenquyi字体</a></td>
+</tr>
+<tr>
+<td valign="top" width="8">·</td><td><a href="http://www.linuxdiyf.com/viewarticle.php?id=85131" target="_blank">我的ubuntu之路</a></td>
+</tr>
+</tbody></table>
+</td></tr>
+<tr><td height="5"></td></tr>
+</tbody></table>
+
+<table width="100%" border="0" cellpadding="4" cellspacing="0">
+<tbody><tr><td bgcolor="#BCD0ED">&nbsp;关注热点</td>
+</tr>
+<tr><td height="1" bgcolor="#999999"></td></tr>
+<tr><td height="5"></td></tr>
+<tr><td>
+</td></tr><tr><td>
+<table style="table-layout: fixed; word-wrap: break-word" width="100%" align="right" border="0" cellpadding="2" cellspacing="2">
+<tbody><tr><td><p><b>Linux教程下载？</b><br>“<a target="_blank" href="http://www.linuxdiyf.com/bbs/thread-405283-1-1.html">Linux学习教程推荐下载</a>”（请点击），Linux教程免费下载。</p>
+<p><b>求助Linux问题？</b><br>论坛有39版块，覆盖所有Linux技术层面。前往“<a target="_blank" href="http://www.linuxdiyf.com/bbs/">红联Linux论坛</a>”</p></td></tr>
+</tbody></table>
+</td></tr>
+
+<tr><td height="5"></td></tr>
+</tbody></table>
+</td>
+
+<td valign="top" width="1" bgcolor="#648EB2"></td>
+</tr>
+<tr>
+  <td height="1" valign="top"></td>
+  <td height="1"></td>
+  <td height="1" valign="top" width="1" bgcolor="#648EB2"></td>
+  <td height="1" valign="top" bgcolor="#648EB2"></td>
+  <td height="1" valign="top" width="1" bgcolor="#648EB2"></td>
+</tr>
+</tbody></table>
+</td></tr></tbody></table>
+
+<table width="960" align="center" border="0" cellpadding="0" cellspacing="0">
+<tbody><tr><td bgcolor="#FFFFFF">
+<table height="30" width="100%" align="center" border="0" cellpadding="0" cellspacing="0">
+  <tbody><tr>
+    <td height="15" align="center" bgcolor="#E9F1F8">　</td>
+  </tr>
+  <tr>
+  <td height="15" align="center" bgcolor="#EEEEEE"><p><a target="_blank" href="http://www.linuxdiyf.com/linux/">Linux系统教程</a>　|　<a target="_blank" href="http://www.linuxdiyf.com/linux/rm/">Linux入门</a>　|　<a target="_blank" href="http://www.linuxdiyf.com/linux/gl/">Linux管理</a>　|　<a target="_blank" href="http://www.linuxdiyf.com/linux/jq/">Linux技巧</a>　|　<a target="_blank" href="http://www.linuxdiyf.com/linux/shell/">Linux命令</a>　|　<a target="_blank" href="http://www.linuxdiyf.com/linux/ubuntu/">Ubuntu系统</a>　|　<a target="_blank" href="http://www.linuxdiyf.com/linux/ffq/">Linux服务器</a>　|　<a target="_blank" href="http://www.linuxdiyf.com/linux/sjk/">Linux数据库</a>　|　<a target="_blank" href="http://www.linuxdiyf.com/linux/kf/">Linux开发</a></p><p><a target="_blank" href="http://www.linuxdiyf.com/about/hezuo.htm">合作</a>　|　<a target="_blank" href="http://www.linuxdiyf.com/about/">关于我们</a>　|　<a target="_blank" href="http://www.linuxdiyf.com/about/contact.htm">联系我们</a>　|　<a href="http://www.linuxdiyf.com/articlelist.php">导航</a>　|　<a href="http://www.linuxdiyf.com/bbs/register.php">会员注册</a></p>
+<p>&#169;2015 红联 Powered by SupSite <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fdf25116b76fb7bf2cb3cd1bf68f5518a' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="%E5%AD%97%E7%AC%A6%E6%B5%8F%E8%A7%88%E5%99%A8Elinks%E5%BF%AB%E6%8D%B7%E9%94%AE-%E7%BA%A2%E8%81%94Linux%E7%B3%BB%E7%BB%9F%E9%97%A8%E6%88%B7_files/h.js" type="text/javascript"></script></p></td>
+</tr>
+  </tbody></table>
+</td></tr></tbody></table>
+
+</body></html>

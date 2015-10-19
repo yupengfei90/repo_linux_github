@@ -1,0 +1,635 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html class="dj_gecko dj_contentbox" xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Linux 技巧: 从命令行创建像素标尺</title>
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/">
+<link rel="SHORTCUT ICON" href="http://www.ibm.com/favicon.ico">
+<meta name="DC.Rights" content="© Copyright&nbsp;IBM Corporation&nbsp;2009">
+<meta name="Keywords" content="pixel, ruler, Bash, shell, script, seq, loop, shell arithmetic, 像素, 标尺, 脚本, 循环, shell 算法, tttlca">
+<meta name="DC.Date" scheme="iso8601" content="2009-08-24">
+<meta name="Source" content="v17 delivery:developerWorks">
+<meta name="Security" content="Public">
+<meta name="Abstract" content="学习如何使用 Linux 命令行和一些基本的 Bash 脚本编写技巧，以便使用 ImageMagick 在图像上绘制线条和文本，同时创建一个像素标尺。">
+<meta name="Description" content="学习如何使用 Linux 命令行和一些基本的 Bash 脚本编写技巧，以便使用 ImageMagick 在图像上绘制线条和文本，同时创建一个像素标尺。">
+<meta name="IBM.Effective" scheme="W3CDTF" content="2009-08-24">
+<meta name="Owner" content="developerWorks/China/IBM">
+<meta name="DC.Language" scheme="rfc1766" content="zh-CN">
+<meta name="IBM.SpecialPurpose" content="SP001">
+<meta name="IBM.Country" content="CN">
+<meta name="Robots" content="index,follow">
+<meta name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316">
+<meta name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="SWGC0">
+<meta name="dW.ContentArea" content="2">
+<meta name="dW.Topic" content="29,247">
+
+<meta scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCLNXCN">
+
+<link rel="canonical" href="http://www.ibm.com/developerworks/cn/linux/l-pixelruler/index.html">
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/www.css" rel="stylesheet" title="www" type="text/css">
+<link href="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/cnzh.css" rel="stylesheet" title="www" type="text/css">
+<!-- Masthead/footer -->
+<link href="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/dw-mfN2015-01.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/dw-article-6.css" rel="stylesheet" title="www" type="text/css">
+<link href="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/dw-common-features.css" rel="stylesheet" title="www" type="text/css">
+<link href="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/dw-local-site-v17-N2014-05.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+        <link href="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/dw-bluemix-regbar.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<script type="text/javascript" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/www.js">//</script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/eluminate_002.js" type="text/javascript"></script>
+<script type="text/javascript" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/dw-www-v2.js">//</script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/Dialog.js" charset="utf-8" type="text/javascript"></script>   
+<script type="text/javascript">dojo.addOnLoad(function(){var dw_lang="zh_CN";var dw_source="dwchina";var dw_content=window.location.pathname.split("/")[window.location.pathname.split("/").length-2];if(dw_content=="library"){dw_content=window.location.pathname.split("/")[window.location.pathname.split("/").length-1];dw_content=window.location.pathname.split("/")[window.location.pathname.split("/").length-3]+"-"+dw_content.substring(0,dw_content.indexOf(".html"))}var lnkID="article-rbar-bmix-home-regbar";dojo.attr(dojo.query(".dw-regbar-btn")[0],"id",lnkID);var lnkHref=dojo.attr(dojo.byId(lnkID),"href")+"?lang="+dw_lang+"&ca="+dw_source+"-_-bluemix-_-"+dw_content+"-_-regbar-article";dojo.attr(dojo.byId(lnkID),"href",lnkHref);var dwRegbarShow=dojo.animateProperty({node:"dw-regbar",duration:1000,delay:1000,properties:{opacity:{start:0,end:1},top:0}});var ibmTopShow=dojo.animateProperty({node:"ibm-top",duration:1000,delay:1000,properties:{marginTop:{start:0,end:42}}});dwRegbarShow.play();ibmTopShow.play()})
+</script><script type="text/javascript">
+//  ibmweb.config.set({ sbs: { enabled: false }});
+</script>
+<script type="text/javascript">dojo.addOnLoad(function(){var dw_lang="zh_CN";var dw_source="dwchina";var dw_register="注册免费的 Bluemix 试用版";var dw_connect="连接 Bluemix 开发者";var dw_vp="在 IBM Bluemix 云平台上开发并部署您的下一个应用。";var dw_cta="开始您的试用";var dw_tile_alt="在 IBM Bluemix 云平台上开发并部署您的下一个应用。现在就开始免费试用";var dw_campaign="bluemix";var dw_content=window.location.pathname.split("/")[window.location.pathname.split("/").length-2];if(dw_content=="library"){dw_content=window.location.pathname.split("/")[window.location.pathname.split("/").length-1];dw_content=window.location.pathname.split("/")[window.location.pathname.split("/").length-3]+"-"+dw_content.substring(0,dw_content.indexOf(".html"))}var bluDevComURL="https://developer.ibm.com/bluemix/";var bluLink="https://www.bluemix.net/";var lnkID;var lnkIDd;var lnkIDt;var bLinkEnd;var bLinkTemp;var idTrkr=[];var idCnt;var artTop=dojo.query("div.ibm-col-1-1")[0];var artChildren=dojo.query(artTop).children();var edgy=false;if(dojo.hasClass(artChildren[0],"ibm-inset"))edgy=true;if((artChildren[0].nodeName=="H2")&&(dojo.hasClass(artChildren[1],"ibm-inset")))edgy=true;if(dojo.hasClass(artChildren[0],"codesection"))edgy=true;if((artChildren[0].nodeName=="H5")&&(dojo.hasClass(artChildren[1],"codesection")))edgy=true;if((artChildren[0].nodeName=="H5")&&(artChildren[1].width>=701))edgy=true;if(artChildren[1].width>=701)edgy=true;if(dojo.hasClass(artChildren[0],"ibm-data-table"))edgy=true;if((artChildren[0].nodeName=="H5")&&(dojo.hasClass(artChildren[1],"ibm-data-table")))edgy=true;if(!(edgy)){var sBarAB='<div class="dw-article-sidebar dw-bluemix" id="dwc-exp-a">'+'<img src="//dw1.s81c.com/developerworks/i/bluemix-graphic.png" height="64" width="64" alt=""/>'+'<p>'+dw_vp+'</p>'+'<p class="ibm-button-link-alternate dw-button-green">'+'<a id="tutc-sbar-bmix-home-btn-ABa" href="'+bluLink+'" class="dw-button-large">'+dw_cta+'</a></p></div>';dojo.place(sBarAB,artTop,"first")}dojo.forEach(dojo.query("#ibm-content-main a"),function(item,index){var dw_medium="article";var bLink=dojo.attr(item,"href");var linkClass=dojo.attr(item,"class");if((dojo.attr(item,"id")!=null)&&(dojo.attr(item,"id").indexOf("-sbar-")>-1))dw_medium="sidebar";if((dojo.attr(item,"id")!=null)&&(dojo.attr(item,"id").indexOf("-vpromo-")>-1))dw_medium="video-promotion";if(bLink&&(bLink.indexOf("//bluemix.net")>-1))bLink=bLink.replace("//bluemix.net","//www.bluemix.net");if(bLink&&(bLink.indexOf("//ace.ng.bluemix.net")>-1))bLink=bLink.replace("//ace.ng.bluemix.net","//www.bluemix.net");if(bLink&&(bLink.indexOf("//console.ng.bluemix.net")>-1))bLink=bLink.replace("//console.ng.bluemix.net","//www.bluemix.net");if(bLink&&((bLink.indexOf("//www.bluemix.net")>-1)||(bLink.indexOf("//www.ng.bluemix.net")>-1)||(bLink.indexOf("//hub.jazz.net")>-1))){bLinkEnd="";bLink=bLink.split("?");if((bLink[1])&&(bLink[1].indexOf("repository=")!=-1)){var deployBtn=true;bLink[0]=bLink[0]+"?"+bLink[1];bLink[1]=null}if((bLink[1])&&(bLink[1].indexOf("/")!=-1))bLinkEnd=bLink[1].substring(bLink[1].indexOf("/"));bLink=bLink[0];if(bLink.indexOf("//hub.jazz.net")>-1){if(!(deployBtn)&&((bLink.indexOf("//hub.jazz.net/git")>-1)||(bLink.indexOf("//hub.jazz.net/project")>-1))){bLink="https://login.jazz.net/psso/proxy/jazzregister?utm_source="+dw_source+"&utm_medium="+dw_medium+"&utm_content="+dw_content+"&utm_campaign="+dw_campaign+"&redirect_uri="+bLink}else{if(deployBtn){bLink=bLink+"&cm_mmc="+dw_source+"-_-"+dw_campaign+"-_-"+dw_content+"-_-"+dw_medium}else{bLink=bLink+"?utm_source="+dw_source+"&utm_campaign="+dw_campaign+"&utm_content="+dw_content+"&utm_medium="+dw_medium}}}else{if(bLink.indexOf("/#/")==-1){if(bLink.substring(bLink.length-7)=="/docs/#"){bLink=bLink.replace("/docs/#","/docs/"+"?cm_mmc="+dw_source+"-_-"+dw_campaign+"-_-"+dw_content+"-_-"+dw_medium)}else if(bLink.substring(bLink.length-5)=="/docs"){bLink=bLink.replace("/docs","/docs/"+"?cm_mmc="+dw_source+"-_-"+dw_campaign+"-_-"+dw_content+"-_-"+dw_medium)}else{bLink=bLink+"?cm_mmc="+dw_source+"-_-"+dw_campaign+"-_-"+dw_content+"-_-"+dw_medium}}else{bLink=bLink.substring(0,bLink.indexOf("#"))+"?cm_mmc="+dw_source+"-_-"+dw_campaign+"-_-"+dw_content+"-_-"+dw_medium+bLink.substring(bLink.indexOf("#")-1)}}if(bLinkEnd)bLink=bLink+bLinkEnd;if(linkClass.indexOf("bluemix-home")==-1){if((bLink.indexOf("#")==-1)&&(bLink.indexOf("/solutions")==-1)&&(bLink.indexOf("/catalog")==-1)&&(bLink.indexOf("//www.bluemix.net/")!=-1)){bLink=bLink.replace("//www.bluemix.net/","//developer.ibm.com/sso/bmregistration");if(bLink.indexOf("http://")==0)bLink=bLink.replace("http://","https://");if(bLink.indexOf("//")==0)bLink=bLink.replace("//","https://");if(bLink.indexOf("?cm_mmc=")!=-1)bLink=bLink.replace("?cm_mmc=","?lang="+dw_lang+"&ca=")}if((bLink.indexOf("#")==-1)&&(bLink.indexOf("/solutions")==-1)&&(bLink.indexOf("//www.bluemix.net?")!=-1)){bLink=bLink.replace("//www.bluemix.net","//developer.ibm.com/sso/bmregistration");if(bLink.indexOf("http://")==0)bLink=bLink.replace("http://","https://");if(bLink.indexOf("//")==0)bLink=bLink.replace("//","https://");if(bLink.indexOf("?cm_mmc=")!=-1)bLink=bLink.replace("?cm_mmc=","?lang="+dw_lang+"&ca=")}}if((bLink.indexOf("#")!=-1)&&(bLink.indexOf("solutions")!=-1)){bLinkTemp=bLink.substring(0,bLink.indexOf("?"));bLink=bLink.substring(bLink.indexOf("/#/")+3,bLink.length);bLink=bLinkTemp+bLink;bLinkTemp=bLink.substring(0,bLink.indexOf("solution="));bLink=bLink.substring(bLink.indexOf("/solution=")+10,bLink.length);bLink=bLinkTemp+bLink;bLink=bLink+"?cm_mmc="+dw_source+"-_-"+dw_campaign+"-_-"+dw_content+"-_-"+dw_medium}if((bLink.indexOf("#")!=-1)&&(bLink.indexOf("store")!=-1)){if(bLink.indexOf("&cloudOEPaneId=store")!=-1){bLinkTemp=bLink.split("&cloudOEPaneId=store");bLink=bLinkTemp[0]}bLinkTemp=bLink.substring(bLink.indexOf("serviceOfferingGuid=")+20,bLink.length);bLink=bLink.substring(0,bLink.indexOf(".net/")+5)+"catalog/"+bLinkTemp+"?cm_mmc="+dw_source+"-_-"+dw_campaign+"-_-"+dw_content+"-_-"+dw_medium}dojo.attr(item,"href",bLink);}});});</script><!-- LEADSPACE_STYLES -->
+
+<script charset="utf-8" id="dojoIoScript1" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/cnzh-utf8.js" type="text/javascript"></script><script charset="utf-8" id="dojoIoScript2" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/a.json" type="text/javascript"></script><script charset="utf-8" id="dojoIoScript3" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/profiling.js" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/eluminate.js" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/move.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/TimedMoveable.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/_CssStateMixin.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/_FormMixin.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/_DialogMixin.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/DialogUnderlay.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/ContentPane.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/common_002.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/TooltipDialog.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/Mover.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/Moveable.js" charset="utf-8" type="text/javascript"></script><script charset="utf-8" id="dojoIoScript4" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/blackwhite_lists.asc" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/_ContentPaneResizeMixin.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/html.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/loading.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/common.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/autoscroll.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/_LayoutWidget.js" charset="utf-8" type="text/javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/50200000.js" type="text/javascript" language="javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/rules_50200000.js" type="text/javascript" language="javascript"></script><script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/dispatcher-v3.js" type="text/javascript" language="javascript"></script><script type="text/javascript" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/yahoo-min.js"></script><script type="text/javascript" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/cp-v3.js"></script><script type="text/javascript" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/json-min.js"></script></head>
+<body aria-busy="false" class="v17" id="ibm-com">
+<div style="opacity: 1; top: 0px;" id="dw-regbar" class="dw-home-band" aria-labelledby="dw-regbar-vp" role="complementary">
+    <div class="ibm-columns">
+        <div class="ibm-col-6-6">
+            <span id="dw-regbar-bluemix">IBM <strong>Bluemix</strong></span>
+            <span id="dw-regbar-vp">点击按钮，开始云上的开发！</span>
+            <p class="ibm-button-link-alternate dw-button-green">
+                <a id="article-rbar-bmix-home-regbar" class="dw-button-large dw-regbar-btn" href="https://developer.ibm.com/sso/bmregistration?lang=zh_CN&amp;ca=dwchina-_-bluemix-_-l-pixelruler-_-regbar-article">开始您的试用</a>                
+            </p>               
+        </div>
+    </div> 
+</div>	<div style="margin-top: 42px;" id="ibm-top" class="ibm-landing-page ibm-no-scroll"><img src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/ibm_logo_print.png" id="ibm-print-masthead" alt="IBM Print" height="15" width="43">
+
+<!-- MASTHEAD_BEGIN -->		
+<div role="banner" id="ibm-masthead">
+
+    <!-- TOP ROW -->    
+	<div id="dw-masthead-top-row">
+		<ul id="ibm-mast-options-dw" role="toolbar" aria-label="Masthead navigation">
+			<li id="dw-mast-top-4" role="presentation">
+				<a href="http://www.ibm.com/developerworks/cn/" tabindex="0"><img src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/dwn-dw-badge.png" alt="dW" aria-label="dW" height="22" width="43"></a>
+			</li>
+			<li id="dw-mast-top-0" role="presentation">
+				<div id="dw-mast-signin">
+					<a id="dw-mf-signin-link" class="" href="http://www.ibm.com/developerworks/dwwi/jsp/ssologin.jsp?d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-pixelruler%2Findex.html&amp;lang=zh_CN&amp;a=dwmav" title="" tabindex="2">登录</a>
+					<span class="dw-mf-signin-spacer">|</span>
+					<a id="dw-mf-reg-link" class="" href="http://www.ibm.com/developerworks/dwwi/jsp/ssoregister.jsp?d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-pixelruler%2Findex.html&amp;lang=zh_CN&amp;a=dwmav" title="" tabindex="3">注册</a>
+				</div>
+				<div id="dw-mast-auth-link" class="dw-mf-hide">
+					<a class="authenticated ibm-active" href="#" role="button" tabindex="2"></a>
+					<ul id="dw-mast-auth-menu" class="dw-mf-hide">
+						<li class="dw-mast-auth-menu-title" aria-hidden="true">developerWorks 社区</li>
+						<li>
+							<span class="dw-mast-auth-menu-arrow" aria-hidden="true">›</span><a href="http://www.ibm.com/developerworks/community/profiles/html/myProfileView.do?lang=zh" tabindex="3">我的概要信息</a>
+						</li>
+						<li>
+							<span class="dw-mast-auth-menu-arrow" aria-hidden="true">›</span><a href="http://www.ibm.com/developerworks/community/groups/service/html/mycommunities?lang=zh" tabindex="4">我的社区</a>
+						</li>
+						<li>
+							<span class="dw-mast-auth-menu-arrow" aria-hidden="true">›</span><a href="http://www.ibm.com/developerworks/community/news/?lang=zh" tabindex="5">设置</a>
+						</li>
+						<li class="dw-mast-auth-menu-divider"><hr></li>
+						<li>
+							<span class="dw-mast-auth-menu-arrow" aria-hidden="true">›</span><a id="dw-mast-signout-link" href="http://www.ibm.com/developerworks/dwwi/jsp/ssologout.jsp?d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2F&amp;a=dwmav" tabindex="6">退出</a>
+						</li>
+					</ul>				
+				</div>
+			</li>
+			<li id="dw-mast-top-1">
+				<div></div>
+			</li>
+			<li id="dw-mast-top-3" role="presentation">
+				<a href="http://www.ibm.com/cn/zh/" tabindex="1">IBM</a>
+			</li>
+		</ul>
+	</div>
+
+    <!-- BOTTOM ROW -->
+	<div id="ibm-universal-nav-dw" aria-label="Site map">
+		<ul id="ibm-unav-links-dw">
+			<li id="ibm-unav-home-dwlogo">
+				<a href="http://www.ibm.com/developerworks/cn/"><img src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/dwn-dw-wordmark.png" alt="developerWorks®" height="28" width="225"></a>
+			</li>
+		</ul>
+		<ul id="ibm-menu-links-dw" class="ibm-menu-links-dw-cn" role="toolbar" aria-label="Site map">
+			<li id="dw-mast-nav-0" role="presentation"><a href="http://www.ibm.com/developerworks/cn/topics/" tabindex="0">技术主题</a></li>
+			<li id="dw-mast-nav-1" role="presentation"><a href="http://www.ibm.com/developerworks/cn/downloads/" tabindex="0">软件下载</a></li>
+			<li id="dw-mast-nav-2" role="presentation"><a href="http://www.ibm.com/developerworks/community/?lang=zh" tabindex="0">社区</a></li>
+			<li id="dw-mast-nav-3" role="presentation"><a href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=6d7f9e5d-5f89-4767-a006-a81b8d186370&amp;lang=zh" tabindex="0">技术讲座</a></li>
+		</ul>
+		<form id="ibm-search-form" action="//www.ibm.com/search/csass/search/" method="get" name="form1" aria-label="搜索 developerWorks" role="search">
+			<p>
+				<label for="q"><span class="ibm-access">搜索 developerWorks</span></label>
+				<input id="q" name="q" value="搜索 developerWorks" maxlength="100" type="text">
+				<input name="sn" value="dw" type="hidden">
+				<input name="lang" value="zh" type="hidden">
+				<input name="cc" value="CN" type="hidden">
+				<input name="en" value="utf" type="hidden">
+				<input name="hpp" value="20" type="hidden">
+				<input name="dws" value="cndw" type="hidden">
+				<input name="lo" value="zh" type="hidden">
+				<input id="ibm-search" class="ibm-btn-search" value="提交" type="submit">
+			</p>
+		</form>
+	</div>    
+	
+<div aria-label="社交工具" role="navigation" style="display: block;" id="ibm-social-tools"><ul aria-label="Social tool list" role="toolbar"><li><a tabindex="0" role="button" dojoattrid="0" rel="print" href="#" title="打印本页面" class="ibm-share-print">打印本页面</a></li><li><a tabindex="-1" role="button" dojoattrid="1" rel="email" href="#" title="用电子邮件发送本页面" class="ibm-share-email">用电子邮件发送本页面</a></li><li></li><li></li><li><a class="ibm-share-weibo" tabindex="-1" role="button" dojoattrid="2" rel="新浪微博" title="新浪微博" href="http://service.weibo.com/share/share.php?title=Linux%20%E6%8A%80%E5%B7%A7%3A%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA&amp;url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-pixelruler%2Findex.html&amp;language=zh_cn" onclick="ibmweb.sbs.clickHandler(event,{url:'http://service.weibo.com/share/share.php?title=%{TITLE}&amp;url=%{URL}&amp;language=zh_cn'});">新浪微博</a></li><li><a class="ibm-share-renren" tabindex="-1" role="button" dojoattrid="3" rel="人人网" title="人人网" href="http://share.renren.com/share/buttonshare?title=Linux%20%E6%8A%80%E5%B7%A7%3A%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA&amp;link=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-pixelruler%2Findex.html" onclick="ibmweb.sbs.clickHandler(event,{url:'http://share.renren.com/share/buttonshare?title=%{TITLE}&amp;link=%{URL}'});">人人网</a></li><li><a class="dwcn-tencent-link" tabindex="-1" role="button" dojoattrid="4" rel="腾讯微博" title="腾讯微博" href="http://v.t.qq.com/share/share.php?title=Linux%20%E6%8A%80%E5%B7%A7%3A%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA&amp;url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-pixelruler%2Findex.html" onclick="ibmweb.sbs.clickHandler(event,{url:'http://v.t.qq.com/share/share.php?title=%{TITLE}&amp;url=%{URL}'});">腾讯微博</a></li><li><a class="dwcn-sohu-link" tabindex="-1" role="button" dojoattrid="5" rel="搜狐微博" title="搜狐微博" href="http://t.sohu.com/third/post.jsp?title=Linux%20%E6%8A%80%E5%B7%A7%3A%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA%20&amp;link=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-pixelruler%2Findex.html" onclick="ibmweb.sbs.clickHandler(event,{url:'http://t.sohu.com/third/post.jsp?title=%{TITLE}%20&amp;link=%{URL}'});">搜狐微博</a></li><li><a class="dwcn-netease-link" tabindex="-1" role="button" dojoattrid="6" rel="网易微博" title="网易微博" href="http://t.163.com/article/user/checkLogin.do?info=Linux%20%E6%8A%80%E5%B7%A7%3A%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA%20http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-pixelruler%2Findex.html" onclick="ibmweb.sbs.clickHandler(event,{url:'http://t.163.com/article/user/checkLogin.do?info=%{TITLE}%20%{URL}'});">网易微博</a></li><li><a class="ibm-share-digg" title="Digg" href="http://digg.com/submit?phase=2&amp;url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-pixelruler%2Findex.html&amp;title=Linux%20%E6%8A%80%E5%B7%A7%3A%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA" rel="digg" dojoattrid="7" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://digg.com/submit?phase=2&amp;url=%{URL}&amp;title=%{TITLE}'});">Digg</a></li><li><a class="ibm-share-facebook" title="Facebook" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-pixelruler%2Findex.html&amp;t=Linux%20%E6%8A%80%E5%B7%A7%3A%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA" rel="facebook" dojoattrid="8" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://www.facebook.com/sharer.php?u=%{URL}&amp;t=%{TITLE}'});">Facebook</a></li><li><a class="ibm-share-twitter" title="Twitter" href="http://twitter.com/?status=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-pixelruler%2Findex.html%20-%20Linux%20%E6%8A%80%E5%B7%A7%3A%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA" rel="twitter" dojoattrid="9" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://twitter.com/?status=%{URL}%20-%20%{TITLE}'});">Twitter</a></li><li><a class="ibm-share-delicious" title="Delicious" href="http://delicious.com/post?url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-pixelruler%2Findex.html&amp;title=Linux%20%E6%8A%80%E5%B7%A7%3A%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA" rel="delicious" dojoattrid="10" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://delicious.com/post?url=%{URL}&amp;title=%{TITLE}'});">Delicious</a></li><li><a class="ibm-share-linkedin" title="Linked In" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-pixelruler%2Findex.html&amp;title=Linux%20%E6%8A%80%E5%B7%A7%3A%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA" rel="linkedin" dojoattrid="11" role="button" tabindex="-1" onclick="ibmweb.sbs.clickHandler(event,{url:'http://www.linkedin.com/shareArticle?mini=true&amp;url=%{URL}&amp;title=%{TITLE}'});">Linked In</a></li></ul></div></div>
+<div id="fdiv" class="ibm-access"></div><!-- MASTHEAD_END -->
+	    
+<!-- LAYOUT -->
+<!-- LEADSPACE_BEGIN --> 
+<div role="main" id="ibm-access-cntr"><div id="ibm-leadspace-head">
+	<!-- LEADSPACE_BODY_BEGIN --> 
+	<div id="ibm-leadspace-body">
+		<!-- Navigation_Trail_BEGIN -->
+      <ul aria-label="Bread Crumbs" role="navigation" id="ibm-navigation-trail"><li><a href="http://www.ibm.com/developerworks/cn/">developerWorks 中国</a></li><li><a href="http://www.ibm.com/developerworks/cn/topics/">技术主题</a></li><li><a href="http://www.ibm.com/developerworks/cn/linux/">Linux</a></li><li><a href="http://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp">文档库</a></li></ul>
+		<!-- END_Navigation_Trail -->
+			<!-- Title_Subtitle -->
+			<h1>Linux 技巧: 从命令行创建像素标尺</h1><p><em><span>如何使用 Bash 脚本、shell 算法和 ImageMagick 在图像上绘制线条和文本</span></em></p>
+	</div>
+	<!-- LEADSPACE_BODY_END --> 
+	<!-- SUMMARY_BEGIN -->
+	<div id="dw-summary-area" class="dw-summary-columns">
+		<div class="ibm-col-6-4">
+		<p>学习如何使用 Linux® 命令行和一些基本的 Bash 脚本编写技巧，以便使用 ImageMagick 在图像上绘制线条和文本，并同时创建一个像素标尺。</p>
+		<p class="ibm-no-print ibm-ind-link">
+<a class="ibm-forward-link" href="http://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=linux+%E6%8A%80%E5%B7%A7">查看本系列更多内容</a> <span class="dw-summary-bar">|</span>
+			
+			<span id="nCmts"><span>0</span><img class="dw-cmts-arrow" alt="" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/dw-cmts-arrow.png" height="7" width="7"> <a href="#icomments" class="dw-cmt-link">评论：</a></span>
+		</p>
+		</div>
+		<div class="ibm-col-6-2 dw-toc-margin">
+			<p class="dw-summary-author"><a role="button" href="#authorN1002F" class="ibm-popup-link" onclick="ibmweb.overlay.show('authorN1002F',this);return false;">Ian Shields</a>, 高级程序员, EMC</p>
+<div id="authorN1002F" class="ibm-common-overlay"><div class="ibm-head"><p><a href="#close" class="ibm-common-overlay-close">关闭 [x]</a></p></div><div class="ibm-body"><div class="ibm-main"><div class="ibm-title"><!--this is where the h2 usually goes--></div><div class="ibm-container ibm-alternate"><div class="ibm-container-body">
+<p><!--.-->
+<img class="dw-summary-bio-image-x64" alt="作者照片" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/p-ishields.jpg" width="64">Ian
+ Shields 参与 developerWorks Linux 专区的许多 Linux 项目。他是 IBM 北卡罗莱那州 Research 
+Triangle Park 的一名高级程序员。他于 1973 年作为一名系统工程师加入 IBM 
+位于澳大利亚堪培拉的子公司。之后，在加拿大蒙特利尔和北卡罗莱那州 RTP 从事通信系统和普及运算。他拥有多项专利。他毕业于 Australian
+ National University，本科学位是纯粹数学和哲学。他拥有北卡罗来纳州立大学的计算机硕士和博士学位。</p><br><img class="dw-author-level-img" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/authorrecogbadge_cont_v3.jpg" alt="developerWorks 投稿作者" height="30" width="187"><br></div></div></div></div><div class="ibm-footer"><!----></div></div>
+			<p class="dw-summary-date">2009 年 8 月 24 日</p>
+			
+
+
+			<div aria-hidden="true" class="ibm-container" id="dw-toc"><div class="ibm-container-body"><ul class="ibm-twisty"><li><a href="#toggle" class="ibm-twisty-trigger ibm-twisty-trigger-closed"><img src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/c.gif" alt="+"></a><span class="ibm-twisty-head">内容</span><div style="display: none;" class="ibm-twisty-body"><ul style="font-size:0.8em" class="ibm-link-list">
+<li><a class="ibm-anchor-down-em-link" href="#N1005A">制作一张画布</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N1007D">添加几根线条</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N100AF">对更多线条编写脚本</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N100D2">添加文本</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N100F0">定位文本</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N10144">一个实践示例</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#N10174">结束语</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#download">下载</a></li>
+<li><a class="ibm-anchor-down-em-link" href="#resources">参考资料 </a></li>
+<li><a class="ibm-anchor-down-em-link" href="#icomments">评论</a></li></ul></div></li></ul></div></div>
+		</div>
+	</div>
+	<!-- SUMMARY_END -->
+</div><div id="ibm-pcon">
+
+<!-- BEGIN_IBM-CONTENT -->
+<div id="ibm-content">
+
+<!-- BEGIN_IBM-CONTENT-BODY -->
+<div id="ibm-content-body">
+
+<!-- BEGIN_IBM-CONTENT-MAIN -->
+<div id="ibm-content-main">
+
+<!-- 1_1_COLUMN_BEGIN -->
+<div class="ibm-columns">
+<div class="ibm-col-1-1"><div class="dw-article-sidebar dw-bluemix" id="dwc-exp-a"><img src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/bluemix-graphic.png" alt="" height="64" width="64"><p>在 IBM Bluemix 云平台上开发并部署您的下一个应用。</p><p class="ibm-button-link-alternate dw-button-green"><a id="tutc-sbar-bmix-home-btn-ABa" href="https://developer.ibm.com/sso/bmregistration?lang=zh_CN&amp;ca=dwchina-_-bluemix-_-l-pixelruler-_-sidebar" class="dw-button-large">开始您的试用</a></p></div>
+
+<p>有时，我需要在一张图像或一块空白画布上绘制几根线条和一些文本。就在最近，我需要将一个像素标尺的一张简单图像包含在我的一篇 
+developerWorks 文章中。我希望这张图像宽 572 像素，以满足目前 developerWorks 文章图像的推荐标准，就像在 “<a href="http://www.ibm.com/developerworks/cn/xml/i-dwgraphics/">developerWorks 投稿图片处理</a>” 中描述的一样。Linux 和 Windows 有许多屏幕像素标尺可用（见 <a href="#resources">参考资料</a>），但我只想要一个简单的 GIF、JPEG 或 PNG 图像。本文介绍如何使用 Bash 脚本、shell 算法和 ImageMagick 创建一个像素标尺。</p><h2 id="N1005A">制作一张画布</h2><p>艺术家需要的首要装备就是一张画布，因此让我们使用 XC 假想类型在 ImageMagick 中创建一张画布。我们还需要一种颜色，可以是 ImageMagick 中的众多已命名颜色中的一种，也可以是一种自定义颜色。（从 <a href="#resources">参考资料</a> 获取到 ImageMagick 文档的链接，这些文档包含一个假想类型和颜色名称的完整列表）。清单 1 展示如何使用 <code>convert</code> 命令制作一张浅蓝色的 572x100 画布。（<code>convert</code> 命令通常用于转换到一种不同的图像格式，或者以另一种方式改变一张图像）。</p><h5 id="N1006D">清单 1. 创建一张画布</h5><div class="codesection"><pre class="displaycode">convert -size 572x100 xc:lightblue ruler1.gif</pre></div><p>
+                图 1 展示了我们的新画布。 </p><h5 id="fig1">图 1. 用于标尺的天蓝色 572x100 像素画布</h5><img alt="用于标尺的天蓝色 572x100 像素画布" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/ruler1.gif" width="572"><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N1007D">添加几根线条</h2><p>现在我们有了一张画布，让我们绘制一些标记来显示沿着标尺的不同点。72 ppi（像素/每英寸）是基于 Web 的图形的标准，因此让我们将我们的第一个标记设置为 72 像素并使它从图像底部扩展 30 像素。另外，让我们用黑色填充这个线条，并为其指定两个端点。</p><h5 id="N10085">清单 2. 将一根线条添加到这张画布</h5><div class="codesection"><pre class="displaycode">convert  -fill black -draw "line 72,70 72,100" ruler1.gif ruler2.gif</pre></div><p>图 2 展示了我们的新图像，图像上面绘制了一条线。</p><h5 id="fig2">图 2. 带有一根垂直线的画布，线条距画布左边 72 像素</h5><img alt="带有一根垂直线的画布，线条距画布左边 72 像素" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/ruler2.gif" width="572"><p>在这个标尺上绘制每个线条都重复上述操作，这很乏味，因此让我们使用 <code>seq</code> 命令来生成一个相距 72 像素的水平偏移的列表，同时使用一个 <code>for</code> 循环来在这个标尺上绘制主线条（如清单 3 所示）。</p><h5 id="N1009F">清单 3. 在画布上每隔 72 像素添加一条线</h5><div class="codesection"><pre class="displaycode">convert  -fill black -draw "$(for n in $(seq 0 72 572) ;\
+ do echo line $n,70 $n,100 ; done)" ruler1.gif ruler3.gif</pre></div><p>注意，我们使用了两个命令替代来为绘制操作生成单独的线条规范。我们还在 0 位置 —— 左侧边缘 —— 放置了一个标记。现在，图 3 看起来更像一个标尺了。</p><h5 id="fig3">图 3. 从左边缘起每 72 像素一条垂直线的画布</h5><img alt="从左边缘起每 72 像素一条垂直线的画布" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/ruler3.gif" width="572"><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N100AF">对更多线条编写脚本</h2><p>此时，我们的命令行变得有点复杂了，但是我们的标尺上仍然只有主要标记。现在是时候编写脚本了。在清单 4 中，我们使用 shell 算法和 <code>for</code> 循环在已经有的标记的中间放置一个 20 像素的标记，并在这些较长的标记之间每隔 6 像素放置一些 10 像素的标记。为完成本文的任务，我们将调用脚本 <code>buildruler.sh</code> 并将它放置在我们的工作目录中。</p><h5 id="N100BD">清单 4. 将一个完整的标记集添加到这个标尺</h5><div class="codesection"><pre class="displaycode">#!/bin/bash
+# Take user parameters or set defaults
+rulername="$1"
+rulerlength="$2"
+rulername="${rulername:=ruler.gif}"
+rulerlength="${rulerlength:=572}"
+drawstring=""
+#Build the line definitions for the ruler marks
+for x1 in `seq 0 72 $rulerlength`; do
+  drawstring="$drawstring line $x1,70 $x1,100"
+  for x2 in 0 36; do
+    (( offset = $x1 + $x2 ))
+    drawstring="$drawstring line $offset,80 $offset,100"
+    for x3 in `seq 6 6 30`; do
+      (( offset2 = $offset + $x3 ))
+      drawstring="$drawstring line $offset2,90 $offset2,100"
+    done
+  done
+done
+#Create the ruler
+convert -size "${rulerlength}x100" xc:lightblue -fill black \
+ -draw "$drawstring" "$rulername"</pre></div><p>注意，我们添加了两个参数，以便用户可以更改标尺的名称并指定其长度。现在，我们的标尺看起来就像图 4 一样。这个标尺是使用命令 <code>./buildruler.sh&nbsp;ruler4.gif</code> 生成的。</p><h5 id="fig4">图 4. 带有完整的标记集的标尺，标记之间相距 6 像素</h5><img alt="带有完整的标记集的标尺，标记之间相距 6 像素" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/ruler4.gif" width="572"><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N100D2">添加文本</h2><div class="dw-sidebar ibm-inset"><h2 id="N100D7">引用</h2><p>脚本编写的一个要点是要知道何时需要引号，何时不需要，以及如何将引用的字符串作为参数传递。特别需要注意这些脚本中使用的引号。</p></div><p>现
+在，让我们将标尺上的较大的标记的标签设置为数字 0、72、144...，依次类推。我们需要告知 ImageMagick 
+使用哪种字体，字体的大小和颜色是什么。显然，数字 0 应该在标尺的左边缘位置，但是如果我们将那些两位数和三位数的数字放置在那些 72 
+像素点，它们看起来会不平衡。为了更正这个问题，我们需要将它们向左侧稍微偏移一些，使它们正好位于标记的正上方。放大的脚本如清单 5 所示。</p><h5 id="N100E0">清单 5. 向标尺添加标签</h5><div class="codesection"><pre class="displaycode">#!/bin/bash
+# Take user parameters or set defaults
+rulername="$1"
+rulerlength="$2"
+rulername="${rulername:=ruler.gif}"
+rulerlength="${rulerlength:=572}"
+drawstring=""
+#Build the line definitions for the ruler marks
+for x1 in `seq 0 72 $rulerlength`; do
+  drawstring="$drawstring line $x1,70 $x1,100"
+  for x2 in 0 36; do
+    (( offset = $x1 + $x2 ))
+    drawstring="$drawstring line $offset,80 $offset,100"
+    for x3 in `seq 6 6 30`; do
+      (( offset2 = $offset + $x3 ))
+      drawstring="$drawstring line $offset2,90 $offset2,100"
+    done
+  done
+done
+#Add the labels
+labelfont="-fill black -font helvetica -pointsize 24  -draw"
+labelstring="text 0,60 \"0\" "
+for x1 in 72; do
+  (( offset = $x1 - 12 ))
+  labelstring="$labelstring text $offset,60 \"$x1\" "
+done
+for x1 in `seq 144 72 $rulerlength`; do
+  (( offset = $x1 - 18 ))
+  labelstring="$labelstring text $offset,60 \"$x1\" "
+done
+
+#Create the ruler
+convert -size "${rulerlength}x100" xc:lightblue -fill black \
+ -draw "$drawstring" $labelfont "$labelstring" "$rulername"</pre></div><p>现在，我们的标尺如图 5 所示。</p><h5 id="fig5">图 5. 带有完整标记集和标签的标尺</h5><img alt="带有一个完整标记集和标签的标尺" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/ruler5.gif" width="572"><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N100F0">定位文本</h2><p>那么，我们如何知道文本应该偏移多少，应该放置在距离顶部多远的位置？想当然的答案可能是：试验和猜测，但这不是一个好办法。</p><p>为了更好地放置文本，我们需要知道包含文本的方框有多大。但这取决于字体，字体是否成比例，以及其他一些不容易计算的因素。幸运的是，我们可以以同样的方法使用 ImageMagick 创建一个画布，我们还能创建一个 <em>label</em>。我们将创建一个标题 <strong>Pixel Ruler</strong> 并将它设置为 36 点的字体。这个标签作为一个图像创建，我们可以使用 <code>identify</code> 命令来确定其大小（如清单 6 所示）。</p><h5 id="N10103">清单 6. 创建一个标题并测量其大小</h5><div class="codesection"><pre class="displaycode">$ convert -fill NavyBlue -background Lavender -font helvetica -pointsize 36 \
+ label:"Pixel Ruler" label.gif
+$ identify "label.gif"
+label.gif GIF 175x36 175x36+0+0 8-bit PseudoClass 256c 1.98kb</pre></div><p>我将文本设置为海军蓝并添加一个淡紫色的背景颜色，以便这个图像从这个页面背景中凸显出来。但是，不管是否使用背景颜色，得到的图像的大小都相同。生成的标签图像如图 6 所示。</p><h5 id="fig6">图 6. 标签图像</h5><img alt="标签图像" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/label.gif" width="175"><p>比编写一个文件甚至更好的是，我们可以使用 ImageMagick <em>INFO</em> 类确定关于文本的更多信息，比如基线的位置。我们将文本写到一张足够大的画布上，然后沿着文本的边缘修剪画布（如清单 7 所示）。</p><h5 id="N1011A">清单 7. 使用 INFO 图像类确定字体信息</h5><div class="codesection"><pre class="displaycode">$ convert -size 572x100 xc:lightblue -font helvetica -pointsize 36 \
+  -fill black -undercolor lavender  -annotate +40+50 'Pixel Ruler' -trim info:
+xc:lightblue XC 174x36 572x100+40+23 16-bit DirectClass</pre></div><p>注解
+的文本从一个点开始，该点的 y 坐标轴代表文本的基线。上面的输出显示，文本填充到一个大小为 174x36 
+像素的方框中。这个结果和此前的结果之间存在 1 个像素的差距，但这并不重要。方框的顶部距离原始画布的顶部 23 
+像素。由于基线位于原始画布顶端下方 50 像素处，这意味着基线实际上距离文本顶端 27 像素（50 减去 23），为下行线留出了 9 个像素。图
+ 7 将一个图像放置在未修剪的画布上来说明这种关系。</p><h5 id="fig7">图 7. 标签度量</h5><img alt="标签度量" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/metrics.gif" width="254"><p>现在我们已经知道了这个标签的尺寸，让我们将基线放置在距离图像顶部 40 像素的位置并使其水平居中。我们的最终脚本如清单 8 所示并可供 <a href="#download">下载</a>。</p><h5 id="N10132">清单 8. 最终脚本</h5><div class="codesection"><pre class="displaycode">#!/bin/bash
+# Take user parameters or set defaults
+rulername="$1"
+rulerlength="$2"
+rulername="${rulername:=ruler.gif}"
+rulerlength="${rulerlength:=572}"
+drawstring=""
+#Build the line definitions for the ruler marks
+for x1 in `seq 0 72 $rulerlength`; do
+  drawstring="$drawstring line $x1,70 $x1,100"
+  for x2 in 0 36; do
+    (( offset = $x1 + $x2 ))
+    drawstring="$drawstring line $offset,80 $offset,100"
+    for x3 in `seq 6 6 30`; do
+      (( offset2 = $offset + $x3 ))
+      drawstring="$drawstring line $offset2,90 $offset2,100"
+    done
+  done
+done
+#Add the labels
+labelfont="-fill black -font helvetica -pointsize 24  -draw"
+labelstring="text 0,60 '0' "
+for x3 in 72; do
+  offset3=$(($x3 - 12 ))
+  labelstring="$labelstring text $offset3,60 '$x3' "
+done
+for x4 in `seq 144 72 $rulerlength`; do
+  offset4=$(( $x4 - 18 ))
+  labelstring="$labelstring text $offset4,60 '$x4' "
+done
+#Add a title
+titledimension=$(convert -size 572x100 xc:lightblue -font helvetica \
+  -pointsize 36  -fill black -undercolor lavender\
+  -annotate +40+50 'Pixel Ruler' -trim info: | awk ' {print $3 } ')
+titlewidth=${titledimension%x*}
+titlefont="-fill NavyBlue -font helvetica -pointsize 36"  
+titlepos=$(( (($rulerlength - $titlewidth)) / 2 ))
+titletext="text $titlepos,30 'Pixel Ruler' "
+#Create the ruler
+convert -size "${rulerlength}x100" xc:lightblue \
+ -fill black  -draw "$drawstring" $labelfont "$labelstring" \
+ $titlefont -draw "$titletext" "$rulername"</pre></div><p>最终的标尺如图 8 所示。</p><h5 id="fig8">图 8. 带有标题的最终标尺</h5><img alt="带有标题的最终标尺" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/ruler8.gif" width="572"><p>对于那些没有艺术技巧的人来说，这算得上一种不错的方法。</p><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N10144">一个实践示例</h2><p>如果图像被缩进 — 比如在列表中 — developerWorks 上允许的最大宽度就相应减小。因此，您可以使用这些方便的标尺来检查随文章一起提交的图像。</p><ul class="ibm-bullet-list"><li>这是在一个未排序的列表中的一个短标尺，它使用 <code>./buildruler.sh&nbsp;ruler9.gif&nbsp;400</code> 命令创建。
+                    
+                    
+<h5 id="fig9">图 9. 一个 400 像素标尺</h5><img alt="一个 400 像素标尺" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/ruler9.gif" width="400"><ul class="ibm-bullet-list"><li>这是一个进一步缩进的更短的标尺，它使用 <code>./buildruler.sh&nbsp;ruler10.gif&nbsp;300</code> 命令创建。
+                            
+                            
+<h5 id="fig10">图 10. 一个 300 像素标尺</h5><img alt="一个 300 像素标尺" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/ruler10.gif" width="300"></li></ul></li></ul><div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="N10174">结束语</h2><p>通过本文的简单实践，您看到了使用 ImageMagick 通过脚本编写包含线条和文本的图像的一些基本技巧。您将在我们的文章 “<a href="http://www.ibm.com/developerWorks/cn/linux/l-graf/">通过命令行处理图形 -- 使用 ImageMagick 进行翻转、缩放大小、旋转以及更多操作</a>” 和 “<a href="http://www.ibm.com/developerWorks/cn/linux/l-graf2/">通过命令行进一步处理图形 -- 在 Linux 上使用 ImageMagick 的提示与技巧</a>” 中发现更多技巧。您也可以在 ImageMagick 的主页上找到更多示例，从 <a href="#resources">参考资料</a> 部分获取相关链接。</p><p>本
+文中的脚本并不是无懈可击的。例如，对于长度是不是对一个有意义的标尺足够大的正数值，或者指定的文件是不是 ImageMagick 
+的有效图像文件类型，我们没有进行验证。您可能还会发现其他问题。例如，标尺标签可能像图 10 中那样被截断，这是我们的脚本没有考虑的一个问题。</p><p>您还可以任意添加多个参数，例如，尝试添加颜色或标尺高度参数。 </p><p>尽管这个技巧主要关注在 Linux 上使用 ImageMagick，ImageMagick 也可用于 Windows 等其他平台上。尝试在您喜欢的平台上使用脚本工具实践这些技巧。</p><!--CMA ID: 422535--><!--Site ID: 10--><!--XSLT stylesheet used to transform this file: dw-document-html-7.0.xsl-->
+<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><h2 id="download">下载</h2><table class="ibm-data-table dw-download-table" border="0" cellpadding="0" cellspacing="0"><thead><tr><th scope="col">描述</th><th scope="col">名字</th><th scope="col">大小</th></tr></thead><tbody><tr><th scope="row" class="ibm-table-row">用脚本构建像素标尺</th><td nowrap="nowrap"><a href="http://www.ibm.com/developerworks/apps/download/index.jsp?contentid=422535&amp;filename=buildruler.zip&amp;method=http&amp;locale=zh_CN">buildruler.zip</a></td><td nowrap="nowrap">1KB</td></tr></tbody></table>
+
+</div>
+</div>
+<!-- 1_1_COLUMN_END -->
+
+<!-- SPLIT_COLUMNS_BEGIN -->
+<div class="ibm-columns">
+
+<!-- 6_4_COLUMN_BEGIN -->
+<div class="ibm-col-6-4">
+
+<h2 id="resources" class="ibm-rule">参考资料 </h2><h3 class="dw-resources-category-heading">学习</h3><ul class="ibm-bullet-list"><li>
+              “<a href="http://www.ibm.com/developerworks/cn/xml/i-dwgraphics/">developerWorks 投稿图片处理</a>”（developerWorks，2008 年 7 月）展示如何为 developerWorks 文章和教程制作和提交技术图形。 </li><li>
+              “<a href="http://www.ibm.com/developerWorks/cn/linux/l-graf/">通过命令行处理图形 -- 使用 ImageMagick 进行翻转、缩放大小、旋转以及更多操作</a>”（developerWorks，2003 年 7 月）和 “<a href="http://www.ibm.com/developerWorks/cn/linux/l-graf2/">通过命令行进一步处理图形 -- 在 Linux 上使用 ImageMagick 的提示与技巧</a>”（developerWorks，2004 年 3 月）展示从命令行使用 ImageMagick 的其他技巧。</li><li>在 <a href="http://www.imagemagick.org/">ImageMagick Web 站点</a> 查找手册页和 ImageMagick 用途的多个示例。</li><li> 
+                在 <a href="http://www.ibm.com/developerworks/cn/linux/sdk/python/python-1/">可爱的 Python：将 XML 和 Python 结合起来介绍 Python 的 XML 工具</a> 可以找到更多针对 Linux 开发人员的参考资料。           
+            </li><li> 在 <a href="http://www.ibm.com/developerworks/cn/linux/"> developerWorks Linux 专区</a> 寻找为 Linux 开发人员（包括 <a href="http://www.ibm.com/developerworks/cn/linux/newto/">Linux 新手入门</a>）准备的更多参考资料，查阅我们 <a href="http://www.ibm.com/developerworks/cn/linux/top10/index.html">最受欢迎的文章和教程</a>。 </li><li>在 developerWorks 上查阅所有 <a href="http://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?search_by=Linux+%E6%8A%80%E5%B7%A7"> Linux 技巧</a> 和 <a href="http://www.ibm.com/developerworks/cn/views/linux/libraryview.jsp?type_by=%E6%95%99%E7%A8%8B"> Linux 教程</a>。 </li><li>随时关注 developerWorks <a href="http://www.ibm.com/developerworks/cn/offers/techbriefings/">技术活动</a>和<a href="http://www.ibm.com/developerworks/cn/swi/">网络广播</a>。 </li></ul><h3 class="dw-resources-category-heading">获得产品和技术</h3><ul class="ibm-bullet-list"><li>一些屏幕标尺可用于不同的操作系统：
+<ul><li><a href="http://gnomecoder.wordpress.com/screenruler/">Gnome
+Screen Ruler (Linux Gnome)</a> 可能包含在您的 Linux 发行版中。 </li><li><a href="http://www.kde.org/">KRuler (Linux KDE)</a> 是 KDE 图形包的一部分，可能包含在您的 Linux 发行版中。</li><li><a href="http://www.pascal.com/software/freeruler/">Free ruler (Mac OS X)</a> 是针对 Mac 的一个免费屏幕标尺。</li><li><a href="http://www.spadixbd.com/freetools/jruler.htm">JR Screen Ruler (Windows)</a> 是针对 Windows 的一个免费虚拟标尺。
+                    </li></ul></li><li>使用可以直接从 developerWorks 下载的 <a href="http://www.ibm.com/developerworks/cn/downloads/">IBM 产品评估试用版软件</a>，在 Linux 上构建您的下一个项目。
+            </li></ul><h3 class="dw-resources-category-heading">讨论</h3><ul class="ibm-bullet-list"><li> 
+                加入 <a href="http://www.ibm.com/developerworks/community" onmouseover="linkQueryAppend(this)">
+My developerWorks 社区</a>；您可以通过个人信息和定
+制主页获得符合自己的兴趣的 developerWorks 文章，并
+与其他 developerWorks 用户进行交流。 
+            </li></ul>
+
+<!-- INLINE_COMMENTS_BEGIN -->
+<h2 id="icomments" class="ibm-alternate-rule ibm-no-print">条评论</h2>
+    
+<div class="ibm-no-print" id="dw-icomments-container">	
+	<div id="threadShow"><img style="display: none;" id="imgPlHdr" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/animated-progress-38x38c.gif" alt=""><div id="cmtTog" style=""><div class="ibm-container ibm-alternate-two dw-commentbox dw-noborder"><div class="ibm-container-body dw-commentbox dw-noborder"><p id="signInSect">请 <a onclick="var e=arguments[0] || window.event; dwsi.siInst &amp;&amp; dwsi.siInst.showSignIn(); if (e.stopPropagation){ e.stopPropagation();} else { e.cancelBubble = true; } e.preventDefault &amp;&amp; e.preventDefault(); return false;" href="#">登录</a> 或 <a href="http://www.ibm.com/developerworks/dwwi/jsp/ssoregister.jsp?d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Flinux%2Fl-pixelruler%2Findex.html%23icomments&amp;lang=cn&amp;a=dwmav">注册</a>  后发表评论。</p><p id="cmtHead"><label for="newCmt"><strong>添加评论:</strong></label></p><p>注意：评论中不支持 HTML 语法</p><div id="infoCmt"></div><form focus="name" enctype="multipart/form-data" method="post" action="" name="form" class="ibm-column-form ibm-styled-form"><p class="6-4-textarea"><textarea rows="5" name="newCmt" id="newCmt" class="dw-inoperable" disabled="disabled"></textarea><br></p><span class="ibm-input-group"><input value="1" name="comment_notification" id="comment_notification" disabled="disabled" type="checkbox"><label id="notifyText" class="ibm-form-note dw-btn-cancel-sec" for="comment_notification">有新评论时提醒我</label></span><span class="ibm-form-note dw-btn-cancel-sec notifySection" id="maxCharsCount">剩余 <span id="charCount">1000</span> 字符</span><p class="ibm-buttons-row"><input value="发布" name="postCmt" id="postCmt" class="ibm-btn-sec ibm-btn-small ibm-disabled" disabled="disabled" type="button"></p></form></div></div><div class="ibm-alternate-rule"><hr></div><div id="topControl" class="ibm-container ibm-alternate-two dw-comment-totals" style="display: none;"><div class="ibm-container-body"><form id="selectComments" method="get" action=""><p>&nbsp;<span class="dw-comment-totals-label"><strong>共有评论 (<span id="numCmts">0</span>)</strong></span><span class="dw-how-many-comments-label" style="display:none" id="dropdownCmts"><label for="howManyComments"><strong>显示：</strong></label>&nbsp;<select name="comments" id="howManyComments" class="dw-how-many-comments"><option selected="selected" value="recent">最新评论 </option></select><input class="ibm-btn-go" name="ibm-go" value="Go" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/short-btn.gif" alt="Go" type="image"><br></span></p></form></div></div><div id="cmtSect"><div class="comment"><div class="dw-icomment-container"><table class="dw-icomment-body" width="100%" cellpadding="0" cellspacing="0"><tbody><tr><td><p>快来添加第一条评论</p></td></tr></tbody></table></div></div></div></div><div id="bottomControl" class="ibm-container ibm-alternate-two dw-comment-totals" style="display:none"><div class="ibm-container-body"><form id="selectComments2" method="get" action=""><p>&nbsp;<span class="dw-comment-totals-label"><strong>共有评论 (<span id="numCmts2">0</span>)</strong></span><span class="dw-how-many-comments-label" style="display:none" id="dropdownCmts2"><label for="howManyComments2"><strong>显示：</strong></label>&nbsp;<select name="comments" id="howManyComments2" class="dw-how-many-comments"><option selected="selected" value="recent">最新评论 </option></select><input class="ibm-btn-go" name="ibm-go" value="Go" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/short-btn.gif" alt="Go" type="image"><br></span></p></form></div></div></div>
+</div>
+<!-- Sign in OVERLAY STARTS HERE -->
+    
+<!-- Sign in OVERLAY STARTS HERE -->
+<div class="ibm-common-overlay" id="signin_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="dwsi.siInst.clearForm();">关闭 [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+
+ <div class="ibm-title">
+<h2>developerWorks: 登录</h2>
+<div id="ibm-overlay-error-signin" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">标有星（<span class="ibm-required">*</span>）号的字段是必填字段。</p> 
+<form class="ibm-column-form" id="sFormId" action="" method="post" name="sForm" onsubmit="return false;">
+<p><label for="ibmid">IBM ID:<span class="ibm-required">*</span></label><span>
+    <input aria-required="true" name="ibm-id" id="ibmid" size="25" class="required" onkeypress="dwsi.siInst.handleEP(event,this.form);" type="text">
+    <br><a onclick="window.location='/developerworks/dwwi/DWAuthRouter?m=reg&amp;lang=zh_CN&amp;d='+encodeURIComponent(location.protocol + '//' + location.hostname + location.pathname + '#icomments'); return false;" href="#" class="ibm-forward-link">需要一个 IBM ID？</a> <br>
+    <a class="ibm-forward-link" href="http://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=zh_CN">忘记 IBM ID？</a> 
+</span>
+</p> 
+<p><label for="password">密码：<span class="ibm-required">*</span></label><span>
+    <input name="password" id="password" size="25" value="" class="required" onkeypress="dwsi.siInst.handleEP(event,this.form);" type="password">
+    <br><a class="ibm-forward-link" href="#" onclick="(function ()
+        {window.location='https://www.ibm.com/account/profile?page=forgot&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(dwsi.siInst.getAuthUrl())+'%3Fm%3Dloginpage%26lang%3Dzh_CN%26d%3D'+encodeURIComponent(location.href);})();">忘记密码？</a>
+    <br><a class="ibm-forward-link" href="#" onclick="(function () {window.location='https://www.ibm.com/account/profile?page=chpw&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d='+encodeURIComponent(location.href);})();">更改您的密码</a></span></p> 
+<p class="dw-perm-box">
+	<span><input id="perm" name="perm_name" type="checkbox"><label for="perm"> 保持登录。</label></span>
+</p>
+<p>单击提交则表示您同意developerWorks 的条款和条件。 <a href="http://www.ibm.com/developerworks/community/terms?lang=zh">查看条款和条件</a>。</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="提交" onclick="dwsi.siInst.signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+<input value="取消" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="dwsi.siInst.clearForm();ibmweb.overlay.hide('signin_overlay');return false;" type="button"></p>
+</div>
+</form>
+ <div class="ibm-overlay-rule"><hr></div> 
+
+<p>在您首次登录 developerWorks 时，会为您创建一份个人概要。<strong>您的个人概要中的信息（您的姓名、国家/地区，以及公司名称）是公开显示的，而且会随着您发布的任何内容一起显示，除非您选择隐藏您的公司名称。</strong>您可以随时更新您的 IBM 帐户。</p>
+<div><p class="dw-c-overlay-secure">所有提交的信息确保安全。</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Display name OVERLAY STARTS HERE -->
+<div class="ibm-common-overlay" id="displayname_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="#" onclick="dwsi.siInst.clearForm();">关闭 [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title">
+<h2>选择您的昵称</h2><br><br>
+<div id="ibm-overlay-error-dname" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">当您初次登录到 developerWorks 时，将会为您创建一份概要信息，您需要指定一个昵称。您的昵称将和您在 developerWorks 发布的内容显示在一起。</p><p><strong>昵称长度在 3 至 31 个字符之间</strong>。 
+    您的昵称在 developerWorks 社区中必须是唯一的，并且出于隐私保护的原因，不能是您的电子邮件地址。</p>
+<p class="ibm-overlay-intro">标有星（<span class="ibm-required">*</span>）号的字段是必填字段。</p> 
+<form id="dFormId" method="post" action="" name="dForm" onsubmit="return false;" class="ibm-column-form">
+<p><label for="displayname">昵称：<span class="ibm-required">*</span></label><span>
+    <input aria-required="true" name="displayname" id="displayname" size="25" onkeypress="dwsi.siInst.handleEP(event,this.form);" type="text"></span>
+    <span class="ibm-form-note">(昵称长度在 3 至 31 个字符之间)</span>
+</p>
+<p>单击<strong>提交</strong>则表示您同意developerWorks 的条款和条件。 <a href="http://www.ibm.com/developerworks/community/terms?lang=zh">查看条款和条件</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="提交" onclick="dwsi.siInst.signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+<input value="取消" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="dwsi.siInst.clearForm();ibmweb.overlay.hide('displayname_overlay');return false;" type="button"></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr></div>
+<div><p class="dw-c-overlay-secure">所有提交的信息确保安全。</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+
+
+<!-- INLINE_COMMENTS_END -->
+
+</div>
+<!-- 6_4_COLUMN_END -->
+
+<!-- 6_2_COLUMN_BEGIN -->
+<div class="ibm-col-6-2">
+
+<!-- Next_Steps -->
+<!-- Dig_Deeper -->
+
+
+<!-- Promotion_Module -->
+    
+<!-- PROMOTION_MODULE_START -->
+<div class="ibm-alternate-rule"><hr></div>
+<ul class="ibm-portrait-module-list">
+<li><a role="presentation" tabindex="-1" class="" href="http://www.ibm.com/developerworks/cn/puresystems/"><img src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/sm-f-cl-puresystems70.jpg" alt="" height="60" width="60"></a>
+<h3><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/puresystems/">IBM PureSystems</a></h3>
+<p>IBM PureSystems™ 系列解决方案是一个专家集成系统</p></li>
+<li><a role="presentation" tabindex="-1" class="" href="http://www.ibm.com/developerworks/cn/views/global/libraryview.jsp?type_by=Knowledge+paths"><img src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/sm-f-knowledgepath50.jpg" alt="" height="60" width="60"></a>
+<h3><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/views/global/libraryview.jsp?type_by=Knowledge+paths">developerWorks 学习路线图</a></h3>
+<p>通过学习路线图系统掌握软件开发技能</p></li>
+<li><a role="presentation" tabindex="-1" class="" href="http://www.ibm.com/developerworks/cn/downloads/"><img src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/sm-f-evaluationsoftware60.png" alt="" height="60" width="60"></a>
+<h3><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/downloads/">软件下载资源中心</a></h3>
+<p>软件下载、试用版及云计算</p></li>
+</ul>
+<!-- PROMOTION_MODULE_END -->
+
+</div>
+<!-- 6_2_COLUMN_END -->
+
+</div>
+<!-- SPLIT_COLUMNS_END -->
+
+<!-- BOTTOM_BACK_TO_TOP -->
+<div class="ibm-columns">
+<div class="ibm-col-1-1">
+	<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p>
+</div>
+</div>
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><div class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</div><div class="metavalue">SITE_ID=10</div><div class="metavalue">Zone=Linux</div><div class="metavalue">ArticleID=422535</div><div class="metavalue">ArticleTitle=Linux 技巧: 从命令行创建像素标尺</div><div class="metavalue">publish-date=08242009</div><script language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href.replace(/</g,  '%3C')+'</div>');</script><div class="metavalue">url=http://www.ibm.com/developerworks/cn/linux/l-pixelruler/index.html</div><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</div>
+<!-- END_IBM_CONTENT_MAIN -->
+
+</div>
+<!-- END_IBM_CONTENT_BODY -->
+
+</div>
+<!-- END_IBM_CONTENT -->
+
+</div></div>
+<!-- LEADSPACE_END -->
+
+
+<!-- END_IBM_PCON -->
+<!-- FOOTER_BEGIN -->
+<div aria-label="页脚" id="ibm-footer"><!-- IBM footer container; disabled --></div>
+
+<div id="ibm-footer-module-dwwrapper" role="contentinfo" aria-label="developerWorks Footer">
+
+<div id="ibm-footer-module-dw">
+	<div class="dw-footer-columns">
+		<div class="dw-footer-col-6-1 dw-footer-col-6-1-cn">
+			<ul>
+				<li><a href="https://www.ibm.com/developerworks/secure/feedback.jsp?domain=dwchina" tabindex="0">帮助</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/author/" tabindex="0">联系编辑</a></li>
+				<li><a href="https://www.ibm.com/developerworks/secure/myideas2.jsp?domain=dwchina&amp;start=true" tabindex="0">提交内容</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/rss/" tabindex="0">订阅源</a></li>
+			</ul>
+        </div>
+		<div class="dw-footer-col-6-2">
+			<ul>
+				<li><a href="http://www.ibm.com/vrm/newsletter/10104?S_TACT=105AGX52&amp;S_CMP=dwcntop" tabindex="0">在线浏览每周时事通讯</a></li>
+				<li><a class="dwcn-sina-link" href="http://weibo.com/ibmdw/" target="_blank" tabindex="0">新浪微博</a></li>
+				<li><a href="https://www.ibm.com/developerworks/community/report?lang=zh" tabindex="0">报告滥用</a></li>
+				<li><a href="https://www.ibm.com/developerworks/community/terms?lang=zh" tabindex="0">使用条款</a></li>
+				<li><a href="https://www.ibm.com/developerworks/cn/community/terms/thirdparty/" tabindex="0">第三方提示</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-3">
+			<ul>
+				<li><a href="http://www.ibm.com/privacy/cn/zh/" tabindex="0">隐私条约</a></li>
+				<li><a href="http://www.ibm.com/ibm/accessibility/cn/" tabindex="0">浏览辅助</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/academic/" tabindex="0">IBM 教育学院教育培养计划</a></li><li><a href="http://www.ibm.com/developerworks/cn/gep/">IBM 创业企业全球扶持计划</a></li><li><a href="http://www.ibm.com/partnerworld/isv/">ISV 资源 (英语)</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-4"> 
+			<ul>
+				<li><a href="http://www.ibm.com/developerworks/cn/newsletter/" tabindex="0">dW 中国每周时事通讯</a></li>
+			</ul>
+			
+		</div>
+		<div class="dw-footer-col-6-5">
+			<ul>
+				<li class="dw-footer-lang-head">选择语言：</li>
+				<li><a href="http://www.ibm.com/developerworks/" tabindex="0">English</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/" tabindex="0" lang="zh">中文</a></li>
+				<li><a href="http://www.ibm.com/developerworks/jp/" tabindex="0" lang="ja">日本語</a></li>
+				<li><a href="http://www.ibm.com/developerworks/ru/" tabindex="0" lang="ru">Русский</a></li>
+				<li><a href="http://www.ibm.com/developerworks/br/" tabindex="0" lang="pt">Português (Brasil)</a></li>
+				<li><a href="http://www.ibm.com/developerworks/ssa/" tabindex="0" lang="es">Español</a></li>
+				<li><a href="http://www.ibm.com/developerworks/vn/" tabindex="0" lang="vi">Việt</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-6">
+			<img alt="IBM®" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/dwn-ibm-logo-v17.png" height="46" width="223">
+			<img class="dw-preload" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/ibm_sprite_social_blue_ON.png" alt="" height="1" width="1">
+		</div>
+	</div>
+</div>
+
+</div><!-- FOOTER_END -->
+
+<!-- END_IBM-TOP -->
+</div>
+
+<!-- SCRIPTS_INCLUDE_BEGIN -->
+<script type="text/javascript" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/dw-comments.js">//</script>
+<script type="text/javascript" language="JavaScript">
+	dojo.ready(function(){
+		rBHash = typeof rBHash == "undefined" ? {} : rBHash;
+		rBHash['viperLang'] = 'zh';
+		rBHash['urlLang'] = 'cn';
+		rBHash['dwwi2Lang'] = 'zh_CN';
+		rBHash['appCode'] = 'dwmav';
+		rBHash['signoutUrl'] = (location.host.toLowerCase() === "www.ibm.com" || location.host.toLowerCase() === "developer.ibm.com") ? 'http://www.ibm.com/developerworks/cn/' : ''; 
+		dwsi.siInst = new dwweb.dynnav.dwsi();
+		dwsi.siInst.initSI();		
+
+		// construct the comment widget
+dwc.cmts = '条评论';
+dwc.signInPreText = '请';
+dwc.signIn = '登录';
+dwc.or = '或';
+dwc.register = '注册';
+dwc.signInPostText = '';
+dwc.leaveCmt = '后发表评论。';
+dwc.view = '查看';
+dwc.totalCmts = '共有评论';
+dwc.postYourCmt = '添加您的评论';
+dwc.show = '显示：';
+dwc.recentCmts = '最新评论';
+dwc.allCmts = '所有评论';
+dwc.tooLongCmt = '您的评论超过了 1000 字符限制';
+dwc.numCharsLeft = '剩余 <span id="charCount">{1}</span> 字符';
+dwc.reportAbuse = '报告滥用';
+dwc.notifyMsg = '有新评论时提醒我';
+dwc.htmlWarning = '注意：评论中不支持 HTML 语法'; 
+dwc.cmt = '评论：';
+dwc.addCmts = '添加评论';
+dwc.addCmt = '添加评论';
+dwc.doNotErase = '--在下方添加评论--'; 
+dwc.viewOrAddCmts = '查看或添加评论';
+dwc.reportInapprCont = '举报不良信息';
+dwc.reportInapprContLink = 'http://www.ibm.com/developerworks/forums/forum.jspa?forumID=1834';
+dwc.postingCmt = '正在发布评论……';
+dwc.noCmt = '快来添加第一条评论';
+dwc.netwkErr = '在检索评论时出错，请稍后刷新。';
+dwc.addACmt = '添加评论';
+dwc.instructCmt = '标有星号（<span class="ibm-required">*</span>）的是必填项目。';
+dwc.btnPost = '发布';
+dwc.btnPostAnon = '匿名发布';
+dwc.btnClrCmt = '清除评论';
+dwc.btnCancel = '取消';
+dwc.showRecent = '显示最新的 {1} 条评论'; // {1} is the count to be substituted
+dwc.showNext = '显示后 {1} 条评论'; // {1} is the count to be substituted
+dwc.showAllCmts = '显示所有评论';
+dwc.enterCmt = '请输入评论内容。';
+dwc.loginErr = '暂时无法验证您的登录状态，请稍后再试。';
+dwc.postErr = '暂时无法发布您的评论，请稍后再试。';
+dwc.postBy = '由 <strong>{1}</strong>  于 {2} '; // {1} is the author to be substituted; {2} is the date
+dwc.siteId = 10;
+dwc.lang = 'zh_CN';
+dwc.viperLang = 'zh';
+//dwc.abuseHref =  null;
+dwc.maxChars = 1000;
+dwc.cmtTxt =  '评论：';
+dwc.cmtsTxt =  '评论：';  
+		dwc && new dwc.comments('threadShow','95%',5,'nCmts','icomments');
+		});
+</script>
+
+
+
+<!-- BEGIN: Use this section to set page specific variables for the Unica Page Tag -->
+<script language="JavaScript">var NTPT_PGEXTRA="ibmSkillLevel=3&ibmCmaId=422535&ibmContentAreas=linux";</script>
+<!--END --><!-- SCRIPTS_INCLUDE_END -->
+
+<div id="ibm-metrics">
+<script src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/stats.js" type="text/javascript">//</script>
+</div>
+
+
+
+<iframe style="width: 0px; height: 0px;" src="Linux%20%E6%8A%80%E5%B7%A7:%20%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%9B%E5%BB%BA%E5%83%8F%E7%B4%A0%E6%A0%87%E5%B0%BA_files/conv.html"></iframe></body></html>

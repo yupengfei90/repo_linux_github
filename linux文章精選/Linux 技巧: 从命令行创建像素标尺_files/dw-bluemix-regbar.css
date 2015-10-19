@@ -1,0 +1,88 @@
+/* O4-18-15 JMH */
+/* 
+ * CSS file for ibm.com developerWorks: registration bar
+ * Copyright (c) 2015 IBM Corporation
+ * Owner: developerWorks Content/Raleigh/IBM (jmh)
+ * Last change: button color
+ */
+
+#dw-regbar {
+    min-height: 40px;
+    height: 40px;
+    background-image: url("//dw1.s81c.com/developerworks/i/regbar_bluemix_background_40.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: #41525a;
+    position: fixed;
+    top: -100px;
+    z-index: 1000;
+    width: 100%;
+    border-bottom: 1px dotted grey;
+    border-top: 1px dotted grey;
+}
+#dw-regbar .ibm-columns {   
+    padding: 0 10px 10px;
+    width: 960px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+#dw-regbar .ibm-columns .ibm-col-6-6 {
+    clear: none;
+    margin: 0 auto;
+    display: table;
+}
+#dw-regbar #dw-regbar-bluemix {
+    line-height: 40px;
+    color: #4ab2dc;
+    font-size: 1.35em;
+    font-family: Helvetica,Arial,sans-serif !important;
+}
+#dw-regbar #dw-regbar-vp {
+    font-size: 1.215em;
+    color: #ffffff;
+    font-weight: normal;
+    padding-left: 20px;
+    font-family: Helvetica,Arial,sans-serif !important;
+}
+#dw-regbar p.ibm-button-link-alternate.dw-button-green {
+    display: inline;
+    float: right;
+    padding-left: 9px;
+    *margin-top : -40px; /* IE7 and below */    
+}
+#dw-regbar p.ibm-button-link-alternate.dw-button-green .dw-regbar-btn {	
+    background: #ff9900;
+    background: -moz-linear-gradient(top,  #ff9900 0%, #cc6700 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff9900), color-stop(100%,#cc6700));
+    background: -webkit-linear-gradient(top,  #ff9900 0%,#cc6700 100%);
+    background: -o-linear-gradient(top,  #ff9900 0%,#cc6700 100%);
+    background: -ms-linear-gradient(top,  #ff9900 0%,#cc6700 100%);
+    background: linear-gradient(to bottom,  #ff9900 0%,#cc6700 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff9900', endColorstr='#cc6700',GradientType=0 );
+    border: 1px solid #cc6700;
+    font-size: .8em;
+    font-family: Helvetica,Arial,sans-serif !important;
+    line-height: 20px;
+    display: block;
+    magin-bottom: 0;
+    magin-left: auto;
+    magin-right: auto;
+    width: auto;
+    text-shadow: none;
+    float: left;
+    margin: 7px 0 0 15px;
+    padding: 2px 15px !important;
+}
+#dw-regbar p.ibm-button-link-alternate.dw-button-green .dw-regbar-btn:hover {
+background: #ff7700;
+background: -moz-linear-gradient(top, #ff7700 0%, #cc6700 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff7700), color-stop(100%,#cc6700));
+background: -webkit-linear-gradient(top, #ff7700 0%,#cc6700 100%);
+background: -o-linear-gradient(top, #ff7700 0%,#cc6700 100%);
+background: -ms-linear-gradient(top, #ff7700 0%,#cc6700 100%);
+background: linear-gradient(to bottom, #ff7700 0%,#cc6700 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff7700', endColorstr='#cc6700',GradientType=0 );
+}
+#ibm-top .ibm-landing-page.dw-home-page{
+    *margin-top: 42px; /* IE7 and below */ 
+}
