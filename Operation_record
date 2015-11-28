@@ -1,0 +1,24 @@
+Date	Operation		Why
+20151028	install pppoe(Warning: not eth0, but enp6s0)	centos7
+
+20151028	yum groupinstall "Development Tools"	gcc 
+
+20151029	为Centos 7添加Windows引导程序,在/boot/grub2/grub.cfg文件尾添加如下代码:
+### BEGIN /etc/grub.d/30_os-prober ###
+menuentry 'Windows 7 (loader) (on /dev/sda1)' --class windows --class os $menuentry_id_option 'osprober-chain-XXX' {
+insmod part_msdos
+insmod ntfs
+set root='hd0,msdos1'
+chainloader +1
+}
+
+20151029	change hostname /etc/hostname
+
+20151030	git config --global core.quotepath false	使git status 正确显示中文
+
+20151030   CentOS7 设置Meta+D快捷键返回桌面，Tool Box --> Add Widgets --> Show Desktop
+
+########20151117 设置命令行高亮 PS1='\e[31m[\u@\h \w]\$ \e[0m'
+#不添加 \[ \]将引起bash无法正确换行的问题，现修改如下：
+20151117 设置命令行高亮 PS1='\[\e[31m\][\u@\h \w]\$ \[\e[0m\]'
+
