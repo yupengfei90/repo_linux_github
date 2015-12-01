@@ -22,3 +22,4 @@ chainloader +1
 #不添加 \[ \]将引起bash无法正确换行的问题，现修改如下：
 20151117 设置命令行高亮 PS1='\[\e[31m\][\u@\h \w]\$ \[\e[0m\]'
 
+Modify git remote repository address: 'git remote set-url origin(#default remote name#) $new_address' 
