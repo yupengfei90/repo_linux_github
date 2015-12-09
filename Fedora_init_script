@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [[ ${ID} != "0" ]];then
+	echo -e "\e[31mTo preceed succesfully, you must achieve root prority\e[0m"
+	exit 1
+fi
+
+# 1.设置命令提示符
+export PS1=\[\e[32m\][\u@\h \w]\$ \[\e[0m\]
+
+# 2.连接vpn，用以登陆google
+
+#安装google-chrome
+cat << EOF > /etc/yum.repos.d/google-chrome.repo
+[google-chrome]
+name=google-chrome - \$basearch
+baseurl=http://dl.google.com/linux/chrome/rpm/stable/\$basearch
+enabled=1
+gpgcheck=1
+gpgkey=https://dl-ssl.google.com/linux/linux_signing_key.pub
+EOF
+
+dnf install google-chrome-stable -y

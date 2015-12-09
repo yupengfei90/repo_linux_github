@@ -18,8 +18,8 @@ chainloader +1
 
 20151030   CentOS7 设置Meta+D快捷键返回桌面，Tool Box --> Add Widgets --> Show Desktop
 
-########20151117 设置命令行高亮 PS1='\e[31m[\u@\h \w]\$ \e[0m'
+########20151117 设置命令行高亮 PS1='\e[32m[\u@\h \w]\$ \e[0m'
 #不添加 \[ \]将引起bash无法正确换行的问题，现修改如下：
-20151117 设置命令行高亮 PS1='\[\e[31m\][\u@\h \w]\$ \[\e[0m\]'
+20151117 设置命令行高亮 PS1='\[\e[32m\][\u@\h \w]\$ \[\e[0m\]'
 
 Modify git remote repository address: 'git remote set-url origin(#default remote name#) $new_address' 
