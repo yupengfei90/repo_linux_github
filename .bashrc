@@ -10,7 +10,7 @@ alias vi='vim'
 # add 20141227
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
-export PS1=\[\e[32m\][\u@\h \w]\$ \[\e[0m\]
+export PS1='\[\e[32m\][\u@\h \w]\$ \[\e[0m\]'
 
 # add 20150323
 alias ld='ld -m elf_i386'	
